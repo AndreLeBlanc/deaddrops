@@ -2,7 +2,7 @@
 
 OSPP (1DT096) 2016 - Grupp 3
 
-<img src="../images/jonas.png" width="200">
+<img src="../images/jonas.jpg" width="200">
 
 ## Vecka 15
 
