@@ -2,28 +2,6 @@
 
 OSPP (1DT096) 2016 - Grupp 3
 
-Det huvudsakliga syftet med att upprätta ett gruppkontrakt är att alla
-i gruppen ska vara överens om mål och arbetssätt för det fortsatta
-arbetet. Utarbetandet av ett gruppkontrakt leder till diskussion och
-reflektion kring frågor som är viktiga för gruppens arbete och
-trivsel. Vid utformandet av gruppkontraktet är det viktigt att alla i
-gruppen deltar aktivt och att hänsyn tas till alla gruppmedlemmars
-synpunkter och önskemål.
-
-Ett gruppkontrakt ska vara underskrivet av samtliga
-projektmedlemmar. Följande områden kan vara del av vad man kommer
-överens om i gruppkontraktet:
-
-- Målsättning och förväntningar på gruppdeltagarna.
-- Arbetsformer och arbetsfördelning.
-- Normer i projektgruppen – överenskommelse om goda gruppegenskaper.
-- Brott mot reglerna i gruppkontraktet.
-- Allmänna förutsättningar.
-
-Denna mall för gruppkontrakt är baserat på:
-
-- http://www.cemus.uu.se/dokument/hub2010/Gruppkontrakt.pdf
-
 ## Rutiner
 
 - Initialt ska gruppen arbeta i par
@@ -60,12 +38,7 @@ Denna mall för gruppkontrakt är baserat på:
 
 ## Brott mot bestämmelserna i gruppkontraktet
 
-Var och en berättar om hur man vill bli påmind om de överenskomna
-bestämmelserna. Ett sätt är att var och en inför de andra i
-projektgruppen beskriver hur man vill bli påmind om att man har brutit
-mot någon punk i gruppkontraktet. Viktigt för att underlätta för
-projektgruppen att under det kommande arbetet såväl ge som att ta
-kritik.
+Varje medlem i gruppen ska bli påmind om kontraktet enligt nedan. Vid upprepande brott kontaktas kursledningen.
 
 ### Joel Wallin
 Via en skarp tillsägelse.
@@ -86,11 +59,6 @@ Via en diplomatisk tillsägelse och via en skarp tillsägelse om den första int
 Via ett argt meddelande.
 
 ## Utskrift och underskrifter
-
-Kontraktet skall skrivas ut på papper, skrivas under
-(namnförtydligande och signatur av samtliga gruppmedlemmar) och lämnas
-in till ansvarig lärare på kursen. Därefter skall kontraktet hållas
-uppdaterat som en del av gruppens repository på Github.
 
 Detta kontrakt har den __________________________  upprättats av:
 
