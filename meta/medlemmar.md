@@ -66,7 +66,7 @@ The text below is written by Ali
 
 Bild                                       | Förnamn               | Efternamn | Personnummer | Användarnamn (Github)
 -------------------------------------------|-----------------------|-----------|--------------|----------------------
-<img src="images/user.png" width="100px">  | [Ali](#alikocholo)  | Shojaeddin | 950404-8696  | `alikocholo`
+<img src="images/Ali.jpg" width="100px">  | [Ali](#alikocholo)  | Shojaeddin | 950404-8696  | `alikocholo`
 
 ## Ali Shojaeddin
 
