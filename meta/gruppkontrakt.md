@@ -1,8 +1,6 @@
 # Gruppkontrakt
 
-OSPP (1DT096) 2016 - Grupp XX
-
-> Ändra XX till numret på gruppen.
+OSPP (1DT096) 2016 - Grupp 3
 
 Det huvudsakliga syftet med att upprätta ett gruppkontrakt är att alla
 i gruppen ska vara överens om mål och arbetssätt för det fortsatta
@@ -26,41 +24,25 @@ Denna mall för gruppkontrakt är baserat på:
 
 - http://www.cemus.uu.se/dokument/hub2010/Gruppkontrakt.pdf
 
-> Kontraktet är skrivet i formatet Markdown, läs mer här:
-- https://help.github.com/articles/markdown-basics/
-
-> Gruppen skall tillsammans utgå från denna mall (ändra, ta bort eller
-> lägga till text och rubriker) för att komma fram till ett
-> gruppkontrakt som alla i gruppen är nöjda med.
-
 ## Rutiner
 
-Exempel på innehåll:
-
-- Skall gruppen i huvudsak sitta och arbeta tillsammans eller endast
-  träffas för kortare möten?
-- Hur ofta ska gruppen träffas?
-- Hur långa ska mötena vara?
-- När på dagen ska mötena läggas?
-- Vilka godtagbara skäl finns för frånvaro på möten?
-
+- Initialt ska gruppen arbeta i par
+- Paren bestämmer själva exakt om de vill parprogrammera eller använda någon annat sätt
+- Hela gruppen ska träffas minst två gånger i veckan
+- Minst ett gruppmöte ska vara på plats
+- Fysiskt scrummöte ska försöka hållas på måndagar
+- På gruppmötena stäms parens arbete av och nya uppgifter fördelas
+- Godtagbara skäl för frånvaro är all skälig frånvaro(?)
 
 ## Kommunikationen i gruppen
 
-Exempel på innehåll:
-
-- Hur ska gruppen kommunicera mellan möten?
-- Hur ska gruppen agera om någon inte kommer på ett möte?
-- Hur ska samordning och rapportering ske inom projektgruppen?
+- Gruppen kommunicerar via Slack
+- Samordning och rapportering görs via Trello, slack samt gruppmöten
 
 ## Frånvaro
 
-Exempel på innehåll:
-
-- Hur och när skall frånvaro meddelas?
-- Hur skall man göra om någon varit frånvarande?
-- Skall frånvaro kompenseras genom annan arbetsinsats eller gäller det
-  bara viss typ av frånvaro?
+- Frånvaro meddelas via Slack om vid > 15 min försening
+- Vid avsevärd frånvaro kan personens namn tas bort ifrån projektet
 
 ## Roller
 
@@ -77,9 +59,15 @@ Exempel på innehåll:
 
 Exempel på innehåll:
 - Hur ska gruppen komma överens om vad som ska göras?
+
+    Arbetet läggs upp under mötet som hålls på måndag.
+    
 - Ska majoritetsbeslut gälla eller ska gruppen genom diskussion
   försöka få alla att vara överens om beslutet?
+
 - Hur ska ni gör ifall ni är oeniga?
+
+    Vi ska försöka att få alla att vara överens, men om det inte sker så får majoriteten bestämma.
 
 ## Arbetsinsats
 
@@ -95,12 +83,22 @@ arbetsinsatser som kan förekomma.  Exempel på innehåll:
 Exempel på innehåll:
 
 - Hur ska arbetet fördelas i gruppen?
+
+    Arbetet ska initialt fördelas jämnt mellan par och personer. Sen kan vissa med mer expertis i vissa områden få större arbetsbörda och ansvar på dem delarna.
+    
 - Hur ska gruppen hantera om någon inte gör sin del av arbetet?
-- Hur mycket arbete ska göras mellan möten?
+
+    Om någon inte gör sin del tjallar vi till Karl, alternativt offentlig avrättning.
+
+- Hur mycket arbete ska göras mellan möten?- 
+
+    Mängden med arbeta som ska göras mellan möten är den mängd som vi kommer överäns om.
 
 ## Konflikter
 
 Hur skall man gå tillväga om det uppstår konflikter?
+
+  Om konflikter uppstår springer vi till Karl igen så han får leka dagisfröken.
 
 ## Brott mot bestämmelserna i gruppkontraktet
 
@@ -110,6 +108,9 @@ projektgruppen beskriver hur man vill bli påmind om att man har brutit
 mot någon punk i gruppkontraktet. Viktigt för att underlätta för
 projektgruppen att under det kommande arbetet såväl ge som att ta
 kritik.
+
+### Joel Wallin
+Via en skarp tillsägelse.
 
 ## Utskrift och underskrifter
 

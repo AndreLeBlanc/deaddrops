@@ -14,6 +14,7 @@ Bild                                       | Förnamn               | Efternamn 
 -------------------------------------------|-----------------------|-----------|--------------|----------------------
 <img src="images/johan.png" width="100px"> | [Johan](#Tallkotten)  | Lejdung   | 930914-3254  | `Tallkotten`
 <img src="images/jonas.png" width="100px"> | [Jonas](#Revyy)       | Olander   | YYMMDD-XXXX  | `Revyy`
+<img src="images/Ali.jpg" width="100px">   | [Ali](#alikocholo)    | Shojaeddin| 950404-8696  | `alikocholo`
 
 > Utgå sedan från mallen nedan och skapa ett avsnitt för varje medlem
 i gruppen sorterade i bokstavsordning  <a name="anders877"></a>
@@ -57,6 +58,21 @@ Film, serier och spel dominerar mitt behov för underhållning. När jag arbetar
 - 'frameworket' React
 	Jag har skrivit i javascript tidigare men detta framework verkar väldigt intressant och användbart
 - dokumentation
+
+## Ali Shojaeddin
+
+### Okänd talang
+
+- I like to learn about the basics of a new programming language. 
+
+### Starka sidor
+
+- I believe I am very good at writing reports in English. 
+- I am very communicative and I like to initiate group meetings quite often. 
+
+### Personlig utveckling
+
+- In this project I am to develop my programming skills by learning about the Go programming language.
 	Min dokumentation är oftast utförlig men följer inget 'gränssnitt' så detta vill jag bli bättre på.
 - rapportskrivande
 	Det är alltid kul när man får ihopp en fint skriven rapport
