@@ -61,3 +61,24 @@ i gruppen sorterade i bokstavsordning  <a name="anders877"></a>
 - rapportskrivande
 - muntlig presentation
 - lägg gärna till flera punkter ...
+
+The text below is written by Ali
+
+Bild                                       | Förnamn               | Efternamn | Personnummer | Användarnamn (Github)
+-------------------------------------------|-----------------------|-----------|--------------|----------------------
+<img src="images/user.png" width="100px">  | [Ali](#alikocholo)  | Shojaeddin | 950404-8696  | `alikocholo`
+
+## Ali Shojaeddin
+
+### Okänd talang
+
+- I like to learn about the basics of a new programming language. 
+
+### Starka sidor
+
+- I believe I am very good at writing reports in English. 
+- I am very communicative and I like to initiate group meetings quite often. 
+
+### Personlig utveckling
+
+- In this project I am to develop my programming skills by learning about the Go programming language.
