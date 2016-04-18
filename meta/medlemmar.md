@@ -104,9 +104,6 @@ Netflix
 
 ### Starka sidor
 
-> Kortfattad beskrivning över områden där du tror du har lättast att
-> bidra till projektet, till exempel:
-
 -programmering
 
 Har en del tidigare erfarenhet inom det område vi valt att lägga projektet inom.
