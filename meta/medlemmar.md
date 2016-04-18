@@ -66,11 +66,13 @@ till exempel:
 
 ### Okänd talang
 
-- I like to learn about the basics of a new programming language. 
+- I like to learn about the basics of a new programming language. I also take great interest in learning about the basics of developing a complex program. In my spare time I like to watch TV series and/or play games. Making video games in programming languages I learn is a goal of mine.
 
 ### Starka sidor
 
-- I believe I am very good at writing reports in English. 
+- I believe I am very good at writing reports and specifications in English. 
 - I am very communicative and I like to initiate group meetings quite often. 
 
 ### Personlig utveckling
+
+- My goal in this project is to develop as much knowledge as possible on devloping a program in a different language with specifications and features that we have decided on.
