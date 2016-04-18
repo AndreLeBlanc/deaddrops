@@ -1,13 +1,11 @@
-# Namn på projektet
+# Project Deadrop
 
-OSPP (1DT096) 2016 - Grupp XX
-
-> Lägg till namnet på projektet och ändra XX till numret på din grupp.
+OSPP (1DT096) 2016 - Grupp 03
 
 Projektarbete på kursen Operativsystem och processorienterad
 programmering (1DT096) våren 2016, Uppsala universitet.
 
-> Lägg till en kort beskrivning av projektet.
+Project Deadrop ämnar att underlätta temporär* filöverföring mellan två eller flera parter. En användare kommer att ladda upp en eller flera filer samt ange livslängd i form av dagar eller antal nedladdningar. Därefter så sparas de under en hashad URL och väntar på besökare.
 
 > Denna fil är skrivet i formatet Markdown, läs mer här:
 >
