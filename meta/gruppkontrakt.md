@@ -59,9 +59,15 @@ Exempel på innehåll:
 
 Exempel på innehåll:
 - Hur ska gruppen komma överens om vad som ska göras?
+
+    Arbetet läggs upp under mötet som hålls på måndag.
+    
 - Ska majoritetsbeslut gälla eller ska gruppen genom diskussion
   försöka få alla att vara överens om beslutet?
+
 - Hur ska ni gör ifall ni är oeniga?
+
+    Vi ska försöka att få alla att vara överens, men om det inte sker så får majoriteten bestämma.
 
 ## Arbetsinsats
 
@@ -77,12 +83,22 @@ arbetsinsatser som kan förekomma.  Exempel på innehåll:
 Exempel på innehåll:
 
 - Hur ska arbetet fördelas i gruppen?
+
+    Arbetet ska initialt fördelas jämnt mellan par och personer. Sen kan vissa med mer expertis i vissa områden få större arbetsbörda och ansvar på dem delarna.
+    
 - Hur ska gruppen hantera om någon inte gör sin del av arbetet?
-- Hur mycket arbete ska göras mellan möten?
+
+    Om någon inte gör sin del tjallar vi till Karl, alternativt offentlig avrättning.
+
+- Hur mycket arbete ska göras mellan möten?- 
+
+    Mängden med arbeta som ska göras mellan möten är den mängd som vi kommer överäns om.
 
 ## Konflikter
 
 Hur skall man gå tillväga om det uppstår konflikter?
+
+  Om konflikter uppstår springer vi till Karl igen så han får leka dagisfröken.
 
 ## Brott mot bestämmelserna i gruppkontraktet
 
@@ -92,6 +108,9 @@ projektgruppen beskriver hur man vill bli påmind om att man har brutit
 mot någon punk i gruppkontraktet. Viktigt för att underlätta för
 projektgruppen att under det kommande arbetet såväl ge som att ta
 kritik.
+
+### Joel Wallin
+Via en skarp tillsägelse.
 
 ## Utskrift och underskrifter
 
