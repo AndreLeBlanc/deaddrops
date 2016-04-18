@@ -44,30 +44,10 @@ Denna mall för gruppkontrakt är baserat på:
 - Frånvaro meddelas via Slack om vid > 15 min försening
 - Vid avsevärd frånvaro kan personens namn tas bort ifrån projektet
 
-## Roller
-
-Exempel på innehåll:
-
-- Ska varje person i gruppen ha en formell roll?
-- Ska ni växla formella roller vid varje möte?
-- Vilka roller behövs:
-  - Projektledare?
-  - Sekreterare?
-  - Dokumentansvarig?
-
 ## Beslutsformer
+-Arbetet läggs upp under mötet som hålls på måndag.
 
-Exempel på innehåll:
-- Hur ska gruppen komma överens om vad som ska göras?
-
-    Arbetet läggs upp under mötet som hålls på måndag.
-    
-- Ska majoritetsbeslut gälla eller ska gruppen genom diskussion
-  försöka få alla att vara överens om beslutet?
-
-- Hur ska ni gör ifall ni är oeniga?
-
-    Vi ska försöka att få alla att vara överens, men om det inte sker så får majoriteten bestämma.
+- Vi ska försöka att få alla att vara överens, men om det inte sker så får majoriteten bestämma.
 
 ## Arbetsinsats
 
@@ -80,25 +60,13 @@ arbetsinsatser som kan förekomma.  Exempel på innehåll:
 
 ## Ansvar
 
-Exempel på innehåll:
-
-- Hur ska arbetet fördelas i gruppen?
-
-    Arbetet ska initialt fördelas jämnt mellan par och personer. Sen kan vissa med mer expertis i vissa områden få större arbetsbörda och ansvar på dem delarna.
+- Arbetet ska initialt fördelas jämnt mellan par och personer. Sen kan vissa med mer expertis i vissa områden få större arbetsbörda och ansvar på dem delarna.
     
-- Hur ska gruppen hantera om någon inte gör sin del av arbetet?
-
-    Om någon inte gör sin del tjallar vi till Karl, alternativt offentlig avrättning.
-
-- Hur mycket arbete ska göras mellan möten?- 
-
-    Mängden med arbeta som ska göras mellan möten är den mängd som vi kommer överäns om.
+- Om någon inte gör sin del tjallar vi till Karl, alternativt offentlig avrättning.
 
 ## Konflikter
 
-Hur skall man gå tillväga om det uppstår konflikter?
-
-  Om konflikter uppstår springer vi till Karl igen så han får leka dagisfröken.
+- Om konflikter uppstår springer vi till Karl igen så han får agera medlare.
 
 ## Brott mot bestämmelserna i gruppkontraktet
 
@@ -121,6 +89,9 @@ Via en skarp tillsägelse.
 ### Ali Shojaeddin
 Via en skarp tillsägelse.
 
+### Erik Melander
+Via en diplomatisk tillsägelse och via en skarp tillsägelse om den första inte funkade.
+
 ## Utskrift och underskrifter
 
 Kontraktet skall skrivas ut på papper, skrivas under
@@ -134,8 +105,8 @@ Detta kontrakt har den __________________________  upprättats av:
 Förnamn | Efternamn | . . . . . . . . . . . Underskrift . . . . . . . . . . .
 --------|-----------|------------
 Ali  | Shojaeddin |
-Britta  | Björk     |
-Cecila  | Carlsson  |
-Daniel  | Dahlqvist |
-Erik    | Eklund    |
-Fanny   | Forsberg  |
+André   | Le Blanc  |
+Erik  | Melander     |
+Joel  | Wallin  |
+Johan  | Lejdung |
+Jonas    | Olander    |
