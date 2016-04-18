@@ -11,6 +11,8 @@ varje gång du arbetat på projektet.
 
 ##### Måndag
 
+Worked with the group on project contract and setting up Github in a group meeting. (Ca 3 hours)
+
 ##### Tisdag
 
 ##### Onsdag
