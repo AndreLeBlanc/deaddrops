@@ -16,6 +16,7 @@ Bild                                       | Förnamn               | Efternamn 
 <img src="images/jonas.jpg" width="100px"> | [Jonas](#Revyy)       | Olander   | 910503-5795  | `Revyy`
 <img src="images/Ali.jpg" width="100px">   | [Ali](#alikocholo)    | Shojaeddin| 950404-8696  | `alikocholo`
                                            | [André](#anle3295)    | Le Blanc  | 9109303850   |	`anle3295`
+                                           | [Joel](#M34ris)	   | Wallin    | 9411233134   |	`M34ris`
 
 > Utgå sedan från mallen nedan och skapa ett avsnitt för varje medlem
 i gruppen sorterade i bokstavsordning  <a name="anders877"></a>
@@ -137,3 +138,24 @@ Vill gärna få en större inblick i hur scrum fungerar.
 - muntlig presentation
 
 Muntliga presentationer är något som jag vill träna ännu mer på även om jag känner mig hyffsat säker redan.
+
+
+## Joel Wallin
+
+### Okänd talang
+
+- Kan lösa en 4x4x4 rubiks kub på 5 minuter.
+- Hög tolerans för stark mat.
+
+### Starka sidor
+
+- Att lösa olika matematiska- och programmeringsproblem.
+- Arbete i grupp och se till så att samarbetet fungerar.
+- Hitta information för att kunna lösa problem.
+- Att skriva rapporter av olika slag och form.
+
+## Personlig Utveckling
+
+- Jag kopierar Johans mål att lära sig skriva tydliga specifikationer.
+- Go programmering, bland annat bli mer bekant med dess concurrency model.
+- Muntliga presentationer är min svagaste sida, framförallt mitt kroppsspråk (då jag ofta har armarna i kors) och engagemang med publiken.
