@@ -16,7 +16,7 @@ Bild                                       | Förnamn               | Efternamn 
 <img src="images/jonas.jpg" width="100px"> | [Jonas](#Revyy)       | Olander   | 910503-5795  | `Revyy`
 <img src="images/Ali.jpg" width="100px">   | [Ali](#alikocholo)    | Shojaeddin| 950404-8696  | `alikocholo`
                                            | [André](#anle3295)    | Le Blanc  | 9109303850   |	`anle3295`
-                                           | [Joel](#M34ris)	   | Wallin    | 9411233134   |	`M34ris`
+<img src="images/Joel.jpg" width="100px">  | [Joel](#M34ris)	   | Wallin    | 9411233134   |	`M34ris`
 
 > Utgå sedan från mallen nedan och skapa ett avsnitt för varje medlem
 i gruppen sorterade i bokstavsordning  <a name="anders877"></a>
