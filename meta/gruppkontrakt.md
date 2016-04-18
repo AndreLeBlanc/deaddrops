@@ -15,7 +15,7 @@ OSPP (1DT096) 2016 - Grupp 3
 ## Kommunikationen i gruppen
 
 - Gruppen kommunicerar via Slack
-- Samordning och rapportering görs via Trello, slack samt gruppmöten
+- Samordning och rapportering görs via Trello, Slack samt gruppmöten
 
 ## Frånvaro
 
@@ -38,7 +38,7 @@ OSPP (1DT096) 2016 - Grupp 3
 
 ## Brott mot bestämmelserna i gruppkontraktet
 
-Varje medlem i gruppen ska bli påmind om kontraktet enligt nedan. Vid upprepande brott kontaktas kursledningen.
+Varje medlem i gruppen ska bli påmind om kontraktet enligt nedan. Vid upprepade brott kontaktas kursledningen.
 
 ### Joel Wallin
 Via en skarp tillsägelse.
