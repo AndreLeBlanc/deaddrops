@@ -41,28 +41,18 @@ Denna mall för gruppkontrakt är baserat på:
 
 ## Frånvaro
 
-- Frånvaro meddelas via Slack om vid > 15 min försening
+- Frånvaro meddelas via Slack vid mer än 15 min försening
 - Vid avsevärd frånvaro kan personens namn tas bort ifrån projektet
 
 ## Beslutsformer
--Arbetet läggs upp under mötet som hålls på måndag.
-
+- Arbetet läggs upp under mötet som hålls på måndag.
 - Vi ska försöka att få alla att vara överens, men om det inte sker så får majoriteten bestämma.
-
-## Arbetsinsats
-
-För att undvika en del missförstånd och irritation kan det vara bra
-att redan från början göra klart för varandra vilka olika typer av
-arbetsinsatser som kan förekomma.  Exempel på innehåll:
-
-- Exempel på olika former av arbetsinsatser.
-- Vilka krav kan man ställa på varandra?
 
 ## Ansvar
 
 - Arbetet ska initialt fördelas jämnt mellan par och personer. Sen kan vissa med mer expertis i vissa områden få större arbetsbörda och ansvar på dem delarna.
     
-- Om någon inte gör sin del tjallar vi till Karl, alternativt offentlig avrättning.
+- Om någon inte gör sin del informeras kursledningen.
 
 ## Konflikter
 
