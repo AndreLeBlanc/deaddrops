@@ -112,6 +112,9 @@ kritik.
 ### Joel Wallin
 Via en skarp tillsägelse.
 
+### Johan Lejdung
+Via en skarp tillsägelse alternativt en intervention utförd av gruppen.
+
 ## Utskrift och underskrifter
 
 Kontraktet skall skrivas ut på papper, skrivas under
