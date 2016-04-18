@@ -1,4 +1,4 @@
-# Dagbok för Förnamn Efternamn
+# Dagbok för Joel Wallin
 
 OSPP (1DT096) 2016 - Grupp 3
 
