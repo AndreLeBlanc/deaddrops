@@ -15,6 +15,7 @@ Bild                                       | Förnamn               | Efternamn 
 <img src="images/johan.jpg" width="100px"> | [Johan](#Tallkotten)  | Lejdung   | 930914-3254  | `Tallkotten`
 <img src="images/jonas.jpg" width="100px"> | [Jonas](#Revyy)       | Olander   | YYMMDD-XXXX  | `Revyy`
 <img src="images/Ali.jpg" width="100px">   | [Ali](#alikocholo)    | Shojaeddin| 950404-8696  | `alikocholo`
+                                           | [André](#anle3295)    | Le Blanc  | 9109303850   |	`anle3295`
 
 > Utgå sedan från mallen nedan och skapa ett avsnitt för varje medlem
 i gruppen sorterade i bokstavsordning  <a name="anders877"></a>
@@ -76,3 +77,20 @@ till exempel:
 ### Personlig utveckling
 
 - My goal in this project is to develop as much knowledge as possible on devloping a program in a different language with specifications and features that we have decided on.
+
+## André Le Blanc
+
+### Okänd talang
+
+- Grym på att hugga ved och slå gräs med lie.
+
+### Starka sidor
+
+- Grym på att producera under crunch time. 
+- Kommer på snabba algoritmer.
+
+### Personlig utveckling
+
+- Lära mig göra ett större projekt.
+- Göra något webbaserat för första gången.
+- Lära mig golang
