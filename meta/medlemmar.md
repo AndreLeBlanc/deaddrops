@@ -12,8 +12,8 @@ OSPP (1DT096) 2016 - Grupp 03
 
 Bild                                       | Förnamn               | Efternamn | Personnummer | Användarnamn (Github)
 -------------------------------------------|-----------------------|-----------|--------------|----------------------
-<img src="images/johan.png" width="100px"> | [Johan](#Tallkotten)  | Lejdung   | 930914-3254  | `Tallkotten`
-<img src="images/jonas.png" width="100px"> | [Jonas](#Revyy)       | Olander   | YYMMDD-XXXX  | `Revyy`
+<img src="images/johan.jpg" width="100px"> | [Johan](#Tallkotten)  | Lejdung   | 930914-3254  | `Tallkotten`
+<img src="images/jonas.jpg" width="100px"> | [Jonas](#Revyy)       | Olander   | YYMMDD-XXXX  | `Revyy`
 <img src="images/Ali.jpg" width="100px">   | [Ali](#alikocholo)    | Shojaeddin| 950404-8696  | `alikocholo`
 
 > Utgå sedan från mallen nedan och skapa ett avsnitt för varje medlem
