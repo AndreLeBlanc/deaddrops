@@ -30,34 +30,37 @@ Film, serier och spel dominerar mitt behov för underhållning. När jag arbetar
 
 ### Starka sidor
 
-- problemlösning och algoritmer
+- **problemlösning och algoritmer**
 	Jag är duktig på att hitta lösningar på problem och tror jag kan bidra med detta.
-- skriva kod utifrån färdig specifikation
+- **skriva kod utifrån färdig specifikation**
 	Det är något jag har erfarenhet av och kommer definitivt klara av igen
-- planering
+- **planering**
 	Jag älskar att planera och skapa "påminnelser"
-- samarbete & ledarskap
+- **samarbete & ledarskap**
 	Jag har arbetat i grupp tidigare (arbetsmiljö) och har erfarenhet av detta. Jag tenderar även att fylla ledarrollen om behovet finns.
-- research (söka och sammanställa information)
+- **research (söka och sammanställa information)**
 	Utöver planering så gillar jag att vara påläst, därför kommer att jag se till och göra research på eventuella problem innan jag implemnterar lösning.
-- muntlig presentation
+- **muntlig presentation**
 	Jag har inga problem att prata inför folk och fann senaste presentationen ganska rolig och utmanande. Ser fram emot att göra det igen.
-- Client & server
+- **Client & server**
 	Har erfarenhet inom detta område och kommer att kunna bidra med kunskap vi behöver i början av projektet.
 
 ### Personlig utveckling
 
-> Under projektet hoppas jag förutom att bli ännu bättre på mina redan
-> starka sidor även ges möjlighet att utveckla följande färdigheter,
-> till exempel:
+Under projektet hoppas jag förutom att bli ännu bättre på mina redan
+starka sidor även ges möjlighet att utveckla följande färdigheter,
+till exempel:
 
-- analys/design/specifikation
+- **analys/design/specifikation**
 	Jag vill lära mig mer om att skriva tydliga specifikationer
-- programmeringsspråket go
+- **programmeringsspråket go**
 	Jag hoppas kunna lära mig mer om Go, det verkar väldigt intressant
-- 'frameworket' React
+- **'frameworket' React**
 	Jag har skrivit i javascript tidigare men detta framework verkar väldigt intressant och användbart
-- dokumentation
+- **In this project I am to develop my programming skills by learning about the Go programming language.**
+	Min dokumentation är oftast utförlig men följer inget 'gränssnitt' så detta vill jag bli bättre på.
+- **rapportskrivande**
+	Det är alltid kul när man får ihopp en fint skriven rapport
 
 ## Ali Shojaeddin
 
@@ -71,8 +74,3 @@ Film, serier och spel dominerar mitt behov för underhållning. När jag arbetar
 - I am very communicative and I like to initiate group meetings quite often. 
 
 ### Personlig utveckling
-
-- In this project I am to develop my programming skills by learning about the Go programming language.
-	Min dokumentation är oftast utförlig men följer inget 'gränssnitt' så detta vill jag bli bättre på.
-- rapportskrivande
-	Det är alltid kul när man får ihopp en fint skriven rapport
