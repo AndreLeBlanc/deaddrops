@@ -32,7 +32,7 @@ Denna mall för gruppkontrakt är baserat på:
 - Minst ett gruppmöte ska vara på plats
 - Fysiskt scrummöte ska försöka hållas på måndagar
 - På gruppmötena stäms parens arbete av och nya uppgifter fördelas
-- Godtagbara skäl för frånvaro är all skälig frånvaro(?)
+- Godtagbara skäl för frånvaro är all skälig frånvaro
 
 ## Kommunikationen i gruppen
 
@@ -45,18 +45,18 @@ Denna mall för gruppkontrakt är baserat på:
 - Vid avsevärd frånvaro kan personens namn tas bort ifrån projektet
 
 ## Beslutsformer
-- Arbetet läggs upp under mötet som hålls på måndag.
-- Vi ska försöka att få alla att vara överens, men om det inte sker så får majoriteten bestämma.
+- Arbetet läggs upp under mötet som hålls på måndag
+- Vi ska försöka att få alla att vara överens, men om det inte sker så får majoriteten bestämma
 
 ## Ansvar
 
-- Arbetet ska initialt fördelas jämnt mellan par och personer. Sen kan vissa med mer expertis i vissa områden få större arbetsbörda och ansvar på dem delarna.
+- Arbetet ska initialt fördelas jämnt mellan par och personer. Sen kan vissa med mer expertis i vissa områden få större arbetsbörda och ansvar på dem delarna
     
-- Om någon inte gör sin del informeras kursledningen.
+- Om någon inte gör sin del informeras kursledningen
 
 ## Konflikter
 
-- Om konflikter uppstår springer vi till Karl igen så han får agera medlare.
+- Om konflikter uppstår springer vi till Karl igen så han får agera medlare
 
 ## Brott mot bestämmelserna i gruppkontraktet
 
