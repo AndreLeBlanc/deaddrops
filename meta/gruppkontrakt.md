@@ -83,7 +83,7 @@ Via en skarp tillsägelse.
 Via en diplomatisk tillsägelse och via en skarp tillsägelse om den första inte funkade.
 
 ### André Le Blanc
-Skicka ett argt meddelande så kommer jag bättra mig.
+Via ett argt meddelande.
 
 ## Utskrift och underskrifter
 
