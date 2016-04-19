@@ -12,14 +12,84 @@ OSPP (1DT096) 2016 - Grupp 03
 
 Bild                                       | Förnamn               | Efternamn | Personnummer | Användarnamn (Github)
 -------------------------------------------|-----------------------|-----------|--------------|----------------------
-<img src="images/johan.jpg" width="100px"> | [Johan](#Tallkotten)  | Lejdung   | 930914-3254  | `Tallkotten`
-<img src="images/jonas.jpg" width="100px"> | [Jonas](#Revyy)       | Olander   | 910503-5795  | `Revyy`
 <img src="images/Ali.jpg" width="100px">   | [Ali](#alikocholo)    | Shojaeddin| 950404-8696  | `alikocholo`
                                            | [André](#anle3295)    | Le Blanc  | 9109303850   |	`anle3295`
+<img src="images/erik.jpg" width="100px"   | [Erik](#erikun)	   | Melander  | 771028-8577  | `erikun`
 <img src="images/Joel.jpg" width="100px">  | [Joel](#M34ris)	   | Wallin    | 9411233134   |	`M34ris`
+<img src="images/johan.jpg" width="100px"> | [Johan](#Tallkotten)  | Lejdung   | 930914-3254  | `Tallkotten`
+<img src="images/jonas.jpg" width="100px"> | [Jonas](#Revyy)       | Olander   | 910503-5795  | `Revyy`
 
 > Utgå sedan från mallen nedan och skapa ett avsnitt för varje medlem
 i gruppen sorterade i bokstavsordning  <a name="anders877"></a>
+
+## Ali Shojaeddin
+
+### Okänd talang
+
+- I like to learn about the basics of a new programming language. I also take great interest in learning about the basics of developing a complex program. In my spare time I like to watch TV series and/or play games. Making video games in programming languages I learn is a goal of mine.
+
+### Starka sidor
+
+- I believe I am very good at writing reports and specifications in English. 
+- I am very communicative and I like to initiate group meetings quite often. 
+
+### Personlig utveckling
+
+- My goal in this project is to develop as much knowledge as possible on devloping a program in a different language with specifications and features that we have decided on.
+
+## André Le Blanc
+
+### Okänd talang
+
+- Grym på att hugga ved och slå gräs med lie.
+
+### Starka sidor
+
+- Grym på att producera under crunch time. 
+- Kommer på snabba algoritmer.
+
+### Personlig utveckling
+
+- Lära mig göra ett större projekt.
+- Göra något webbaserat för första gången.
+- Lära mig golang
+
+
+## Erik Melander
+
+### Okänd talang
+Spelat go (brädspelet).
+
+### Starka sidor
+- Gillar problemlösning och att jaga buggar.
+- Bra på att läsa på och söka information.
+
+### Personlig utveckling
+
+- Lära sig client/server tänkande.
+- Tillämpa det vi lärt oss om concurrency programmering.
+- Lära sig Golang.
+
+
+## Joel Wallin
+
+### Okänd talang
+
+- Kan lösa en 4x4x4 rubiks kub på 5 minuter.
+- Hög tolerans för stark mat.
+
+### Starka sidor
+
+- Att lösa olika matematiska- och programmeringsproblem.
+- Arbete i grupp och se till så att samarbetet fungerar.
+- Hitta information för att kunna lösa problem.
+- Att skriva rapporter av olika slag och form.
+
+## Personlig Utveckling
+
+- Jag kopierar Johans mål att lära sig skriva tydliga specifikationer.
+- Go programmering, bland annat bli mer bekant med dess concurrency model.
+- Muntliga presentationer är min svagaste sida, framförallt mitt kroppsspråk (då jag ofta har armarna i kors) och engagemang med publiken.
 
 ## Johan Lejdung
 
@@ -64,37 +134,7 @@ till exempel:
 - **rapportskrivande**
 	Det är alltid kul när man får ihopp en fint skriven rapport
 
-## Ali Shojaeddin
 
-### Okänd talang
-
-- I like to learn about the basics of a new programming language. I also take great interest in learning about the basics of developing a complex program. In my spare time I like to watch TV series and/or play games. Making video games in programming languages I learn is a goal of mine.
-
-### Starka sidor
-
-- I believe I am very good at writing reports and specifications in English. 
-- I am very communicative and I like to initiate group meetings quite often. 
-
-### Personlig utveckling
-
-- My goal in this project is to develop as much knowledge as possible on devloping a program in a different language with specifications and features that we have decided on.
-
-## André Le Blanc
-
-### Okänd talang
-
-- Grym på att hugga ved och slå gräs med lie.
-
-### Starka sidor
-
-- Grym på att producera under crunch time. 
-- Kommer på snabba algoritmer.
-
-### Personlig utveckling
-
-- Lära mig göra ett större projekt.
-- Göra något webbaserat för första gången.
-- Lära mig golang
 
 ## Jonas Olander
 
@@ -140,22 +180,3 @@ Vill gärna få en större inblick i hur scrum fungerar.
 Muntliga presentationer är något som jag vill träna ännu mer på även om jag känner mig hyffsat säker redan.
 
 
-## Joel Wallin
-
-### Okänd talang
-
-- Kan lösa en 4x4x4 rubiks kub på 5 minuter.
-- Hög tolerans för stark mat.
-
-### Starka sidor
-
-- Att lösa olika matematiska- och programmeringsproblem.
-- Arbete i grupp och se till så att samarbetet fungerar.
-- Hitta information för att kunna lösa problem.
-- Att skriva rapporter av olika slag och form.
-
-## Personlig Utveckling
-
-- Jag kopierar Johans mål att lära sig skriva tydliga specifikationer.
-- Go programmering, bland annat bli mer bekant med dess concurrency model.
-- Muntliga presentationer är min svagaste sida, framförallt mitt kroppsspråk (då jag ofta har armarna i kors) och engagemang med publiken.
