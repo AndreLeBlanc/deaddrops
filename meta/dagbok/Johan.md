@@ -37,6 +37,7 @@ Meet: Första mötet med Karl, sedan träffades vi för att planera inför förs
 Work: Satte upp en local webb-server för att kunna öva på frontend verktygen vi ska använda oss av
 
 ##### Torsdag
+Work: Skapade & konfigurerade en server för att använda i utvecklingen av projektet (speicellt fronend)
 
 ##### Fredag
 
