@@ -11,8 +11,6 @@ varje gång du arbetat på projektet.
 
 ##### Måndag
 
-Worked with the group on project contract and setting up Github in a group meeting. (Ca 3 hours)
-
 ##### Tisdag
 
 ##### Onsdag
@@ -26,9 +24,15 @@ Worked with the group on project contract and setting up Github in a group meeti
 
 ##### Måndag
 
+Worked with the group on project contract and setting up Github in a group meeting. (3 hours)
+
 ##### Tisdag
 
+Read up on Go language introduction for the first part of my daily Go practice for this week. Read the Milstolpe 1. (2 hours)
+
 ##### Onsdag
+
+Had a meeting with the group after the meeting with Karl where we worked on the peer reviews for other groups and discussed the base of the project. (1 hour)
 
 ##### Torsdag
 
