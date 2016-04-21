@@ -1,11 +1,8 @@
-﻿# Dagbok för Förnamn Efternamn
+﻿# Dagbok för Johan Lejdung
 
-OSPP (1DT096) 2016 - Grupp XX
-
-> Ändra XX till numret på din grupp.
+OSPP (1DT096) 2016 - Grupp 03
 
 <img src="../images/johan.png" width="200">
-> Ändra så att bilden länkar till bilden på dig.
 
 Gör en kort anteckning i dagboken under aktuell vecka och dag nedan
 varje gång du arbetat på projektet.
@@ -13,23 +10,31 @@ varje gång du arbetat på projektet.
 ## Vecka 15
 
 ##### Måndag
+Meet: Diskussion kring projektförslaget. Valde ut rimliga idéer
 
 ##### Tisdag
+Meet: Beslut om idé, påbörjade arbetet med projektförslag + presentation.
 
 ##### Onsdag
+Work: Arbetade främst med presentationen men även med förslaget.
 
 ##### Torsdag
+Meet&Work: Fördigställde den muntliga presentationen, övade och utförde den.
 
 ##### Fredag
-
+Work: Finslipade den skriftliga presentationen och lämnade in den
 
 ## Vecka 16
 
 ##### Måndag
+Meet: Träffades och delade ut uppgifter samt skrev på gruppkontrakt
 
 ##### Tisdag
+Work: Läste på lite om goland och react
 
 ##### Onsdag
+Meet: Första mötet med Karl, sedan träffades vi för att planera inför första sprinten
+Work: Satte upp en local webb-server för att kunna öva på frontend verktygen vi ska använda oss av
 
 ##### Torsdag
 
