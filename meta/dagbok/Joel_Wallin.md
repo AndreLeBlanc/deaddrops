@@ -2,31 +2,34 @@
 
 OSPP (1DT096) 2016 - Grupp 3
 
-> Ändra XX till numret på din grupp.
-
-<img src="../images/user.png" width="200">
-> Ändra så att bilden länkar till bilden på dig.
+<img src="../images/Joel.jpg" width="200">
 
 ## Vecka 15
 
-##### Måndag
+##### Måndag, 12:00 - 13:15
+Brainstorming och diskussion om projektförslag i grupp.
 
-##### Tisdag
+##### Tisdag, 09:15 - 13:00
+Vi beslutade om vilket projekt vi skulle göra och inledde arbetet med det skriftliga och muntliga projektförslaget.
 
-##### Onsdag
+##### Onsdag, 12:00 - 13:15
+Fortsatt arbete i grupp med både det skriftliga och muntliga projektförslaget.
 
-##### Torsdag
+##### Torsdag 09:30 - 12:00
+Gjorde klart alla slides och förberedde oss för presentationen.
 
-##### Fredag
-
+##### Fredag, 20 min
+Fin slip av det skriftliga projektförslaget och lämnade in den.
 
 ## Vecka 16
 
-##### Måndag
+##### Måndag, 12:00 - 16:00
+Fixade gruppkontrakt, presentation av medlemmar samt dagbok på Github.
 
 ##### Tisdag
 
-##### Onsdag
+##### Onsdag 14:00 - 15:30
+Peer review av andra gruppers projektförslag samt allmän diskussion om systemarkitektur och design.
 
 ##### Torsdag
 
