@@ -6,24 +6,40 @@ OSPP (1DT096) 2016 - Grupp 3
 
 ## Vecka 15
 
-##### Måndag
+##### Måndag 
+
+Brainstorming och diskussion kring projektförslaget.
 
 ##### Tisdag
 
+Beslut om projekt, påbörjade arbetet med skriftligt och muntligt projektförslag.
+
 ##### Onsdag
+
+Fortsatt arbete med muntligt och skriftligt projektförslag.
 
 ##### Torsdag
 
+Färdigställde slides och tränade inför presentationen. Utförde presentationen.
+
 ##### Fredag
+
+Finslip av skriftligt projektförslag och inlämning.
 
 
 ## Vecka 16
 
 ##### Måndag
 
+Skrev gruppkontakt, skapade en dagbok på github, delade ut uppgifter till alla(saker att läsa på). 
+
 ##### Tisdag
 
+Läste på om React.js och började sätta ihop ett byggsystem för frontend.
+
 ##### Onsdag
+
+Första mötet med Karl. Diskuterade och skrev peer-reviews.
 
 ##### Torsdag
 
