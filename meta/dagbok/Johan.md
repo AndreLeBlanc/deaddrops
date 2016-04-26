@@ -40,11 +40,12 @@ Work: Satte upp en local webb-server för att kunna öva på frontend verktygen 
 Work: Skapade & konfigurerade en server för att använda i utvecklingen av projektet (speicellt fronend)
 
 ##### Fredag
-
+Work: Fortsatte med serverfix
 
 ## Vecka 17
 
 ##### Måndag
+Work: Gjorde klart en stor del på server (byggsystemet med npm osv)
 
 ##### Tisdag
 
