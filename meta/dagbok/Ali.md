@@ -51,7 +51,11 @@ Read more on file handling and tried to take notes. (1 hour)
 
 ##### Måndag
 
+Took notes on reading and writing files. (1 hour)
+
 ##### Tisdag
+
+Group meeting to discuss mile stone 1 and edditing our report. (2 hours)
 
 ##### Onsdag
 
