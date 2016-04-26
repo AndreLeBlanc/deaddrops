@@ -42,16 +42,16 @@ Läste på om React.js och började sätta ihop ett byggsystem för frontend.
 Första mötet med Karl. Diskuterade och skrev peer-reviews.
 
 ##### Torsdag
-
+Läste på om React och övriga web-teknologier.
 ##### Fredag
 
 
 ## Vecka 17
 
 ##### Måndag
-
+Satte upp ett byggsystem för frontend tillsammans med Johan.
 ##### Tisdag
-
+Gruppmöte
 ##### Onsdag
 
 ##### Torsdag
