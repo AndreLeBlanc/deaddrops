@@ -30,19 +30,26 @@ Gruppmöte, gruppkontrakt och reflektion av presentationen.
 Läste på om Golang och webbservrar. Skrev min del i medlemmar.md och den här dagboken.
 
 ##### Onsdag
+Peer review av andras projektförslag. Fipplat med golang webserver. Möte med Karl.
 
 ##### Torsdag
+Minimalt med golang testande.
 
 ##### Fredag
+Läste på mer om webstandarder och fixat med emacs och gitrepon.
 
-
+#### Lördag
+Konfigurerade emacs ännu mer. Testade att starta en webbserver med go. Testade ladda upp och ner filer.
 ## Vecka 17
 
 ##### Måndag
+Satt med Joel och diskuterade igenom de olika lösningar för webbserver vi kollat på under förra veckan. Diskuterade github-struktur.
 
 ##### Tisdag
+Gruppmöte. Uppdaterade Projektplan, diskuterade inför onsdagens gruppmöte.
 
 ##### Onsdag
+Möte med gruppen och sedan möte med de andra grupperna och Karl.
 
 ##### Torsdag
 
