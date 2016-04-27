@@ -36,14 +36,26 @@ Had a meeting with the group after the meeting with Karl where we worked on the 
 
 ##### Torsdag
 
+Started a mini tour of Golang to learn more about the language. (1 hour)
+
 ##### Fredag
 
+Continued with the Golang tour. Found and read a bunch of other sites as well. 
+Also started reading up file handling in Go. (2 hours)
+
+##### Söndag 
+
+Read more on file handling and tried to take notes. (1 hour)
 
 ## Vecka 17
 
 ##### Måndag
 
+Took notes on reading and writing files. (1 hour)
+
 ##### Tisdag
+
+Group meeting to discuss mile stone 1 and edditing our report. (2 hours)
 
 ##### Onsdag
 
