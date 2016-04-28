@@ -49,9 +49,11 @@ Satt med Joel och diskuterade igenom de olika lösningar för webbserver vi koll
 Gruppmöte. Uppdaterade Projektplan, diskuterade inför onsdagens gruppmöte.
 
 ##### Onsdag
-Möte med gruppen och sedan möte med de andra grupperna och Karl.
+Möte med gruppen och sedan möte med de andra grupperna och Karl. Satt
+och skissade på serverarkitektur på kvällen.
 
 ##### Torsdag
+Möte med gruppen där systemarkitektur på servern och interface diskuterades. Nästa vecka planlades.
 
 ##### Fredag
 
