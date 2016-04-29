@@ -53,9 +53,9 @@ Satte upp ett byggsystem för frontend tillsammans med Johan.
 ##### Tisdag
 Gruppmöte
 ##### Onsdag
-
+Gruppmöte sedan Milestone 1.
 ##### Torsdag
-
+Skapade en drag and drop yta för filer(Frontend)
 ##### Fredag
 
 ## Vecka 18
