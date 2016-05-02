@@ -63,11 +63,11 @@ Group presenation with Karl. (1.5 hours)
 
 ##### Torsdag
 
-Online group meeting to discuss stuff (ie web upload/download) (2 hours)
+Online group meeting to discuss stuff (ie architecture) (2 hours)
 
 ##### Fredag
 
-Had a brief look at the concepts of web upload and download in regards to Golang. (2 hours)
+Had a brief look at the concepts of web server upload and download in regards to Golang. (2 hours)
 
 ## Vecka 18
 
