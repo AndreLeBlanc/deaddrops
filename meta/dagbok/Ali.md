@@ -59,13 +59,21 @@ Group meeting to discuss mile stone 1 and edditing our report. (2 hours)
 
 ##### Onsdag
 
+Group presenation with Karl. (1.5 hours)
+
 ##### Torsdag
 
+Online group meeting to discuss stuff (ie web upload/download) (2 hours)
+
 ##### Fredag
+
+Had a brief look at the concepts of web upload and download in regards to Golang. (2 hours)
 
 ## Vecka 18
 
 ##### Måndag
+
+Group meeting to discuss web upload and download and new future plans. (2 hours)
 
 ##### Tisdag
 
