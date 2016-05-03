@@ -6,14 +6,31 @@ import (
 	"io"
 	"log"
 	"os"
+	"crypto/md5"
+	"time"
+	"encoding/json"
+	"encoding/hex"
 )
+
+//global map of channels
+var mapOfChannels map[string] chan string
 
 func createStash(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
-
+	
 	fmt.Println("method:", r.Method)
 	if r.Method == "GET" {
-		//http.ServeFile(w,r, "./filetest/README.md")
+		//Create token for upload session
+		token := md5.New()
+		t := time.Now()
+		io.WriteString(token,t.String())
+		c := make(chan string)
+		//TODO probably will not work with a global variable, use supersupervisor??
+		stringToken:=hex.EncodeToString(token.Sum(nil))
+		appendChan(mapOfChannels,stringToken,c)
+		//go supervisor(token, c)
+		reply, _ := json.Marshal(stringToken)
+		fmt.Fprintf(w,string(reply))
 	} else if r.Method == "POST" {
 		r.ParseMultipartForm(32 << 20)
 		file, handler, err := r.FormFile("uploadfile")
@@ -39,6 +56,7 @@ func initServer() {
 	//TODO: check/start database
 
 	//TODO: load server settings from somewhere, ex. port number
+	mapOfChannels = initChanMap()
 	http.HandleFunc("/", createStash)
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
@@ -51,8 +69,8 @@ func initChanMap() map[string]chan string {
 	return map[string]chan string{}
 }
 
-func appendChan(m map[string]chan string, token string) {
-	m[token] = make(chan string)
+func appendChan(m map[string]chan string, token string, c chan string) {
+	m[token] = c
 }
 
 func getChan(m map[string]chan string, token string) chan string {
