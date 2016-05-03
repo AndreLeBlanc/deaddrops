@@ -61,6 +61,7 @@ Skapade en drag and drop yta för filer(Frontend)
 ## Vecka 18
 
 ##### Måndag
+Gruppmöte, började definera interface och fördelade uppgifter.
 
 ##### Tisdag
 
