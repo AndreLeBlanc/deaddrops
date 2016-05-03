@@ -1,38 +1,40 @@
 package main
 
 import (
+	"crypto/md5"
+	"encoding/hex"
+	"encoding/json"
 	"fmt"
-	"net/http"
 	"io"
 	"log"
+	"net/http"
 	"os"
-	"crypto/md5"
 	"time"
-	"encoding/json"
-	"encoding/hex"
 )
 
 //global map of channels
-var mapOfChannels map[string] chan string
+var mapOfChannels map[string]chan string
 
 func createStash(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
-	
+
 	fmt.Println("method:", r.Method)
 	if r.Method == "GET" {
 		//Create token for upload session
 		token := md5.New()
 		t := time.Now()
-		io.WriteString(token,t.String())
+		io.WriteString(token, t.String())
 		c := make(chan string)
 		//TODO probably will not work with a global variable, use supersupervisor??
-		stringToken:=hex.EncodeToString(token.Sum(nil))
-		appendChan(mapOfChannels,stringToken,c)
+		stringToken := hex.EncodeToString(token.Sum(nil))
+		appendChan(mapOfChannels, stringToken, c)
 		//go supervisor(token, c)
 		reply, _ := json.Marshal(stringToken)
-		fmt.Fprintf(w,string(reply))
+		//TODO: handle error from JSON
+		fmt.Fprintf(w, string(reply))
 	} else if r.Method == "POST" {
 		r.ParseMultipartForm(32 << 20)
+		//TODO check that token is valid
 		file, handler, err := r.FormFile("uploadfile")
 		if err != nil {
 			fmt.Println(err)
