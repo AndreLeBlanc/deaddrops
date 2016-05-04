@@ -32,6 +32,8 @@ func createStash(w http.ResponseWriter, r *http.Request, cm *ChanMap) {
 		//TODO: handle error from JSON
 		fmt.Fprintf(w, string(reply))
 	} else if r.Method == "POST" {
+		//TODO: handle json form at the end, ie. they will send a json object instead of a file
+		
 		r.ParseMultipartForm(32 << 20)
 		file, handler, err := r.FormFile("uploadfile")
 		if err != nil {
@@ -40,7 +42,7 @@ func createStash(w http.ResponseWriter, r *http.Request, cm *ChanMap) {
 		}
 		defer file.Close()
 
-		//TODO check that token is valid
+		//TODO: check that token is valid
 		token := r.FormValue("token")
 		c, ok := findChan(cm, token)
 		if !ok {
@@ -103,6 +105,10 @@ func initChanMap() *ChanMap {
 
 func appendChan(cm *ChanMap, token string, c chan string) {
 	cm.mux.Lock()
+	if _, ok := findChan(cm, token); ok {
+		cm.mux.Unlock()
+		return
+	}
 	cm.m[token] = c
 	cm.mux.Unlock()
 }
