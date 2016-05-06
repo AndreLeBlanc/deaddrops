@@ -2,16 +2,17 @@ package main
 
 import (
 	"bytes"
+	"deadrop/api"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 )
 
 func TestStashGET(t *testing.T) {
-	cm := initChanMap()
+	cm := api.InitChanMap()
 
-	if n := len(cm.m); n != 0 {
-		t.Errorf("Map containing more/less elements than it should: %d elem", len(cm.m))
+	if n := api.LenChan(cm); n != 0 {
+		t.Errorf("Map containing more/less elements than it should: %d elem", api.LenChan(cm))
 	}
 
 	for i := 0; i < 10; i++ {
@@ -25,14 +26,14 @@ func TestStashGET(t *testing.T) {
 		}
 	}
 
-	if n := len(cm.m); n != 10 {
-		t.Errorf("Map containing more/less elements than it should: %d elem", len(cm.m))
+	if n := api.LenChan(cm); n != 10 {
+		t.Errorf("Map containing more/less elements than it should: %d elem", api.LenChan(cm))
 	}
 }
 
 // Test does not work yet, as POST is not 100% defined yet
 func TestStashPOST(t *testing.T) {
-	cm := initChanMap()
+	cm := api.InitChanMap()
 	csHandler := makeHandler(createStash, cm)
 
 	req, _ := http.NewRequest("GET", "http://localhost:8080/test", nil)

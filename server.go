@@ -2,6 +2,7 @@ package main
 
 import (
 	"crypto/md5"
+	"deadrop/api"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
@@ -10,11 +11,10 @@ import (
 	"net/http"
 	"os"
 	"regexp"
-	"sync"
 	"time"
 )
 
-func createStash(w http.ResponseWriter, r *http.Request, cm *ChanMap) {
+func createStash(w http.ResponseWriter, r *http.Request, cm *api.ChanMap) {
 	w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
 
 	fmt.Println("method:", r.Method)
@@ -26,7 +26,7 @@ func createStash(w http.ResponseWriter, r *http.Request, cm *ChanMap) {
 		//TODO probably will not work with a global variable, use supersupervisor??
 		stringToken := hex.EncodeToString(token.Sum(nil))
 		c := make(chan string)
-		appendChan(cm, stringToken, c)
+		api.AppendChan(cm, stringToken, c)
 
 		//go supervisor(token, c, cm) //TODO: maybe skip c?
 		go dummySupervisor(stringToken, c, cm)
@@ -47,7 +47,7 @@ func createStash(w http.ResponseWriter, r *http.Request, cm *ChanMap) {
 
 		//TODO: check that token is valid
 		token := r.FormValue("token")
-		c, ok := findChan(cm, token)
+		c, ok := api.FindChan(cm, token)
 		if !ok {
 			//ABANDON SHIP
 			return
@@ -71,7 +71,7 @@ func createStash(w http.ResponseWriter, r *http.Request, cm *ChanMap) {
 	}
 }
 
-func dummySupervisor(token string, c chan string, cm *ChanMap) {
+func dummySupervisor(token string, c chan string, cm *api.ChanMap) {
 	select {
 	case fname := <-c:
 		fmt.Println("received filename: %s", fname)
@@ -82,7 +82,7 @@ func dummySupervisor(token string, c chan string, cm *ChanMap) {
 
 var validPath = regexp.MustCompile("^/(test)")
 
-func makeHandler(f func(http.ResponseWriter, *http.Request, *ChanMap), cm *ChanMap) http.HandlerFunc {
+func makeHandler(f func(http.ResponseWriter, *http.Request, *api.ChanMap), cm *api.ChanMap) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		m := validPath.FindStringSubmatch(r.URL.Path)
 		if m == nil {
@@ -98,7 +98,7 @@ func initServer() {
 	//TODO: check/start database
 
 	//TODO: load server settings from somewhere, ex. port number
-	cm := initChanMap()
+	cm := api.InitChanMap()
 	http.HandleFunc("/test", makeHandler(createStash, cm))
 
 	err := http.ListenAndServe(":8080", nil)
@@ -110,38 +110,6 @@ func initServer() {
 func validateFile( /*file*/ ) bool {
 	//TODO: file validation, ex. not too big
 	return true
-}
-
-type ChanMap struct {
-	m   map[string]chan string
-	mux sync.Mutex
-}
-
-// Initialize a new empty ChanMap.
-func initChanMap() *ChanMap {
-	return &ChanMap{m: make(map[string]chan string)}
-}
-
-// Append a channel to the ChanMap with the token string as key.
-func appendChan(cm *ChanMap, token string, c chan string) {
-	cm.mux.Lock()
-	if _, ok := findChan(cm, token); ok {
-		cm.mux.Unlock()
-		return
-	}
-	cm.m[token] = c
-	cm.mux.Unlock()
-}
-
-// Get the channel with the corresponding token string as key.
-func getChan(cm *ChanMap, token string) chan string {
-	return cm.m[token]
-}
-
-// Get the channel with the corresponding token string as key.
-func findChan(cm *ChanMap, token string) (chan string, bool) {
-	c, ok := cm.m[token]
-	return c, ok
 }
 
 func main() {
