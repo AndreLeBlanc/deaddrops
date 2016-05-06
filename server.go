@@ -11,6 +11,7 @@ import (
 	"os"
 	"time"
 	"sync"
+	"regexp"
 )
 
 
@@ -69,15 +70,31 @@ func createStash(w http.ResponseWriter, r *http.Request, cm *ChanMap) {
 	}
 }
 
+var validPath = regexp.MustCompile("^/(test)")
+
+func makeHandler(f func(http.ResponseWriter, *http.Request, *ChanMap), cm *ChanMap) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		m := validPath.FindStringSubmatch(r.URL.Path)
+		if m == nil {
+			http.NotFound(w, r)
+			fmt.Println("invalid path")
+			return
+		}
+		f(w, r, cm)
+	}
+}
+
+
 func initServer() {
 	//TODO: check/start database
 
 	//TODO: load server settings from somewhere, ex. port number
-	chanMap := initChanMap()
+	cm := initChanMap()
 	//http.HandleFunc("/", createStash)
-	http.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
-		createStash(w, r, chanMap)
-       })
+	// http.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
+	// 	createStash(w, r, cm)
+	// })
+	http.HandleFunc("/test", makeHandler(createStash, cm))
 
 	
 	err := http.ListenAndServe(":8080", nil)
