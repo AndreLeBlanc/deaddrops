@@ -1,8 +1,8 @@
 package main
 
 import (
-	"testing"
 	"sync"
+	"testing"
 )
 
 func TestBasicCM(t *testing.T) {
@@ -20,12 +20,11 @@ func TestBasicCM(t *testing.T) {
 	if c, _ := findChan(cm, "hello"); c != c1 {
 		t.Errorf("Overwrite in ChanMap")
 	}
-	
+
 	if _, ok := findChan(cm, "bye"); ok {
 		t.Errorf("Found token 'bye' in ChanMap")
 	}
 }
-
 
 func TestCMconcurrency(t *testing.T) {
 	cm := initChanMap()
@@ -44,7 +43,7 @@ func TestCMconcurrency(t *testing.T) {
 
 	var wg sync.WaitGroup
 	wg.Add(10)
-	
+
 	for i := 0; i < 10; i++ {
 		go func(i int) {
 			defer wg.Done()
@@ -53,7 +52,7 @@ func TestCMconcurrency(t *testing.T) {
 	}
 
 	wg.Wait()
-	
+
 	for i := 0; i < 10; i++ {
 		if _, ok := findChan(cm, tokens[i]); !ok {
 			t.Errorf("Could not find token %s in ChanMap", tokens[i])
