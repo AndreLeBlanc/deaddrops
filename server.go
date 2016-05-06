@@ -11,6 +11,7 @@ import (
 	"os"
 	"time"
 	"sync"
+	"regexp"
 )
 
 
@@ -42,14 +43,18 @@ func createStash(w http.ResponseWriter, r *http.Request, cm *ChanMap) {
 		}
 		defer file.Close()
 
-		//TODO: check that token is valid
 		token := r.FormValue("token")
+		if !validateToken(token) {
+			//Abandon ship
+			return
+		}
+		fmt.Println("checked that token is valid")
 		c, ok := findChan(cm, token)
 		if !ok {
 			//ABANDON SHIP
 			return
 		}
-
+		fmt.Println("Checked that channel exist")
 		validateFile(/*file*/)
 		
 		fmt.Fprintf(w, "%v", handler.Header)
@@ -60,10 +65,12 @@ func createStash(w http.ResponseWriter, r *http.Request, cm *ChanMap) {
 		}
 		defer f.Close()
 		io.Copy(f, file)
-
+		fmt.Println("wrote to file")
 		//TODO: maybe have a response channel for the supervisor to reply
 		//ie. c <- handler.Filename, responseChannel
 		c <- handler.Filename
+		fmt.Println("Sent filename to channel")
+		fmt.Fprintf(w, "%v", handler.Header)
 	} else {
 		return
 	}
@@ -86,6 +93,16 @@ func initServer() {
 	}
 }
 
+func validateToken(token string) bool{
+	if len(token)!=32 {
+		return false
+	} else if match, _ := regexp.MatchString("^[a-zA-Z0-9]*$",token); !match {
+		return match
+	} else {
+		return true
+	}
+
+}
 
 func validateFile(/*file*/) bool {
 	//TODO: file validation, ex. not too big
