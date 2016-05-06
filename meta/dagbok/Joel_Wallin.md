@@ -19,7 +19,7 @@ Fortsatt arbete i grupp med både det skriftliga och muntliga projektförslaget.
 Gjorde klart alla slides och förberedde oss för presentationen.
 
 ##### Fredag, 20 min
-Fin slip av det skriftliga projektförslaget och lämnade in den.
+Finslip av det skriftliga projektförslaget och lämnade in den.
 
 ## Vecka 16
 
@@ -38,23 +38,33 @@ Peer review av andra gruppers projektförslag samt allmän diskussion om systema
 
 ## Vecka 17
 
-##### Måndag
+##### Måndag, 16:00-19:00
+Läste på om webbserverar i Go.
 
 ##### Tisdag
 
-##### Onsdag
+##### Onsdag, 11:30-14:00
+Jag och Erik disskuterade vad vi hade lärt oss om webbserver teknologier i Go. Samt arbete inför milstolpe 1.
 
-##### Torsdag
+##### Torsdag, 10:00-12:00
+Möte inför milstolpe 1 och planering.
 
-##### Fredag
+##### Fredag, 15:00-16:00
+Snabbt möte fölt av milstolpe 1.
+
+#### Lördag, 09:00-10:30
+Möte via slack där vi definierade systemarkitekturen bättre samt interface mellan front- och back-end.
 
 ## Vecka 18
 
-##### Måndag
+##### Måndag, 13:00-16:00
+Delade initialt upp arbetet för backend, jag och Erik började fila på servern och upload funktionaliteten.
 
-##### Tisdag
+##### Tisdag, 13:30-16:30
+Fortsatt arbete från igår.
 
-##### Onsdag
+##### Onsdag, 13:15-16:15
+Fortsatt arbete från igår samt tester skrivna i Go.
 
 ##### Torsdag
 
