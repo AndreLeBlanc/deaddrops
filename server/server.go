@@ -5,10 +5,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"regexp"
 	"os"
+	"regexp"
 )
-
 
 //TODO temporary config fake struct
 type Configuration struct {
@@ -17,14 +16,12 @@ type Configuration struct {
 	chanMap    *api.ChanMap
 }
 
-
 func (c *Configuration) loadSettings() {
 	//TODO: load server settings from somewhere, ex. port number
 	c.filefolder = "deadropfiles"
 	c.port = ":8080"
 	c.chanMap = api.InitChanMap()
 }
-
 
 func (c *Configuration) Filefolder() string {
 	return c.filefolder
@@ -33,7 +30,6 @@ func (c *Configuration) Filefolder() string {
 func (c *Configuration) ChanMap() *api.ChanMap {
 	return c.chanMap
 }
-
 
 var validPath = regexp.MustCompile("^/(upload|download)")
 
@@ -51,10 +47,10 @@ func makeHandler(f func(http.ResponseWriter, *http.Request, *Configuration), con
 
 func InitServer() *Configuration {
 	//TODO: check/start database
-	
+
 	conf := new(Configuration)
 	conf.loadSettings()
-	
+
 	//Check if folder "deadropfiles" exist
 	if _, err := os.Stat(conf.filefolder); os.IsNotExist(err) {
 		err = os.Mkdir(conf.filefolder, 0700) //Borde det vara 0700?
@@ -68,7 +64,6 @@ func InitServer() *Configuration {
 
 	return conf
 }
-
 
 func StartServer(conf *Configuration) {
 	http.HandleFunc("/upload", makeHandler(createStash, conf))

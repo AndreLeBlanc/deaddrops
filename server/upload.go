@@ -7,12 +7,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"regexp"
 	"time"
-	"path/filepath"
-	"log"
 )
 
 func createStash(w http.ResponseWriter, r *http.Request, conf *Configuration) {
@@ -60,15 +60,15 @@ func uploadFile(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	fmt.Println("Checked that channel exist")
 
 	validateFile( /*file*/ ) // ?
-	
-	if _, err := os.Stat(filepath.Join(conf.filefolder,token)); os.IsNotExist(err){
-		err = os.MkdirAll(filepath.Join(conf.filefolder, token), 0700 )
+
+	if _, err := os.Stat(filepath.Join(conf.filefolder, token)); os.IsNotExist(err) {
+		err = os.MkdirAll(filepath.Join(conf.filefolder, token), 0700)
 		fmt.Println("Creating new token folder")
-		if err != nil{
+		if err != nil {
 			log.Fatal("Could not create token folder")
 		}
 	}
-	
+
 	f, err := os.OpenFile(filepath.Join(conf.filefolder, token, handler.Filename), os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		fmt.Println(err)
@@ -76,7 +76,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	}
 	defer f.Close()
 	io.Copy(f, file)
-	
+
 	//TODO: maybe have a response channel for the supervisor to reply
 	//ie. c <- handler.Filename, responseChannel
 	c <- handler.Filename
@@ -96,10 +96,6 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		return
 	}
 }
-
-
-
-
 
 func validateToken(token string) bool {
 	if len(token) != 32 {

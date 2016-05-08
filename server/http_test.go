@@ -35,7 +35,7 @@ func TestStashGET(t *testing.T) {
 // Test does not work yet, as POST is not 100% defined yet
 func TestStashPOST(t *testing.T) {
 	conf := InitServer()
-	
+
 	csHandler := makeHandler(upload, conf)
 
 	req, _ := http.NewRequest("GET", "http://localhost:8080/upload", nil)

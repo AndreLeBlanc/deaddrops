@@ -6,7 +6,6 @@ import (
 	"path/filepath"
 )
 
-
 func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	fmt.Println("method:", r.Method)
 	if r.Method != "GET" {

@@ -14,7 +14,6 @@ func DummySupervisor1(token string, c chan string, cm *ChanMap) {
 	}
 }
 
-
 func DummySupervisor2(token string, c chan string, cm *ChanMap) {
 	fmt.Printf("Upload supervisor %s up and running\n", token)
 	loop := true
