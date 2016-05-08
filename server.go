@@ -12,14 +12,16 @@ import (
 	"os"
 	"regexp"
 	"time"
+	"path/filepath"
 )
- //TODO temporary config fake struct
-type Configuration struct{
+
+//TODO temporary config fake struct
+type Configuration struct {
 	filefolder string
-	port string
+	port       string
 }
 
-func createStash(w http.ResponseWriter, r *http.Request, cm *api.ChanMap) {
+func createStash(w http.ResponseWriter, r *http.Request, cm *api.ChanMap, conf *Configuration) {
 	w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
 
 	fmt.Println("method:", r.Method)
@@ -64,10 +66,17 @@ func createStash(w http.ResponseWriter, r *http.Request, cm *api.ChanMap) {
 		}
 		fmt.Println("Checked that channel exist")
 
-		validateFile( /*file*/ )
+		validateFile( /*file*/)
 
-		fmt.Fprintf(w, "%v", handler.Header)
-		f, err := os.OpenFile("./deadropfiles/"+handler.Filename, os.O_WRONLY|os.O_CREATE, 0666) //TODO does not use folder from config yet
+		if _, err := os.Stat(filepath.Join(conf.filefolder,token)); os.IsNotExist(err){
+			err2:= os.MkdirAll(filepath.Join(conf.filefolder, token), 0700 )
+			fmt.Println("Creating new token folder")
+			if err2 != nil{
+				log.Fatal("Could not create token folder")
+			}
+		}
+		
+		f, err := os.OpenFile(filepath.Join(conf.filefolder, token, handler.Filename), os.O_WRONLY|os.O_CREATE, 0666)
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -85,9 +94,7 @@ func createStash(w http.ResponseWriter, r *http.Request, cm *api.ChanMap) {
 	}
 }
 
-const FileRoot = "root"
-
-func download(w http.ResponseWriter, r *http.Request, cm *api.ChanMap) {
+func download(w http.ResponseWriter, r *http.Request, cm *api.ChanMap, conf *Configuration) {
 	fmt.Println("method:", r.Method)
 	if r.Method != "GET" {
 		// Invalid request
@@ -96,7 +103,7 @@ func download(w http.ResponseWriter, r *http.Request, cm *api.ChanMap) {
 
 	token := r.FormValue("token")
 	filename := r.FormValue("filename")
-	filepath := FileRoot + "/" + token + "/" + filename
+	filepath := filepath.Join(conf.filefolder, token, filename)
 
 	w.Header().Set("Content-Type", "multipart/form-data")
 	w.Header().Set("Content-Disposition", "attachment; filename='"+filename+"'")
@@ -129,7 +136,7 @@ func dummySupervisor(token string, c chan string, cm *api.ChanMap) {
 
 var validPath = regexp.MustCompile("^/(test|download)")
 
-func makeHandler(f func(http.ResponseWriter, *http.Request, *api.ChanMap), cm *api.ChanMap) http.HandlerFunc {
+func makeHandler(f func(http.ResponseWriter, *http.Request, *api.ChanMap, *Configuration), cm *api.ChanMap, conf *Configuration) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		m := validPath.FindStringSubmatch(r.URL.Path)
 		if m == nil {
@@ -137,13 +144,13 @@ func makeHandler(f func(http.ResponseWriter, *http.Request, *api.ChanMap), cm *a
 			fmt.Println("invalid path")
 			return
 		}
-		f(w, r, cm)
+		f(w, r, cm, conf)
 	}
 }
 
-func (c *Configuration)loadSettings() {
+func (c *Configuration) loadSettings() {
 	//TODO: load server settings from somewhere, ex. port number
-	c.filefolder =  "deadropfiles"
+	c.filefolder = "deadropfiles"
 	c.port = ":8080"
 }
 
@@ -153,17 +160,17 @@ func initServer() {
 	conf.loadSettings()
 	cm := api.InitChanMap()
 	//Check if folder "deadropfiles" exist
-	if _, err := os.Stat(conf.filefolder); os.IsNotExist(err){
+	if _, err := os.Stat(conf.filefolder); os.IsNotExist(err) {
 		err2 := os.Mkdir(conf.filefolder, 0700) //Borde det vara 0700?
-		fmt.Println("Creating folder %s", conf.filefolder)
+		fmt.Println("Creating folder ", conf.filefolder)
 		if err2 != nil {
 			log.Fatal("Could not create file directory %s", err2)
 		}
 	} else {
 		fmt.Println("Folder exists")
 	}
-	http.HandleFunc("/test", makeHandler(createStash, cm))
-	http.HandleFunc("/download", makeHandler(download, cm))
+	http.HandleFunc("/test", makeHandler(createStash, cm, conf))
+	http.HandleFunc("/download", makeHandler(download, cm, conf))
 
 	err := http.ListenAndServe(conf.port, nil)
 	if err != nil {
@@ -171,7 +178,7 @@ func initServer() {
 	}
 }
 
-func validateFile( /*file*/ ) bool {
+func validateFile( /*file*/) bool {
 	//TODO: file validation, ex. not too big
 	return true
 }
