@@ -71,6 +71,24 @@ func createStash(w http.ResponseWriter, r *http.Request, cm *api.ChanMap) {
 	}
 }
 
+const FileRoot = "root"
+
+func download(w http.ResponseWriter, r *http.Request, cm *api.ChanMap) {
+	fmt.Println("method:", r.Method)
+	if r.Method != "GET" {
+		// Invalid request
+		return
+	}
+
+	token := r.FormValue("token")
+	filename := r.FormValue("filename")
+	filepath := FileRoot + "/" + token + "/" + filename
+
+	w.Header().Set("Content-Type", "multipart/form-data")
+	w.Header().Set("Content-Disposition", "attachment; filename='"+filename+"'")
+	http.ServeFile(w, r, filepath)
+}
+
 func dummySupervisor(token string, c chan string, cm *api.ChanMap) {
 	select {
 	case fname := <-c:
@@ -80,7 +98,7 @@ func dummySupervisor(token string, c chan string, cm *api.ChanMap) {
 	}
 }
 
-var validPath = regexp.MustCompile("^/(test)")
+var validPath = regexp.MustCompile("^/(test|download)")
 
 func makeHandler(f func(http.ResponseWriter, *http.Request, *api.ChanMap), cm *api.ChanMap) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -100,6 +118,7 @@ func initServer() {
 	//TODO: load server settings from somewhere, ex. port number
 	cm := api.InitChanMap()
 	http.HandleFunc("/test", makeHandler(createStash, cm))
+	http.HandleFunc("/download", makeHandler(download, cm))
 
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {

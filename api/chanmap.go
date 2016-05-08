@@ -18,17 +18,11 @@ func InitChanMap() *ChanMap {
 // Append a channel to the ChanMap with the token string as key.
 func AppendChan(cm *ChanMap, token string, c chan string) {
 	cm.mux.Lock()
+	defer cm.mux.Unlock()
 	if _, ok := FindChan(cm, token); ok {
-		cm.mux.Unlock()
 		return
 	}
 	cm.m[token] = c
-	cm.mux.Unlock()
-}
-
-// Get the channel with the corresponding token string as key.
-func GetChan(cm *ChanMap, token string) chan string {
-	return cm.m[token]
 }
 
 // Get the channel with the corresponding token string as key.
