@@ -13,6 +13,11 @@ import (
 	"regexp"
 	"time"
 )
+ //TODO temporary config fake struct
+type Configuration struct{
+	filefolder string
+	port string
+}
 
 func createStash(w http.ResponseWriter, r *http.Request, cm *api.ChanMap) {
 	w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
@@ -62,7 +67,7 @@ func createStash(w http.ResponseWriter, r *http.Request, cm *api.ChanMap) {
 		validateFile( /*file*/ )
 
 		fmt.Fprintf(w, "%v", handler.Header)
-		f, err := os.OpenFile("./filetest/"+handler.Filename, os.O_WRONLY|os.O_CREATE, 0666)
+		f, err := os.OpenFile("./deadropfiles/"+handler.Filename, os.O_WRONLY|os.O_CREATE, 0666) //TODO does not use folder from config yet
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -110,11 +115,15 @@ func validateToken(token string) bool {
 }
 
 func dummySupervisor(token string, c chan string, cm *api.ChanMap) {
-	select {
-	case fname := <-c:
-		fmt.Println("received filename: %s", fname)
-	case <-time.After(time.Second * 1):
-		fmt.Println("timeout")
+	fmt.Println("Upload supervisor %s up and running", token)
+	loop := true
+	for loop {
+		select {
+		case fname := <-c:
+			fmt.Println("received filename: %s", fname)
+			//	case <-time.After(time.Second + 100)://TODO decide timeout
+			//		fmt.Println("timeout")
+		}
 	}
 }
 
@@ -132,15 +141,31 @@ func makeHandler(f func(http.ResponseWriter, *http.Request, *api.ChanMap), cm *a
 	}
 }
 
+func (c *Configuration)loadSettings() {
+	//TODO: load server settings from somewhere, ex. port number
+	c.filefolder =  "deadropfiles"
+	c.port = ":8080"
+}
+
 func initServer() {
 	//TODO: check/start database
-
-	//TODO: load server settings from somewhere, ex. port number
+	var conf = new(Configuration)
+	conf.loadSettings()
 	cm := api.InitChanMap()
+	//Check if folder "deadropfiles" exist
+	if _, err := os.Stat(conf.filefolder); os.IsNotExist(err){
+		err2 := os.Mkdir(conf.filefolder, 0700) //Borde det vara 0700?
+		fmt.Println("Creating folder %s", conf.filefolder)
+		if err2 != nil {
+			log.Fatal("Could not create file directory %s", err2)
+		}
+	} else {
+		fmt.Println("Folder exists")
+	}
 	http.HandleFunc("/test", makeHandler(createStash, cm))
 	http.HandleFunc("/download", makeHandler(download, cm))
 
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(conf.port, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
