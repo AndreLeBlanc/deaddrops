@@ -60,15 +60,24 @@ Möte med gruppen där systemarkitektur på servern och interface diskuterades. 
 ## Vecka 18
 
 ##### Måndag
+Parprogrammering av server.go med Joel. Fokus på att skapa md5 hask när man får en GET request.
 
 ##### Tisdag
+Mer parprogrammering. Fokus på att skapa och hålla koll på kanalerna som ska skapas till supervisor rutinerna.
 
 ##### Onsdag
+Mer parprogrammering. Löst concurrencyproblem med kanal map:en (med mutex...). Fösta testerna skrivna. Funderade lite på godoc.
 
 ##### Torsdag
 
 ##### Fredag
+Testade GET och POST requests för att se om det vi gjort hittills funkade. Började kolla på skapandet av foldrar.
 
+##### Lördag
+Lite diskussion med Joel om uppdelning i packages
+
+##### Söndag
+Fixade en fake configurering. Fixade så att foldrar kontrolleras och skapas. Mer snack med Joel om paketstruktur.
 ## Vecka 19
 
 ##### Måndag
