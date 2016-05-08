@@ -7,3 +7,6 @@ test:
 clean:
 	rm -rf *#
 	rm -rf *~
+
+clean_server_files:
+	rm deadropfiles/ -rf
