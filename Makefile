@@ -2,8 +2,12 @@ build:
 	go build
 
 test:
-	go test -v
+	go test ./... -v
+
+fmt:
+	go fmt ./...
 
 clean:
-	rm -rf *#
 	rm -rf *~
+	rm -rf api/*~
+	rm -rf server/*~

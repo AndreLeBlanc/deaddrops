@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"bytes"
@@ -17,7 +17,7 @@ func TestStashGET(t *testing.T) {
 
 	for i := 0; i < 10; i++ {
 		csHandler := makeHandler(createStash, cm)
-		req, _ := http.NewRequest("GET", "http://localhost:8080/test", nil)
+		req, _ := http.NewRequest("GET", "http://localhost:8080/upload", nil)
 		w := httptest.NewRecorder()
 		csHandler.ServeHTTP(w, req)
 
@@ -36,12 +36,12 @@ func TestStashPOST(t *testing.T) {
 	cm := api.InitChanMap()
 	csHandler := makeHandler(createStash, cm)
 
-	req, _ := http.NewRequest("GET", "http://localhost:8080/test", nil)
+	req, _ := http.NewRequest("GET", "http://localhost:8080/upload", nil)
 	w := httptest.NewRecorder()
 	csHandler.ServeHTTP(w, req)
 
 	var jsonStr = []byte(`{"title":"Buy cheese and bread for breakfast."}`)
-	req, _ = http.NewRequest("POST", "http://localhost:8080/test", bytes.NewBuffer(jsonStr))
+	req, _ = http.NewRequest("POST", "http://localhost:8080/upload", bytes.NewBuffer(jsonStr))
 
 	w = httptest.NewRecorder()
 	csHandler.ServeHTTP(w, req)

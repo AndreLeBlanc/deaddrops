@@ -4,7 +4,6 @@ import (
 	"sync"
 )
 
-
 type ChanMap struct {
 	m   map[string]chan string
 	mux sync.Mutex
