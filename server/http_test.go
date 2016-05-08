@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"bytes"
@@ -9,15 +9,16 @@ import (
 )
 
 func TestStashGET(t *testing.T) {
-	cm := api.InitChanMap()
+	conf := InitServer()
+	cm := conf.ChanMap()
 
 	if n := api.LenChan(cm); n != 0 {
 		t.Errorf("Map containing more/less elements than it should: %d elem", api.LenChan(cm))
 	}
 
 	for i := 0; i < 10; i++ {
-		csHandler := makeHandler(createStash, cm)
-		req, _ := http.NewRequest("GET", "http://localhost:8080/test", nil)
+		csHandler := makeHandler(upload, conf)
+		req, _ := http.NewRequest("GET", "http://localhost:8080/upload", nil)
 		w := httptest.NewRecorder()
 		csHandler.ServeHTTP(w, req)
 
@@ -33,15 +34,16 @@ func TestStashGET(t *testing.T) {
 
 // Test does not work yet, as POST is not 100% defined yet
 func TestStashPOST(t *testing.T) {
-	cm := api.InitChanMap()
-	csHandler := makeHandler(createStash, cm)
+	conf := InitServer()
+	
+	csHandler := makeHandler(upload, conf)
 
-	req, _ := http.NewRequest("GET", "http://localhost:8080/test", nil)
+	req, _ := http.NewRequest("GET", "http://localhost:8080/upload", nil)
 	w := httptest.NewRecorder()
 	csHandler.ServeHTTP(w, req)
 
 	var jsonStr = []byte(`{"title":"Buy cheese and bread for breakfast."}`)
-	req, _ = http.NewRequest("POST", "http://localhost:8080/test", bytes.NewBuffer(jsonStr))
+	req, _ = http.NewRequest("POST", "http://localhost:8080/upload", bytes.NewBuffer(jsonStr))
 
 	w = httptest.NewRecorder()
 	csHandler.ServeHTTP(w, req)
