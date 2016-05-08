@@ -1,8 +1,1 @@
-*
-
-!*.txt
-!*.go
-!meta/*
-!Makefile
-!*.md
-!.gitignore
+deadrop
