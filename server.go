@@ -67,7 +67,7 @@ func createStash(w http.ResponseWriter, r *http.Request, cm *api.ChanMap, conf *
 		fmt.Println("Checked that channel exist")
 
 		validateFile( /*file*/)
-
+		
 		if _, err := os.Stat(filepath.Join(conf.filefolder,token)); os.IsNotExist(err){
 			err2:= os.MkdirAll(filepath.Join(conf.filefolder, token), 0700 )
 			fmt.Println("Creating new token folder")
