@@ -14,6 +14,8 @@ import (
 	"time"
 )
 
+
+
 func createStash(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	//Create token for upload session
 	token := md5.New()
@@ -27,10 +29,15 @@ func createStash(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 
 	//go supervisor(token, c, cm) //TODO: maybe skip c?
 	go api.DummySupervisor2(stringToken, c, cm)
-
-	reply, _ := json.Marshal(stringToken)
+	jsonToken := struct {
+		Token string
+	}{
+		stringToken,
+	}
+	reply, _ := json.Marshal(jsonToken)
 	//TODO: handle error from JSON
-	fmt.Fprintf(w, string(reply))
+	w.Header().Set("Content-Type","application/json")
+	w.Write(reply)
 }
 
 type stashpayload struct {
