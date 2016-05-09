@@ -3,7 +3,7 @@
 OSPP (1DT096) 2016 - Grupp 3
 
 
-<img src="../images/erik.jpg” width="200">
+<img src="../images/erik.jpg" width="200">
 
 Gör en kort anteckning i dagboken under aktuell vecka och dag nedan
 varje gång du arbetat på projektet.
