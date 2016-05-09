@@ -66,7 +66,7 @@ func InitServer() *Configuration {
 }
 
 func StartServer(conf *Configuration) {
-	http.HandleFunc("/upload", makeHandler(createStash, conf))
+	http.HandleFunc("/upload", makeHandler(upload, conf))
 	http.HandleFunc("/download", makeHandler(download, conf))
 
 	err := http.ListenAndServe(":8080", nil)
