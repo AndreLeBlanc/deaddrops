@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"regexp"
 	"time"
 )
 
@@ -47,7 +46,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 
 	token := r.FormValue("token")
 
-	if !validateToken(token) {
+	if !api.ValidateToken(token) {
 		//Abandon ship
 		return
 	}
@@ -59,7 +58,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	}
 	fmt.Println("Checked that channel exist")
 
-	validateFile( /*file*/ ) // ?
+	api.ValidateFile( /*file*/ ) // ?
 
 	if _, err := os.Stat(filepath.Join(conf.filefolder, token)); os.IsNotExist(err) {
 		err = os.MkdirAll(filepath.Join(conf.filefolder, token), 0700)
@@ -97,18 +96,4 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	}
 }
 
-func validateToken(token string) bool {
-	if len(token) != 32 {
-		return false
-	} else if match, _ := regexp.MatchString("^[a-zA-Z0-9]*$", token); !match {
-		return match
-	} else {
-		return true
-	}
 
-}
-
-func validateFile( /*file*/ ) bool {
-	//TODO: file validation, ex. not too big
-	return true
-}
