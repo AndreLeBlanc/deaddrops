@@ -33,9 +33,25 @@ func createStash(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	fmt.Fprintf(w, string(reply))
 }
 
+type stashpayload struct{
+	Token string
+	//endTime time.Time
+	//files map[string]int
+}
+
+func endUpload(w http.ResponseWriter, r *http.Request, conf *Configuration){
+	decoder := json.NewDecoder(r.Body)
+	var meta stashpayload
+	err := decoder.Decode(&meta)
+	if err != nil {
+		fmt.Printf("the error is ",err)
+	}
+	fmt.Printf("the payload is %s",meta.Token)
+	fmt.Fprintf(w, "%v", r.Header)
+}
+
 func uploadFile(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	//TODO: handle json form at the end, ie. they will send a json object instead of a file
-
 	r.ParseMultipartForm(32 << 20)
 	file, handler, err := r.FormFile("uploadfile")
 	if err != nil {
@@ -90,8 +106,15 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	if r.Method == "GET" {
 		createStash(w, r, conf)
 	} else if r.Method == "POST" {
+		t:=r.Header.Get("Content-Type")
+		if t == "application/json" {
+			endUpload(w,r,conf)
+			fmt.Println("I just received a JSON")
+			return
+		}
 		uploadFile(w, r, conf)
 	} else {
+		//TODO return error
 		return
 	}
 }
