@@ -69,7 +69,7 @@ func StartServer(conf *Configuration) {
 	http.HandleFunc("/upload", makeHandler(upload, conf))
 	http.HandleFunc("/download", makeHandler(download, conf))
 
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(conf.port, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
