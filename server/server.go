@@ -13,23 +13,25 @@ import (
 type Configuration struct {
 	filefolder string
 	port       string
-	chanMap    *api.ChanMap
+	upMap      *api.ChanMap
+	downMap    *api.ChanMap
 }
 
 func (c *Configuration) loadSettings() {
 	//TODO: load server settings from somewhere, ex. port number
 	c.filefolder = "deadropfiles"
-	c.port = ":8080"
-	c.chanMap = api.InitChanMap()
+	c.port = ":9090"
+	c.upMap = api.InitChanMap()
+	c.downMap = api.InitChanMap()
 }
 
-func (c *Configuration) Filefolder() string {
-	return c.filefolder
-}
+// func (c *Configuration) Filefolder() string {
+// 	return c.filefolder
+// }
 
-func (c *Configuration) ChanMap() *api.ChanMap {
-	return c.chanMap
-}
+// func (c *Configuration) ChanMap() *api.ChanMap {
+// 	return c.chanMap
+// }
 
 var validPath = regexp.MustCompile("^/(upload|download)")
 
@@ -67,7 +69,7 @@ func InitServer() *Configuration {
 
 func StartServer(conf *Configuration) {
 	http.HandleFunc("/upload", makeHandler(upload, conf))
-	http.HandleFunc("/download", makeHandler(download, conf))
+	http.HandleFunc("/download/", makeHandler(download, conf))
 
 	err := http.ListenAndServe(conf.port, nil)
 	if err != nil {

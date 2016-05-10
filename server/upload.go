@@ -20,7 +20,7 @@ func createStash(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	t := time.Now()
 	io.WriteString(token, t.String())
 	//TODO probably will not work with a global variable, use supersupervisor??
-	cm := conf.ChanMap()
+	cm := conf.upMap
 	stringToken := hex.EncodeToString(token.Sum(nil))
 	c := make(chan string)
 	api.AppendChan(cm, stringToken, c)
@@ -68,7 +68,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	}
 	fmt.Println("Checked that token is valid")
 
-	c, ok := api.FindChan(conf.ChanMap(), token)
+	c, ok := api.FindChan(conf.upMap, token)
 	if !ok {
 		return
 	}
