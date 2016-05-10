@@ -19,7 +19,7 @@ type Configuration struct {
 func (c *Configuration) loadSettings() {
 	//TODO: load server settings from somewhere, ex. port number
 	c.filefolder = "deadropfiles"
-	c.port = ":8080"
+	c.port = ":9090"
 	c.chanMap = api.InitChanMap()
 }
 
