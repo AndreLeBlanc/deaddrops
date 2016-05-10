@@ -24,8 +24,8 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 
 	//token := r.FormValue("token")
 
-	filename := r.FormValue("filename")
-
+	filename := r.Header.Get("filename")
+	fmt.Printf("filename is %s",filename)
 	if len(filename) == 0 {
 		_, ok := api.FindChan(conf.downMap, token)
 		if !ok {
@@ -40,18 +40,20 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 
 	if !validateFilename(filename) {
 		http.Error(w, "Invalid file name", 404) // TODO: Check error code
+		return
 	}
 
-	filepath := filepath.Join(conf.filefolder, token, filename)
+	path := filepath.Join(conf.filefolder, token, filename)
 
-	if _, err := os.Stat(filepath); os.IsNotExist(err) {
+	if _, err := os.Stat(path); os.IsNotExist(err) {
 		http.Error(w, "File does not exist", 404) // TODO: Check error code
+		return
 	}
-
+	fmt.Println(path)
 	// TODO: Fix headers
 	// w.Header().Set("Content-Type", "multipart/form-data")
 	// w.Header().Set("Content-Disposition", "attachment; filename='"+filename+"'")
-	http.ServeFile(w, r, filepath)
+	http.ServeFile(w, r, path)
 }
 
 func validateURLpath(path string) (string, bool) {
