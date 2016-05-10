@@ -71,12 +71,15 @@ Work: Fortsatte arbete på front-end. Fokus på design
 ##### Torsdag
 
 ##### Fredag
+Meet&Work: Möte med gruppen
 
 ## Vecka 19
 
 ##### Måndag
+Meet&Work: Möte med gruppen + arbete på sidan
 
 ##### Tisdag
+Work: Arbetade hemma med att läsa på mer ingående på react + teoerier om det. Uppdaterade sedan sidan med ny funktionalitet.
 
 ##### Onsdag
 
