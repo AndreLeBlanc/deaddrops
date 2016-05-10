@@ -81,8 +81,10 @@ Fixade en fake configurering. Fixade så att foldrar kontrolleras och skapas. Me
 ## Vecka 19
 
 ##### Måndag
+Satt med Joel och gick igenom vad vi gjort. La till hantering av JSON payload. Pull request för get-post branchen vi jobbat på. Fixade diverse buggar som upptäcktes när Johan och Jonas testade vår branch. Satt och funderade lite på download.
 
 ##### Tisdag
+Fixade slides till milstolpe 2 mötet och parkodade med Joel, parsning av url vid download map hash och fil. Testade så vi kunde ladda ner en fil vi laddat upp. Man måste veta vad den heter och hashen dock. Installerade golang 1.6 för att kunna testa Gorilla webtoolkit ifall vi vill använda websockets.
 
 ##### Onsdag
 
