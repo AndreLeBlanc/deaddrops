@@ -79,17 +79,29 @@ Group meeting to discuss web upload and download and new future plans. (2 hours)
 
 ##### Onsdag
 
+Started reading up on SQL to manage the Supervisor (1 hour)
+
 ##### Torsdag
 
+SQL code practice (1 hour)
+
 ##### Fredag
+
+SQL code practice (2 hours)
 
 ## Vecka 19
 
 ##### Måndag
 
+SQL coding to start supervisor file (2 hours)
+
 ##### Tisdag
 
+Worked on the presentation before milestone 2 (1 hour)
+
 ##### Onsdag
+
+Group meeting to wrap things up before milestone 2 (2 hours)
 
 ##### Torsdag
 
