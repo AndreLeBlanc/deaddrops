@@ -13,7 +13,7 @@ OSPP (1DT096) 2016 - Grupp 03
 Bild                                       | Förnamn               | Efternamn | Personnummer | Användarnamn (Github)
 -------------------------------------------|-----------------------|-----------|--------------|----------------------
 <img src="images/Ali.jpg" width="100px">   | [Ali](#alikocholo)    | Shojaeddin| 950404-8696  | `alikocholo`
-<img src="images/Ali.jpg" width="100px">   | [André](#anle3295)    | Le Blanc  | 9109303850   |	`anle3295`
+<img src="images/André.jpg" width="100px"> | [André](#anle3295)    | Le Blanc  | 9109303850   |	`anle3295`
 <img src="images/erik.jpg" width="100px">  | [Erik](#erikun)	   | Melander  | 771028-8577  | `erikun`
 <img src="images/Joel.jpg" width="100px">  | [Joel](#M34ris)	   | Wallin    | 9411233134   |	`M34ris`
 <img src="images/johan.jpg" width="100px"> | [Johan](#Tallkotten)  | Lejdung   | 930914-3254  | `Tallkotten`
