@@ -58,27 +58,35 @@ Möte via slack där vi definierade systemarkitekturen bättre samt interface me
 ## Vecka 18
 
 ##### Måndag, 13:00-16:00
-Delade initialt upp arbetet för backend, jag och Erik började fila på servern och upload funktionaliteten.
+Delade initialt upp arbetet för backend, jag och Erik började fila på servern och upload funktionaliteten. Fokus hamnade på att skapa en md5 hash vid en GET request till servern.
 
 ##### Tisdag, 13:30-16:30
-Fortsatt arbete från igår.
+Parprogrammering med Erik, fortsatt arbete från igår. Skapade även en datastruktur för kanaler till supervisor rutiner.
 
 ##### Onsdag, 13:15-16:15
-Fortsatt arbete från igår samt tester skrivna i Go.
+Parprogrammering med Erik, fortsatt arbete från igår samt tester skrivna i Go.
 
 ##### Torsdag
 
-##### Fredag
+##### Fredag, 16:00-19:00
+Experimenterade med godoc samt http tester.
+
+##### Lördag, ?-?
+Mest snack med erik om uppdelning i paket och lite almänt om servern.
+
+##### Söndag, 16:00-18:00
+Skrev bättre tester och omstrukturering av kod och mappar.
 
 ## Vecka 19
 
 ##### Måndag, 12:00-16:00
-Fixade json och försökte få till någon vettig dokumentering.
+Parprogrammering med Erik. Fixade json och försökte få till någon vettig dokumentering. Gjode pull-request till master.
 
 ##### Tisdag, 12:00-16:00
-Började definiera download funktionaliteten för servern.
+Parprogrammering med Erik. Började definiera download funktionaliteten för servern. Samt fixade slides inför milstolpe 2.
 
-##### Onsdag
+##### Onsdag, 09:15-16:00
+Gruppmöte inför milstolpe 2. Även parprogrammering med Erik där vi fortsatte med json kodning/avkodning och att parsa URLer. Gruppen gjorde även en primär planering för denna vecka.
 
 ##### Torsdag
 
