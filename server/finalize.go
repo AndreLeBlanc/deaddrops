@@ -6,8 +6,6 @@ import (
 	"net/http"
 )
 
-
-
 func endUpload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	decoder := json.NewDecoder(r.Body)
 	meta := decodeJson(decoder)
@@ -32,7 +30,7 @@ func finalize(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		fmt.Println("Finalize: Invalid request")
 		return
 	}
-	
+
 	t := r.Header.Get("Content-Type")
 	if t == "application/json" {
 		fmt.Println("I just received a JSON")

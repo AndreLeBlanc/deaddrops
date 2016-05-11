@@ -11,7 +11,6 @@ import (
 	"time"
 )
 
-
 func generateToken() string {
 	token := md5.New()
 	t := time.Now()
@@ -19,13 +18,12 @@ func generateToken() string {
 	return hex.EncodeToString(token.Sum(nil))
 }
 
-
 func create(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	if r.Method != "GET" {
 		fmt.Println("Create: Invalid request")
 		return
 	}
-	
+
 	stringToken := generateToken()
 	c := make(chan string)
 	api.AppendChan(conf.upMap, stringToken, c)

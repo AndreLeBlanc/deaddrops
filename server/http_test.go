@@ -42,6 +42,7 @@ func TestStashPOST(t *testing.T) {
 	w := httptest.NewRecorder()
 	csHandler.ServeHTTP(w, req)
 
+	csHandler = makeHandler(upload, conf)
 	var jsonStr = []byte(`{"title":"Buy cheese and bread for breakfast."}`)
 	req, _ = http.NewRequest("POST", "http://localhost:9090/upload", bytes.NewBuffer(jsonStr))
 

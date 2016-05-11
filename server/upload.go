@@ -10,15 +10,14 @@ import (
 	"path/filepath"
 )
 
-
 func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
-	
+
 	if r.Method != "POST" {
 		fmt.Println("Upload: Invalid request")
 		return
 	}
-	
+
 	r.ParseMultipartForm(32 << 20)
 	file, handler, err := r.FormFile("uploadfile")
 	if err != nil {
@@ -52,7 +51,7 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		}
 	}
 	// TODO: end
-	
+
 	f, err := os.OpenFile(filepath.Join(conf.filefolder, token, handler.Filename), os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		fmt.Println(err)
