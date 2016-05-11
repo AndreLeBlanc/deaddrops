@@ -82,6 +82,7 @@ Meet&Work: Möte med gruppen + arbete på sidan
 Work: Arbetade hemma med att läsa på mer ingående på react + teoerier om det. Uppdaterade sedan sidan med ny funktionalitet.
 
 ##### Onsdag
+Meet&Work: Träffades, arbetade samt planerade presentation och utförde sedan denna.
 
 ##### Torsdag
 
