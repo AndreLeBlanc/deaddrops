@@ -33,21 +33,21 @@ func createStash(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	fmt.Fprintf(w, string(reply))
 }
 
-type stashpayload struct {
-	Token string
-	//endTime time.Time
-	//files map[string]int
-}
-
 func endUpload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	decoder := json.NewDecoder(r.Body)
-	var meta stashpayload
+	meta := decodeJson(decoder)
+
+	fmt.Println(meta)
+	fmt.Fprintf(w, "%v", meta.Token)
+}
+
+func decodeJson(decoder *json.Decoder) stash {
+	var meta stash
 	err := decoder.Decode(&meta)
 	if err != nil {
 		fmt.Printf("the error is ", err)
 	}
-	fmt.Printf("the payload is %s", meta.Token)
-	fmt.Fprintf(w, "%v", r.Header)
+	return meta
 }
 
 func uploadFile(w http.ResponseWriter, r *http.Request, conf *Configuration) {
@@ -108,8 +108,8 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	} else if r.Method == "POST" {
 		t := r.Header.Get("Content-Type")
 		if t == "application/json" {
-			endUpload(w, r, conf)
 			fmt.Println("I just received a JSON")
+			endUpload(w, r, conf)
 			return
 		}
 		uploadFile(w, r, conf)
@@ -117,4 +117,22 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		//TODO return error
 		return
 	}
+}
+
+func finalize(w http.ResponseWriter, r *http.Request, conf *Configuration) {
+	w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
+
+	fmt.Println("method:", r.Method)
+	if r.Method != "POST" {
+		fmt.Println("sdgdsg")
+		return
+	}
+
+	// t := r.Header.Get("Content-Type")
+	// if t == "application/json" {
+	fmt.Println("I just received a JSON")
+	// 	endUpload(w, r, conf)
+	// 	return
+	// }
+	endUpload(w, r, conf)
 }

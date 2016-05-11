@@ -17,6 +17,19 @@ type Configuration struct {
 	downMap    *api.ChanMap
 }
 
+type stashFile struct {
+	Fname    string
+	Size     int
+	Type     string
+	Download int
+}
+
+type stash struct {
+	Token    string
+	Lifetime int
+	Files    []stashFile
+}
+
 func (c *Configuration) loadSettings() {
 	//TODO: load server settings from somewhere, ex. port number
 	c.filefolder = "deadropfiles"
@@ -33,7 +46,7 @@ func (c *Configuration) loadSettings() {
 // 	return c.chanMap
 // }
 
-var validPath = regexp.MustCompile("^/(upload|download)")
+var validPath = regexp.MustCompile("^/(create|upload|download|finalize)")
 
 func makeHandler(f func(http.ResponseWriter, *http.Request, *Configuration), conf *Configuration) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -68,7 +81,11 @@ func InitServer() *Configuration {
 }
 
 func StartServer(conf *Configuration) {
+	// TODO: fix /create, /finalize and /
+	//http.HandleFunc("/", makeHandler(upload, conf))
+	http.HandleFunc("/create", makeHandler(upload, conf))
 	http.HandleFunc("/upload", makeHandler(upload, conf))
+	http.HandleFunc("/finalize", makeHandler(finalize, conf))
 	http.HandleFunc("/download/", makeHandler(download, conf))
 
 	err := http.ListenAndServe(conf.port, nil)
