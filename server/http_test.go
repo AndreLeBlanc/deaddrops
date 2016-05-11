@@ -17,8 +17,8 @@ func TestStashGET(t *testing.T) {
 	}
 
 	for i := 0; i < 10; i++ {
-		csHandler := makeHandler(upload, conf)
-		req, _ := http.NewRequest("GET", "http://localhost:9090/upload", nil)
+		csHandler := makeHandler(create, conf)
+		req, _ := http.NewRequest("GET", "http://localhost:9090/create", nil)
 		w := httptest.NewRecorder()
 		csHandler.ServeHTTP(w, req)
 
@@ -36,9 +36,9 @@ func TestStashGET(t *testing.T) {
 func TestStashPOST(t *testing.T) {
 	conf := InitServer()
 
-	csHandler := makeHandler(upload, conf)
+	csHandler := makeHandler(create, conf)
 
-	req, _ := http.NewRequest("GET", "http://localhost:9090/upload", nil)
+	req, _ := http.NewRequest("GET", "http://localhost:9090/create", nil)
 	w := httptest.NewRecorder()
 	csHandler.ServeHTTP(w, req)
 
@@ -56,7 +56,7 @@ func TestStashPOST(t *testing.T) {
 func TestEndUpload(t *testing.T) {
 	conf := InitServer()
 
-	csHandler := makeHandler(upload, conf)
+	csHandler := makeHandler(finalize, conf)
 
 	var jsonStr = []byte(`{"Token":"hfsiehfsiehf983989wrhiuhsi","Lifetime":60,"Files":[{"Fname":"blaj.txt","Size":100,"Type":"txt","Download":10},{"Fname":"blaj.txt","Size":100,"Type":"txt","Download":10}]}`)
 

@@ -11,9 +11,8 @@ import (
 )
 
 func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
-	fmt.Println("method:", r.Method)
 	if r.Method != "GET" {
-		// Invalid request
+		fmt.Println("Download: Invalid request")
 		return
 	}
 
@@ -26,6 +25,7 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 			return
 		}
 
+		// Send info about stash to client
 		json := createJsonStash(token, conf)
 		w.Write([]byte(json))
 		return
@@ -49,6 +49,7 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 }
 
 func createJsonStash(token string, conf *Configuration) string {
+	// TODO: This whole function
 	_, ok := api.FindChan(conf.downMap, token)
 	if !ok {
 		// superChan := make(chan string)
@@ -75,7 +76,6 @@ func validateURLpath(path string) (string, bool) {
 }
 
 func parseURL(path string) ([]string, bool) {
-	//valid, err := regexp.Compile("^/(download)/([\\w]+)/([\\w]+\\.[a-z]+)$")
 	valid, err := regexp.Compile("^/(download)/([a-zA-Z0-9]+)/([\\w]+\\.[a-z]+)$")
 	if err != nil {
 		fmt.Println(err)

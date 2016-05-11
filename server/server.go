@@ -38,14 +38,6 @@ func (c *Configuration) loadSettings() {
 	c.downMap = api.InitChanMap()
 }
 
-// func (c *Configuration) Filefolder() string {
-// 	return c.filefolder
-// }
-
-// func (c *Configuration) ChanMap() *api.ChanMap {
-// 	return c.chanMap
-// }
-
 var validPath = regexp.MustCompile("^/(create|upload|download|finalize)")
 
 func makeHandler(f func(http.ResponseWriter, *http.Request, *Configuration), conf *Configuration) http.HandlerFunc {
@@ -56,6 +48,7 @@ func makeHandler(f func(http.ResponseWriter, *http.Request, *Configuration), con
 			fmt.Println("invalid path")
 			return
 		}
+		fmt.Println("method:", r.Method)
 		f(w, r, conf)
 	}
 }
@@ -69,7 +62,7 @@ func InitServer() *Configuration {
 	//Check if folder "deadropfiles" exist
 	if _, err := os.Stat(conf.filefolder); os.IsNotExist(err) {
 		err = os.Mkdir(conf.filefolder, 0700) //Borde det vara 0700?
-		fmt.Printf("Creating folder %s", conf.filefolder)
+		fmt.Printf("Creating folder %s\n", conf.filefolder)
 		if err != nil {
 			log.Fatal("Could not create file directory %s\n", err)
 		}
@@ -83,7 +76,7 @@ func InitServer() *Configuration {
 func StartServer(conf *Configuration) {
 	// TODO: fix /create, /finalize and /
 	//http.HandleFunc("/", makeHandler(upload, conf))
-	http.HandleFunc("/create", makeHandler(upload, conf))
+	http.HandleFunc("/create", makeHandler(create, conf))
 	http.HandleFunc("/upload", makeHandler(upload, conf))
 	http.HandleFunc("/finalize", makeHandler(finalize, conf))
 	http.HandleFunc("/download/", makeHandler(download, conf))
