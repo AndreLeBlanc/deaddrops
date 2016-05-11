@@ -87,6 +87,7 @@ Satt med Joel och gick igenom vad vi gjort. La till hantering av JSON payload. P
 Fixade slides till milstolpe 2 mötet och parkodade med Joel, parsning av url vid download map hash och fil. Testade så vi kunde ladda ner en fil vi laddat upp. Man måste veta vad den heter och hashen dock. Installerade golang 1.6 för att kunna testa Gorilla webtoolkit ifall vi vill använda websockets.
 
 ##### Onsdag
+Gruppmöte för att gå igenom inför presentationen för milstolpe 2. Milstolpe 2 möte. Planerade gruppens arbete för resten av veckan. Satt och parkodade med Joel för att få JSON avkodningen och dess datatyp att funka.
 
 ##### Torsdag
 
