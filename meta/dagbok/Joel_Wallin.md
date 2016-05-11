@@ -72,9 +72,11 @@ Fortsatt arbete från igår samt tester skrivna i Go.
 
 ## Vecka 19
 
-##### Måndag
+##### Måndag, 12:00-16:00
+Fixade json och försökte få till någon vettig dokumentering.
 
-##### Tisdag
+##### Tisdag, 12:00-16:00
+Började definiera download funktionaliteten för servern.
 
 ##### Onsdag
 
