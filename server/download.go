@@ -17,6 +17,7 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		return
 	}
 
+	fmt.Println(r.URL.Path)
 	urlSubStr, valid := parseURL(r.URL.Path)
 	if !valid {
 		token, valid := validateURLpath(r.URL.Path)
@@ -74,7 +75,8 @@ func validateURLpath(path string) (string, bool) {
 }
 
 func parseURL(path string) ([]string, bool) {
-	valid, err := regexp.Compile("^/(download)/([\\w]+)/([\\w]+\\.[a-z]+)$")
+	//valid, err := regexp.Compile("^/(download)/([\\w]+)/([\\w]+\\.[a-z]+)$")
+	valid, err := regexp.Compile("^/(download)/([a-zA-Z0-9]+)/([\\w]+\\.[a-z]+)$")
 	if err != nil {
 		fmt.Println(err)
 		return []string{}, false
