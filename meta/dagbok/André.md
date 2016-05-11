@@ -1,5 +1,6 @@
 OSPP (1DT096) 2016 - Grupp 03
 
+<img src="../images/Ali.jpg" width="100px">
 
 ## Vecka 15
 
