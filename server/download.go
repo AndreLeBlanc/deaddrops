@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"regexp"
 )
 
 func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
@@ -17,22 +16,30 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	}
 
 	fmt.Println(r.URL.Path)
-	urlSubStr, valid := parseURL(r.URL.Path)
-	if !valid {
-		token, valid := validateURLpath(r.URL.Path)
-		if !valid {
-			http.Error(w, "Invalid URL", 404) // TODO: Check error code
+	urlSubStr := api.ParseURL(r.URL.Path)
+	fmt.Println(urlSubStr)
+	if len(urlSubStr) < 3 {
+		http.Error(w, "Invalid URL", 404) //TODO fix error code
+		return
+	}
+	if len(urlSubStr) == 3 {
+		if api.ValidateToken(api.GetToken(urlSubStr)) {
+			// Send info about stash to client
+			json := createJsonStash(api.GetToken(urlSubStr), conf)
+			w.Write([]byte(json))
+			return
+		} else {
+			http.Error(w, "Invalid URL", 404) //TODO fix error code
 			return
 		}
-
-		// Send info about stash to client
-		json := createJsonStash(token, conf)
-		w.Write([]byte(json))
+	}
+	if !api.ValidateFileName(api.GetFilename(urlSubStr))||!api.ValidateToken(api.GetToken(urlSubStr)) {
+		http.Error(w, "Invalid Filename", 404) //TODO fix error code
 		return
 	}
 
-	token := getToken(urlSubStr)
-	filename := getFilename(urlSubStr)
+	token := api.GetToken(urlSubStr)
+	filename := api.GetFilename(urlSubStr)
 	path := filepath.Join(conf.filefolder, token, filename)
 
 	fmt.Printf("filename is %s", filename)
@@ -57,43 +64,4 @@ func createJsonStash(token string, conf *Configuration) string {
 		// api.DownSupervisor(superChan, conf)
 	}
 	return token
-}
-
-func validateURLpath(path string) (string, bool) {
-	valid, err := regexp.Compile("^/(download)/([a-zA-Z0-9]+)$")
-	if err != nil {
-		fmt.Println(err)
-		return path, false
-	}
-
-	urlSubStr := valid.FindStringSubmatch(path)
-	fmt.Println(urlSubStr)
-	if len(urlSubStr) < 2 || !api.ValidateToken(urlSubStr[2]) { //TODO: If not lazy evaluations, there could be a Panic
-		return path, false
-	}
-
-	return urlSubStr[2], true
-}
-
-func parseURL(path string) ([]string, bool) {
-	valid, err := regexp.Compile("^/(download)/([a-zA-Z0-9]+)/([\\w]+\\.[a-z]+)$")
-	if err != nil {
-		fmt.Println(err)
-		return []string{}, false
-	}
-
-	urlSubStr := valid.FindStringSubmatch(path)
-	if len(urlSubStr) == 0 {
-		return []string{}, false
-	}
-
-	return urlSubStr, true
-}
-
-func getToken(urlSubStr []string) string {
-	return urlSubStr[2]
-}
-
-func getFilename(urlSubStr []string) string {
-	return urlSubStr[3]
 }
