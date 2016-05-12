@@ -80,8 +80,10 @@ Lade till möjlighet att ta bort filer. Uppdaterade designen på frontend.
 Gick igenom uppdateringar som Johan gjort.
 
 ##### Onsdag
+Gruppmöte, planering inför resten av veckan och nästa vecka.
 
 ##### Torsdag
+Dokumenterade kod för frontend.
 
 ##### Fredag
 
