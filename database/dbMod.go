@@ -1,12 +1,16 @@
-package api
+package database
 
-func newConnect() {
-	db, err := sql.Open("sqlite3", "database/deaddrops.db")
-    checkErr(err)
-    return db
+import (
+	"database/sql"
+)
+
+func NewConnect() * sql.DB {
+	Db, err := sql.Open("sqlite3", "database/deaddrops.db")
+    CheckErr(err)
+    return Db
 }
 
-func checkErr(err error) {
+func CheckErr(err error) {
     if err != nil {
         panic(err)
     }

@@ -12,6 +12,7 @@ import (
 	"os"
 	"path/filepath"
 	"time"
+	"deadrop/database"
 )
 
 
@@ -27,8 +28,16 @@ func createStash(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	c := make(chan string)
 	api.AppendChan(cm, stringToken, c)
 
-	//go supervisor(token, c, cm) //TODO: maybe skip c?
-	go api.DummySupervisor2(stringToken, c, cm)
+
+	// Ny kod från André
+
+	db := database.NewConnect()
+
+
+	//
+
+	go database.SupervisorUp(db, /*token*/"pppp", c) //TODO: maybe skip c? tog bort cm
+	go database.SupervisorDo(db, stringToken, c) // tog bort cm
 	jsonToken := struct {
 		Token string
 	}{
