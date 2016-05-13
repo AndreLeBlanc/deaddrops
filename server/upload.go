@@ -11,8 +11,6 @@ import (
 )
 
 func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
-	w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
-
 	if r.Method != "POST" {
 		fmt.Println("Upload: Invalid request")
 		return

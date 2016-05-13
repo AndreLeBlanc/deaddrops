@@ -10,8 +10,6 @@ import (
 )
 
 func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
-	w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
-	
 	if r.Method != "GET" {
 		fmt.Println("Download: Invalid request")
 		return

@@ -7,8 +7,6 @@ import (
 )
 
 func endUpload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
-	w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
-	
 	decoder := json.NewDecoder(r.Body)
 	meta := decodeJson(decoder)
 
@@ -26,8 +24,6 @@ func decodeJson(decoder *json.Decoder) stash {
 }
 
 func finalize(w http.ResponseWriter, r *http.Request, conf *Configuration) {
-	w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
-
 	if r.Method != "POST" {
 		fmt.Println("Finalize: Invalid request")
 		return
