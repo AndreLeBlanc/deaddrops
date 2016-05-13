@@ -11,10 +11,9 @@ import (
 )
 
 func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
-	w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
-
 	if r.Method != "POST" {
 		fmt.Println("Upload: Invalid request")
+		http.Error(w, "Invalid request", 400)
 		return
 	}
 
@@ -22,6 +21,7 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	file, handler, err := r.FormFile("uploadfile")
 	if err != nil {
 		fmt.Println(err)
+		http.Error(w, "Received bad file", 400)
 		return
 	}
 	defer file.Close()
@@ -31,6 +31,7 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	
 	if !api.ValidateToken(token) {
 		fmt.Println("Invalid token")
+		http.Error(w, "Invalid token, bad format", 400)
 		return
 	}
 	fmt.Println("Checked that token is valid")
@@ -38,6 +39,7 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	c, ok := api.FindChan(conf.upMap, token)
 	if !ok {
 		fmt.Println("Invalid token, could not find in upMap")
+		http.Error(w, "Invalid token, does not exist", 400)
 		return
 	}
 	fmt.Println("Checked that channel exist")
@@ -49,13 +51,16 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		fmt.Println("Creating new token folder")
 		if err != nil {
 			log.Fatal("Could not create token folder")
+			http.Error(w, "Internal server error", 500)
+			return
 		}
 	}
 	// TODO: end
 
 	f, err := os.OpenFile(filepath.Join(conf.filefolder, token, handler.Filename), os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(err) // Could not open file
+		http.Error(w, "Internal server error", 500)
 		return
 	}
 	defer f.Close()

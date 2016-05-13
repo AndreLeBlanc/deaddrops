@@ -19,7 +19,7 @@ Fortsatt arbete i grupp med både det skriftliga och muntliga projektförslaget.
 Gjorde klart alla slides och förberedde oss för presentationen.
 
 ##### Fredag, 20 min
-Fin slip av det skriftliga projektförslaget och lämnade in den.
+Finslip av det skriftliga projektförslaget och lämnade in den.
 
 ## Vecka 16
 
@@ -38,35 +38,55 @@ Peer review av andra gruppers projektförslag samt allmän diskussion om systema
 
 ## Vecka 17
 
-##### Måndag
+##### Måndag, 16:00-19:00
+Läste på om webbserverar i Go.
 
 ##### Tisdag
 
-##### Onsdag
+##### Onsdag, 11:30-14:00
+Jag och Erik disskuterade vad vi hade lärt oss om webbserver teknologier i Go. Samt arbete inför milstolpe 1.
 
-##### Torsdag
+##### Torsdag, 10:00-12:00
+Möte inför milstolpe 1 och planering.
 
-##### Fredag
+##### Fredag, 15:00-16:00
+Snabbt möte fölt av milstolpe 1.
+
+#### Lördag, 09:00-10:30
+Möte via slack där vi definierade systemarkitekturen bättre samt interface mellan front- och back-end.
 
 ## Vecka 18
 
-##### Måndag
+##### Måndag, 13:00-16:00
+Delade initialt upp arbetet för backend, jag och Erik började fila på servern och upload funktionaliteten. Fokus hamnade på att skapa en md5 hash vid en GET request till servern.
 
-##### Tisdag
+##### Tisdag, 13:30-16:30
+Parprogrammering med Erik, fortsatt arbete från igår. Skapade även en datastruktur för kanaler till supervisor rutiner.
 
-##### Onsdag
+##### Onsdag, 13:15-16:15
+Parprogrammering med Erik, fortsatt arbete från igår samt tester skrivna i Go.
 
 ##### Torsdag
 
-##### Fredag
+##### Fredag, 16:00-19:00
+Experimenterade med godoc samt http tester.
+
+##### Lördag, ?-?
+Mest snack med erik om uppdelning i paket och lite almänt om servern.
+
+##### Söndag, 16:00-18:00
+Skrev bättre tester och omstrukturering av kod och mappar.
 
 ## Vecka 19
 
-##### Måndag
+##### Måndag, 12:00-16:00
+Parprogrammering med Erik. Fixade json och försökte få till någon vettig dokumentering. Gjode pull-request till master.
 
-##### Tisdag
+##### Tisdag, 12:00-16:00
+Parprogrammering med Erik. Började definiera download funktionaliteten för servern. Samt fixade slides inför milstolpe 2.
 
-##### Onsdag
+##### Onsdag, 09:15-16:00
+Gruppmöte inför milstolpe 2. Även parprogrammering med Erik där vi fortsatte med json kodning/avkodning och att parsa URLer. Gruppen gjorde även en primär planering för denna vecka.
 
 ##### Torsdag
 

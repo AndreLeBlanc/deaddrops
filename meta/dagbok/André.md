@@ -1,19 +1,40 @@
 OSPP (1DT096) 2016 - Grupp 03
 
+<img src="../images/André.jpg" width="100px">
 
-Gör en kort anteckning i dagboken under aktuell vecka och dag nedan varje gång du arbetat på projektet.
-Vecka 15
-Måndag
-Tisdag
-Onsdag
-Torsdag
-Fredag
-Vecka 16
-Måndag
-Tisdag
-Onsdag
-Torsdag
-Fredag
+## Vecka 15
+
+##### Måndag
+
+##### Tisdag
+
+##### Onsdag
+
+##### Torsdag
+
+##### Fredag
+
+
+## Vecka 16
+
+##### Måndag
+Gruppmöte, gruppkontrakt och reflektion av presentationen.
+
+##### Tisdag
+gjorde en golang tutorial.
+
+##### Onsdag
+skrev ett litet program i golang. Möte med Karl.
+
+##### Torsdag
+Minimalt med golang testande.
+
+##### Fredag
+Klonade gitrepot gitrepon och lekte mer med golang
+
+
+filer.
+## Vecka 17
 Vecka 17
 Måndag
 Tisdag

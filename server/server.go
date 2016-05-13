@@ -42,10 +42,15 @@ var validPath = regexp.MustCompile("^/(create|upload|download|finalize)")
 
 func makeHandler(f func(http.ResponseWriter, *http.Request, *Configuration), conf *Configuration) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
+		w.Header().Add("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token")
+		w.Header().Add("Access-Control-Allow-Credentials", "true")
+
 		m := validPath.FindStringSubmatch(r.URL.Path)
 		if m == nil {
 			http.NotFound(w, r)
-			fmt.Println("invalid path")
+			fmt.Println("Invalid path")
+			http.Error(w, "Invalid URL", 400)
 			return
 		}
 		fmt.Println("method:", r.Method)

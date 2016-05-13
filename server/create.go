@@ -21,19 +21,27 @@ func generateToken() string {
 func create(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	if r.Method != "GET" {
 		fmt.Println("Create: Invalid request")
+		http.Error(w, "Invalid request", 400)
 		return
 	}
 
 	stringToken := generateToken()
 	c := make(chan string)
 	api.AppendChan(conf.upMap, stringToken, c)
-
-	reply, err := json.Marshal(stringToken)
+	jsonToken := struct {
+		Token string
+	}{
+		stringToken,
+	}
+	reply, err := json.Marshal(jsonToken)
 	if err != nil {
 		fmt.Println("Failed token json encoding")
+		http.Error(w, "Internal server error", 500)
 		return
 	}
-
 	go api.DummySupervisor2(stringToken, c, conf.upMap)
-	fmt.Fprintf(w, string(reply))
+
+	//TODO: handle error from JSON
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(reply)
 }
