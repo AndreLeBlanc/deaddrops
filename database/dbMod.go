@@ -1,6 +1,6 @@
 package api
 
-func newConnect() {}
+func newConnect() {
 	db, err := sql.Open("sqlite3", "database/deaddrops.db")
     checkErr(err)
     return db
