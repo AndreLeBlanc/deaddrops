@@ -59,33 +59,57 @@ Group meeting to discuss mile stone 1 and edditing our report. (2 hours)
 
 ##### Onsdag
 
+Group presenation with Karl. (1.5 hours)
+
 ##### Torsdag
 
+Online group meeting to discuss stuff (ie architecture) (2 hours)
+
 ##### Fredag
+
+Had a brief look at the concepts of web server upload and download in regards to Golang. (2 hours)
 
 ## Vecka 18
 
 ##### Måndag
 
+Group meeting to discuss web upload and download and new future plans. (2 hours)
+
 ##### Tisdag
 
 ##### Onsdag
 
+Started reading up on SQL to manage the Supervisor (1 hour)
+
 ##### Torsdag
 
+SQL code practice (1 hour)
+
 ##### Fredag
+
+SQL code practice (2 hours)
 
 ## Vecka 19
 
 ##### Måndag
 
+SQL coding to start database file (2 hours)
+
 ##### Tisdag
+
+Worked on the presentation before milestone 2 (1 hour)
 
 ##### Onsdag
 
+Group meeting to wrap things up before milestone 2 (2 hours)
+
 ##### Torsdag
 
+Worked on the database a bit (1 hour)
+
 ##### Fredag
+
+Group meeting to code a bit and discuss what's to come (2 hours)
 
 ## Vecka 20
 

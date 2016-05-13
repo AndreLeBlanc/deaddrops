@@ -3,7 +3,7 @@
 OSPP (1DT096) 2016 - Grupp 3
 
 
-<img src="../images/erik.jpg” width="200">
+<img src="../images/erik.jpg" width="200">
 
 Gör en kort anteckning i dagboken under aktuell vecka och dag nedan
 varje gång du arbetat på projektet.
@@ -60,22 +60,34 @@ Möte med gruppen där systemarkitektur på servern och interface diskuterades. 
 ## Vecka 18
 
 ##### Måndag
+Parprogrammering av server.go med Joel. Fokus på att skapa md5 hask när man får en GET request.
 
 ##### Tisdag
+Mer parprogrammering. Fokus på att skapa och hålla koll på kanalerna som ska skapas till supervisor rutinerna.
 
 ##### Onsdag
+Mer parprogrammering. Löst concurrencyproblem med kanal map:en (med mutex...). Fösta testerna skrivna. Funderade lite på godoc.
 
 ##### Torsdag
 
 ##### Fredag
+Testade GET och POST requests för att se om det vi gjort hittills funkade. Började kolla på skapandet av foldrar.
 
+##### Lördag
+Lite diskussion med Joel om uppdelning i packages
+
+##### Söndag
+Fixade en fake configurering. Fixade så att foldrar kontrolleras och skapas. Mer snack med Joel om paketstruktur.
 ## Vecka 19
 
 ##### Måndag
+Satt med Joel och gick igenom vad vi gjort. La till hantering av JSON payload. Pull request för get-post branchen vi jobbat på. Fixade diverse buggar som upptäcktes när Johan och Jonas testade vår branch. Satt och funderade lite på download.
 
 ##### Tisdag
+Fixade slides till milstolpe 2 mötet och parkodade med Joel, parsning av url vid download map hash och fil. Testade så vi kunde ladda ner en fil vi laddat upp. Man måste veta vad den heter och hashen dock. Installerade golang 1.6 för att kunna testa Gorilla webtoolkit ifall vi vill använda websockets.
 
 ##### Onsdag
+Gruppmöte för att gå igenom inför presentationen för milstolpe 2. Milstolpe 2 möte. Planerade gruppens arbete för resten av veckan. Satt och parkodade med Joel för att få JSON avkodningen och dess datatyp att funka.
 
 ##### Torsdag
 

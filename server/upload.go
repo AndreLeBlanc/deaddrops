@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 )
 
+
 func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	if r.Method != "POST" {
 		fmt.Println("Upload: Invalid request")

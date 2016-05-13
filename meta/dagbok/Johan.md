@@ -48,32 +48,41 @@ Work: Fortsatte med serverfix
 Work: Gjorde klart en stor del på server (byggsystemet med npm osv)
 
 ##### Tisdag
+Meet: Gruppmöte
 
 ##### Onsdag
+Meet: Gruppmöte + milestone 1
 
 ##### Torsdag
+Work: Läste på frontend devtools och försökte få det och fungera på VM
 
 ##### Fredag
 
 ## Vecka 18
 
 ##### Måndag
-
+Work: Planerade interface i mer detalj, fick igång så att man kunde ladda upp filer + ladda ner från servern.
+Work2: Fixade lite server-problem
 ##### Tisdag
+Work: Fortsatte arbete på front-end. Fokus på design
 
 ##### Onsdag
 
 ##### Torsdag
 
 ##### Fredag
+Meet&Work: Möte med gruppen
 
 ## Vecka 19
 
 ##### Måndag
+Meet&Work: Möte med gruppen + arbete på sidan
 
 ##### Tisdag
+Work: Arbetade hemma med att läsa på mer ingående på react + teoerier om det. Uppdaterade sedan sidan med ny funktionalitet.
 
 ##### Onsdag
+Meet&Work: Träffades, arbetade samt planerade presentation och utförde sedan denna.
 
 ##### Torsdag
 
