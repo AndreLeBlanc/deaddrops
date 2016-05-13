@@ -12,6 +12,7 @@ import (
 func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	if r.Method != "GET" {
 		fmt.Println("Download: Invalid request")
+		http.Error(w, "Invalid request", 400)
 		return
 	}
 
@@ -19,7 +20,7 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	urlSubStr := api.ParseURL(r.URL.Path)
 	fmt.Println(urlSubStr)
 	if len(urlSubStr) < 3 {
-		http.Error(w, "Invalid URL", 404) //TODO fix error code
+		http.Error(w, "Invalid URL", 400)
 		return
 	}
 	if len(urlSubStr) == 3 {
@@ -29,12 +30,12 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 			w.Write([]byte(json))
 			return
 		} else {
-			http.Error(w, "Invalid URL", 404) //TODO fix error code
+			http.Error(w, "Invalid URL", 400)
 			return
 		}
 	}
-	if !api.ValidateFileName(api.GetFilename(urlSubStr))||!api.ValidateToken(api.GetToken(urlSubStr)) {
-		http.Error(w, "Invalid Filename", 404) //TODO fix error code
+	if !api.ValidateFileName(api.GetFilename(urlSubStr)) || !api.ValidateToken(api.GetToken(urlSubStr)) {
+		http.Error(w, "Invalid Filename", 404)
 		return
 	}
 
@@ -45,7 +46,7 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	fmt.Printf("filename is %s", filename)
 
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		http.Error(w, "File does not exist", 404) // TODO: Check error code
+		http.Error(w, "File does not exist", 404)
 		return
 	}
 	fmt.Println(path)
