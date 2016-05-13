@@ -93,7 +93,7 @@ SQL code practice (2 hours)
 
 ##### Måndag
 
-SQL coding to start supervisor file (2 hours)
+SQL coding to start database file (2 hours)
 
 ##### Tisdag
 
@@ -105,7 +105,11 @@ Group meeting to wrap things up before milestone 2 (2 hours)
 
 ##### Torsdag
 
+Worked on the database a bit (1 hour)
+
 ##### Fredag
+
+Group meeting to code a bit and discuss what's to come (2 hours)
 
 ## Vecka 20
 
