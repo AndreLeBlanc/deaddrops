@@ -7,6 +7,8 @@ import (
 )
 
 func endUpload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
+	w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
+	
 	decoder := json.NewDecoder(r.Body)
 	meta := decodeJson(decoder)
 
