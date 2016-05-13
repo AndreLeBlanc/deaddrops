@@ -43,6 +43,7 @@ func supervisorUp(db * sql.DB, token string, c chan string, cm *ChanMap) {
     select {
     case fname := <-c:
         fmt.Printf("received filename: %s\n", fname)
+        add(db, fil{2131231, 10, time.Now(), ".exe"}
     case <-time.After(time.Second * 10):
         fmt.Println("timeout")
     }
