@@ -1,0 +1,57 @@
+package server
+
+import (
+    "database/sql"
+    "fmt"
+    _ "github.com/mattn/go-sqlite3"
+    "strings"
+    "os"
+    "api/dbMod"
+    "time"
+)
+
+type fil struct {
+	hash, size, time int
+	format string
+}
+
+func add(db * sql.DB, fil fille) {
+    stmt, err := db.Prepare("INSERT INTO deaddrops(hash, time, size, format) values(?,?,?,?)")
+    checkErr(err)
+
+   	stmt.Exec(fille.hash, fille.size, fille.time, fille.format)
+}
+
+ func skrivUt(db * sql.DB) {
+ 	rows, err := db.Query("SELECT * FROM deaddrops")
+    checkErr(err)
+
+        for rows.Next() {
+	        var hash int
+	        var size int
+	        var time int
+	        var format string
+	        err = rows.Scan(&hash, &size, &time, &format)
+	        checkErr(err)
+	        fmt.Println(hash , " | ", size, " | ", time, " | ", format)
+    }
+}
+
+func main(db * sql.DB, tid Time) {
+
+ 	for time.Now() < tid {
+ 		fmt.Println("Vad vill du göra? L för lägg till, T för ta bort, s för att skriva ut innehållet i databasen, A för avsluta")
+ 		fmt.Scanf("%s", &val) 
+
+ 		if strings.EqualFold(val, "l") {
+ 			go add(db)
+ 		} else if strings.EqualFold(val, "t" ) {
+ 			go delete(db)
+ 		} else if strings.EqualFold(val, "a") {
+ 			db.Close()
+ 			os.Exit(0)
+ 		} else if strings.EqualFold(val, "s") {
+ 			go skrivUt(db)
+ 		}
+ 	}
+ }
