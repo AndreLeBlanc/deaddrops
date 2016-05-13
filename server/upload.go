@@ -11,6 +11,7 @@ import (
 )
 
 
+
 func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	if r.Method != "POST" {
 		fmt.Println("Upload: Invalid request")
@@ -50,7 +51,8 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		}
 	}
 	// TODO: end
-
+	var st []api.StashFile
+	s := api.Stash{Token: token, Lifetime:0, Files:append(st, api.StashFile{Fname:handler.Filename,Size:0,Type:"",Download:0})}
 	f, err := os.OpenFile(filepath.Join(conf.filefolder, token, handler.Filename), os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		fmt.Println(err)
@@ -61,7 +63,8 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 
 	//TODO: maybe have a response channel for the supervisor to reply
 	//ie. c <- handler.Filename, responseChannel
-	c <- handler.Filename
+	replyChannel := make(chan api.Stash)
+	c <- api.SuperChan{s,replyChannel}
 	fmt.Println("Sent filename to channel")
 	fmt.Fprintf(w, "%v", handler.Header)
 }

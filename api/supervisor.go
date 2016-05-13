@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func DummySupervisor1(token string, c chan string, cm *ChanMap) {
+func DummySupervisor1(token string, c chan SuperChan, cm *ChanMap) {
 	select {
 	case fname := <-c:
 		fmt.Printf("received filename: %s\n", fname)
@@ -14,7 +14,7 @@ func DummySupervisor1(token string, c chan string, cm *ChanMap) {
 	}
 }
 
-func DummySupervisor2(token string, c chan string, cm *ChanMap) {
+func DummySupervisor2(token string, c chan SuperChan, cm *ChanMap) {
 	fmt.Printf("Upload supervisor %s up and running\n", token)
 	loop := true
 	for loop {
