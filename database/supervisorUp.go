@@ -17,14 +17,14 @@ type fil struct {
 
 func add(db * sql.DB, fil fille) {
     stmt, err := db.Prepare("INSERT INTO deaddrops(hash, time, size, format) values(?,?,?,?)")
-    api.checkErr(err)
+    checkErr(err)
 
    	stmt.Exec(fille.hash, fille.size, fille.time, fille.format)
 }
 
  func skrivUt(db * sql.DB) {
  	rows, err := db.Query("SELECT * FROM deaddrops")
-    api.checkErr(err)
+    checkErr(err)
 
         for rows.Next() {
 	        var hash int
@@ -37,20 +37,14 @@ func add(db * sql.DB, fil fille) {
     }
 }
 
-func main(db * sql.DB, tid Time) {
 
- 	for time.Now() < tid {
- 		fmt.Println("Vad vill du göra? L för lägg till, T för ta bort, s för att skriva ut innehållet i databasen, A för avsluta")
- 		fmt.Scanf("%s", &val) 
+func supervisorUp(db * sql.DB, token string, c chan string, cm *ChanMap) {
 
- 		if strings.EqualFold(val, "l") {
- 			go add(db)
- 		} else if strings.EqualFold(val, "t" ) {
- 			go delete(db)
- 		} else if strings.EqualFold(val, "a") {
- 			os.Exit(0)
- 		} else if strings.EqualFold(val, "s") {
- 			go skrivUt(db)
- 		}
- 	}
- }
+    select {
+    case fname := <-c:
+        fmt.Printf("received filename: %s\n", fname)
+    case <-time.After(time.Second * 10):
+        fmt.Println("timeout")
+    }
+
+}
