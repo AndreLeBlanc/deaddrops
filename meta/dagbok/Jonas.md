@@ -87,6 +87,8 @@ Dokumenterade kod för frontend.
 
 ##### Fredag
 
+Skapade basen för download-sidan på frontend. Diskuterade och uppdaterade designen tillsammans med Johan.
+
 ## Vecka 20
 
 ##### Måndag
