@@ -55,8 +55,9 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		}
 	}
 	// TODO: end
+	filename := ParseFilename(handler.Filename)
 
-	f, err := os.OpenFile(filepath.Join(conf.filefolder, token, handler.Filename), os.O_WRONLY|os.O_CREATE, 0666)
+	f, err := os.OpenFile(filepath.Join(conf.filefolder, token, filename), os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
 		fmt.Println(err) // Could not open file
 		http.Error(w, "Internal server error", 500)
@@ -67,7 +68,17 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 
 	//TODO: maybe have a response channel for the supervisor to reply
 	//ie. c <- handler.Filename, responseChannel
-	c <- handler.Filename
+	c <- filename
 	fmt.Println("Sent filename to channel")
 	fmt.Fprintf(w, "%v", handler.Header)
+}
+
+
+func ParseFilename(path string) string {
+	substr := api.ParseURL(path)
+	if len(substr) == 0 {
+		fmt.Println("Failed parsing filename")
+		return path
+	}
+	return substr[len(substr)-1] 
 }
