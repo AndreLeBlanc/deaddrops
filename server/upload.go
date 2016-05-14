@@ -27,7 +27,8 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	defer file.Close()
 
 	token := r.FormValue("token")
-
+	fmt.Printf("[Upload] token: %s\n", token)
+	
 	if !api.ValidateToken(token) {
 		fmt.Println("Invalid token")
 		http.Error(w, "Invalid token, bad format", 400)
