@@ -2,9 +2,9 @@ package server
 
 import (
 	"deadrop/api"
+	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -28,35 +28,22 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 
 	token := r.FormValue("token")
 	fmt.Printf("[Upload] token: %s\n", token)
-	
-	if !api.ValidateToken(token) {
+
+	err = validateToken(token, conf)
+	if err != nil {
 		fmt.Println("Invalid token")
-		http.Error(w, "Invalid token, bad format", 400)
-		return
+		http.Error(w, "Invalid token", 400)
 	}
-	fmt.Println("Checked that token is valid")
 
-	c, ok := api.FindChan(conf.upMap, token)
-	if !ok {
-		fmt.Println("Invalid token, could not find in upMap")
-		http.Error(w, "Invalid token, does not exist", 400)
-		return
-	}
-	fmt.Println("Checked that channel exist")
-
-	// TODO: Everything till next comment should be in ValidateFile
 	api.ValidateFile( /*file*/ ) // ?
-	if _, err := os.Stat(filepath.Join(conf.filefolder, token)); os.IsNotExist(err) {
-		err = os.MkdirAll(filepath.Join(conf.filefolder, token), 0700)
-		fmt.Println("Creating new token folder")
-		if err != nil {
-			log.Fatal("Could not create token folder")
-			http.Error(w, "Internal server error", 500)
-			return
-		}
+
+	err = createFolder(token, conf)
+	if err != nil {
+		fmt.Println("Could not create token folder")
+		http.Error(w, "Internal server error", 500)
 	}
-	// TODO: end
-	filename := ParseFilename(handler.Filename)
+
+	filename := parseFilename(handler.Filename)
 
 	f, err := os.OpenFile(filepath.Join(conf.filefolder, token, filename), os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
@@ -69,17 +56,44 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 
 	//TODO: maybe have a response channel for the supervisor to reply
 	//ie. c <- handler.Filename, responseChannel
+	c, _ := api.FindChan(conf.upMap, token)
 	c <- filename
 	fmt.Println("Sent filename to channel")
 	fmt.Fprintf(w, "%v", handler.Header)
 }
 
-
-func ParseFilename(path string) string {
+func parseFilename(path string) string {
 	substr := api.ParseURL(path)
 	if len(substr) == 0 {
 		fmt.Println("Failed parsing filename")
 		return path
 	}
-	return substr[len(substr)-1] 
+	return substr[len(substr)-1]
+}
+
+// TODO: Function body should (maybe?) be integrated into api.ValidateToken
+func validateToken(token string, conf *Configuration) error {
+	if !api.ValidateToken(token) {
+		return errors.New("Invalid token, incorrect format")
+	}
+	fmt.Println("Checked that token is valid")
+
+	_, ok := api.FindChan(conf.upMap, token)
+	if !ok {
+		return errors.New("Invalid token, could not find in upMap")
+	}
+	fmt.Println("Checked that channel exist")
+
+	return nil
+}
+
+func createFolder(token string, conf *Configuration) error {
+	if _, err := os.Stat(filepath.Join(conf.filefolder, token)); os.IsNotExist(err) {
+		err = os.MkdirAll(filepath.Join(conf.filefolder, token), 0700)
+		fmt.Println("Creating new token folder")
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
