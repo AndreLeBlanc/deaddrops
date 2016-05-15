@@ -5,7 +5,7 @@ import (
 )
 
 func NewConnect() * sql.DB {
-	Db, err := sql.Open("sqlite3", "database/deaddrops.db")
+	Db, err := sql.Open("sqlite3", "database/deadrops.db")
     CheckErr(err)
     return Db
 }
