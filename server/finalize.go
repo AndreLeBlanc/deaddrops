@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"deadrop/api"
 )
 
 func endUpload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
@@ -14,8 +15,8 @@ func endUpload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	fmt.Fprintf(w, "%v", meta.Token)
 }
 
-func decodeJson(decoder *json.Decoder) stash {
-	var meta stash
+func decodeJson(decoder *json.Decoder) api.Stash {
+	var meta api.Stash
 	err := decoder.Decode(&meta)
 	if err != nil {
 		fmt.Printf("the error is ", err)

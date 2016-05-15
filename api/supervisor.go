@@ -20,7 +20,7 @@ func DummySupervisor2(token string, c chan SuperChan, cm *ChanMap) {
 	for loop {
 		select {
 		case fname := <-c:
-			fmt.Printf("received filename: %s\n", fname)
+			fmt.Printf("received filename: %+v\n", fname)
 			//	case <-time.After(time.Second + 100)://TODO decide timeout
 			//		fmt.Println("timeout")
 		}

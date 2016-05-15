@@ -63,7 +63,7 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 
 	//TODO: maybe have a response channel for the supervisor to reply
 	//ie. c <- handler.Filename, responseChannel
-	replyChannel := make(chan api.Stash)
+	replyChannel := make(chan api.HttpReplyChan)
 	c <- api.SuperChan{s,replyChannel}
 	fmt.Println("Sent filename to channel")
 	fmt.Fprintf(w, "%v", handler.Header)

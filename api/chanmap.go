@@ -5,8 +5,14 @@ import (
 )
 
 type SuperChan struct{
-	Payload Stash
-	C chan Stash
+	Meta Stash
+	C chan HttpReplyChan
+}
+
+type HttpReplyChan struct{
+	Meta Stash
+	Message string
+	HttpCode int
 }
 
 type StashFile struct {
