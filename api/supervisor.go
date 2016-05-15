@@ -2,8 +2,8 @@ package api
 
 import (
 	"fmt"
-	"time"
 	"net/http"
+	"time"
 )
 
 /*
@@ -38,11 +38,13 @@ func DummySupervisor2(token string, c chan SuperChan, cm *ChanMap) {
 		select {
 		case incoming := <-c:
 			fmt.Printf("received filename: %+v\n", incoming)
+			rc := incoming.C
 			if s.Token == incoming.Meta.Token {
-				s.Files = append(s.Files,incoming.Meta.Files...)
-				rc := incoming.C
+				s.Files = append(s.Files, incoming.Meta.Files...)
 				fmt.Printf("received filename: %+v\n", s)
 				rc <- HttpReplyChan{s, "", http.StatusOK}
+			} else {
+				rc <- HttpReplyChan{s, "Internal token error", http.StatusInternalServerError}
 			}
 
 		}
