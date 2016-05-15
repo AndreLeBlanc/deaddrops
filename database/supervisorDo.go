@@ -8,10 +8,19 @@ import (
 )
 
 func delete(db * sql.DB, hash int) {
-    out, error := db.Prepare("delete from userinfo where hash=?")
+    var numD int
+    error := db.QueryRow("SELECT numD FROM userinfo WHERE hash=?", hash).Scan(&numD)
     CheckErr(error)
-
-    out.Exec(hash)
+    
+    if numD < 1 {
+        ut, error := db.Prepare("delete from userinfo where hash=?")
+        CheckErr(error)
+        ut.Exec(hash)
+    } else {
+        update, error := db.Prepare("UPDATE userinfo SET numD=? WHERE hash=?")
+        CheckErr(error)
+        update.Exec(numD-1, hash)
+    }
 }
 
 func SupervisorDo(db * sql.DB, token string, c chan string) {
@@ -23,5 +32,4 @@ func SupervisorDo(db * sql.DB, token string, c chan string) {
     case <-time.After(time.Second * 10):
         fmt.Println("timeout")
     }
-
 }

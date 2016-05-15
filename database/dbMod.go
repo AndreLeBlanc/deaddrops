@@ -15,3 +15,7 @@ func CheckErr(err error) {
         panic(err)
     }
 }
+
+func Close(db * sql.DB) {
+	db.Close()
+}
