@@ -92,10 +92,17 @@ Gruppmöte för att gå igenom inför presentationen för milstolpe 2. Milstolpe
 ##### Torsdag
 
 ##### Fredag
+Möte med Joel och Ali. Planering. Fixade några refaktoreringsbuggar. Började skapa nya struktar för filarean.
+
+##### Lördag
+
+##### Söndag
+Skrev supervisor channel structar och reply strucktar samt ändrade så att dessa används.
 
 ## Vecka 20
 
 ##### Måndag
+Merge av det Joel arbetat på i supervisor branch med min channel branch. Parkodade med Joel upload supervisor och download supervisor. Skrev download supervisor hjälpfunktioner för att ändra i filstruktarna. Skrev lite test och dokumentation.
 
 ##### Tisdag
 
