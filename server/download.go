@@ -49,7 +49,7 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	// 	http.Error(w, reply.Message, reply.HttpCode)
 	// 	return
 	// }
-	
+
 	fmt.Printf("filename is %s", filename)
 
 	if _, err := os.Stat(path); os.IsNotExist(err) {
@@ -66,7 +66,7 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 func createJsonStash(w http.ResponseWriter, token string, conf *Configuration) {
 	reply, err := DnSuperStash(token, conf)
 	if err != nil {
-		http.Error(w, reply.Message, reply.HttpCode) 
+		http.Error(w, reply.Message, reply.HttpCode)
 	}
 
 	json, err := json.Marshal(reply.Meta)
@@ -75,6 +75,6 @@ func createJsonStash(w http.ResponseWriter, token string, conf *Configuration) {
 		http.Error(w, "Internal server error", 500)
 		return
 	}
-	
+
 	w.Write([]byte(json))
 }

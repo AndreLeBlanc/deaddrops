@@ -1,10 +1,10 @@
 package server
 
 import (
+	"deadrop/api"
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"deadrop/api"
 )
 
 func endUpload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
@@ -24,7 +24,6 @@ func endUpload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	fmt.Println(*meta)
 	fmt.Fprintf(w, "%v", meta.Token)
 }
-
 
 func decodeJson(decoder *json.Decoder) *api.Stash {
 	var meta api.Stash

@@ -64,12 +64,12 @@ func TestCMconcurrency(t *testing.T) {
 	}
 }
 
-func TestStashDecrementFile(t *testing.T){
+func TestStashDecrementFile(t *testing.T) {
 	files := []StashFile{}
 	findFile := StashFile{Fname: "test2", Size: 0, Type: "", Download: 0}
-	files = append(files,StashFile{Fname: "test1", Size: 0, Type: "", Download: 1})
-	files = append(files,StashFile{Fname: "test2", Size: 0, Type: "", Download: 2})
-	files = append(files,StashFile{Fname: "test3", Size: 0, Type: "", Download: 3})
+	files = append(files, StashFile{Fname: "test1", Size: 0, Type: "", Download: 1})
+	files = append(files, StashFile{Fname: "test2", Size: 0, Type: "", Download: 2})
+	files = append(files, StashFile{Fname: "test3", Size: 0, Type: "", Download: 3})
 	s := Stash{"abc", 0, files}
 	if d := s.DecrementDownloadCounter(findFile); d == 1 && s.Files[s.FindFileInStash(findFile)].Download != d {
 		t.Errorf("Incorrect download counter")

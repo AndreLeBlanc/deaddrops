@@ -49,7 +49,7 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		http.Error(w, reply.Message, reply.HttpCode)
 	}
 	fmt.Println("Sent filename to channel")
-	
+
 	if reply.HttpCode == 200 {
 		f, err := os.OpenFile(filepath.Join(conf.filefolder, token, filename), os.O_WRONLY|os.O_CREATE, 0666)
 		if err != nil {
@@ -58,7 +58,7 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		}
 		defer f.Close()
 		io.Copy(f, file)
-		fmt.Fprintf(w, supAns.Message)
+		fmt.Fprintf(w, reply.Message)
 
 	} else {
 		http.Error(w, reply.Message, reply.HttpCode)
