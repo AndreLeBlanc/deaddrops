@@ -219,12 +219,22 @@ func DnSuper(token string, conf *Configuration) {
 				if length == 0 {
 					replyChan <- api.HttpReplyChan{stash, "Current stash status", http.StatusOK}
 				} else if length == 1 {
-					// TODO: Validate stash restrictions, like number of files in a stash (optional).
+					reqFile := superChan.Meta.Files[0]
+					fileIndex := stash.FindFileInStash(reqFile)
+					if stash.Files[fileIndex].Download == 0 {
+						replyChan <- api.HttpReplyChan{stash, "File no longer available", http.StatusNotFound}
+					} else {
+						n := stash.DecrementDownloadCounter(reqFile)
+						if n == 0 {
+							//defer cleanupfunction(stash)
+						}
+						replyChan <- api.HttpReplyChan{stash, "Download file OK", http.StatusOK}
+					}
 					stash.Files = append(stash.Files, superChan.Meta.Files...)
 					fmt.Printf("received filename: %+v\n", stash)
 					replyChan <- api.HttpReplyChan{stash, "", http.StatusOK}
 				} else {
-					// TODO: panic
+					replyChan <- api.HttpReplyChan{stash, "Bad file handling", http.StatusInternalServerError}
 				}
 			} else {
 				replyChan <- api.HttpReplyChan{stash, "Internal token error", http.StatusInternalServerError}
