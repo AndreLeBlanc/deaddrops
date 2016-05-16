@@ -1,10 +1,10 @@
 package server
 
 import (
-	"fmt"
-	//"time"
 	"deadrop/api"
 	"errors"
+	"fmt"
+	"net/http"
 )
 
 // Contains meta data relevant to the system supervisor. The Struct should probably
@@ -116,13 +116,6 @@ func sysHandler(sys *system, sysOpt SysOption) error {
 	return nil
 }
 
-// Meta data for an upload supervisor.
-type UploadStash struct {
-	token string
-	// db  *database
-	//upChan chan SomeStruct // Should have a response channel field
-}
-
 func superRequest(token string, req api.SuperChan, cm *api.ChanMap) (*api.HttpReplyChan, error) {
 	respChan := req.C
 	c, ok := api.FindChan(cm, token)
@@ -153,21 +146,48 @@ func UpSuperFinalize(finalStash api.Stash, conf *Configuration) (*api.HttpReplyC
 
 // The upload supervisor. Has a stash which it updates after every call and writes
 // the stash to the database when finalize is called.
-func UpSuper( /*stashUp stashUploadStruct*/ ) {
+func UpSuper(token string, conf *Configuration) {
 	// Create a stash.
+	c, ok := api.FindChan(conf.upMap, token)
+	if !ok {
+		fmt.Println("[UpSuper]: Invalid token")
+		return
+	}
+	stash := api.Stash{token, 0, []api.StashFile{}}
+	fmt.Printf("UpSuper %s running\n", token)
 	// Update is for every request.
-	// Write stash to database when it gets a finalize flag.
+	for {
+		select {
+		case superChan := <-c:
+			//fmt.Printf("received : %+v\n", sc)
+			replyChan := superChan.C
+			if stash.Token == superChan.Meta.Token {
+				if superChan.Meta.Lifetime != 0 {
+					// TODO: Validate filenames (optional).
+					// TODO: Write stash to database when it gets a finalize flag.
+					return
+				}
+
+				// TODO: Validate stash restrictions, like number of files in a stash (optional).
+				stash.Files = append(stash.Files, superChan.Meta.Files...)
+				fmt.Printf("received filename: %+v\n", stash)
+				replyChan <- api.HttpReplyChan{stash, "", http.StatusOK}
+			} else {
+				replyChan <- api.HttpReplyChan{stash, "Internal token error", http.StatusInternalServerError}
+			}
+		}
+	}
 }
 
-// Meta data for an download supervisor. Will need a response channel to send a json.
-type DownloadStash struct {
-	token string
-	// db   *database
-	//dnChan chan SomeStruct // Should have a response channel field
-	janitor chan string
+// Contact a download supervisor to get stash.
+func DnSuperStash(token string, conf *Configuration) (*api.HttpReplyChan, error) {
+	stash := api.Stash{Token: token, Lifetime: 0, Files: []api.StashFile{}}
+	replyChannel := make(chan api.HttpReplyChan)
+	req := api.SuperChan{stash, replyChannel}
+	return superRequest(token, req, conf.downMap)
 }
 
-// Contact an upload supervisor to download a file.
+// Contact a download supervisor to download a file.
 func DnSuperDownload(token string, fname string, conf *Configuration) (*api.HttpReplyChan, error) {
 	stash := api.Stash{Token: token, Lifetime: 0, Files: append([]api.StashFile{}, api.StashFile{Fname: fname, Size: 0, Type: "", Download: 0})}
 	replyChannel := make(chan api.HttpReplyChan)
@@ -179,28 +199,39 @@ func DnSuperDownload(token string, fname string, conf *Configuration) (*api.Http
 // stash meta data, like Lifetime and #downloads. Calls the janitor to remove files
 // from the database and disc when their #downloads reach 0 and the whole stash when
 // Lifetime expires.
-func DnSuper() {
-	// Read stash from database.
+func DnSuper(token string, conf *Configuration) {
+	// TODO: Read stash from database.
+	stash := api.Stash{token, 0, []api.StashFile{}} // this is just temporary
+	c, ok := api.FindChan(conf.downMap, token)
+	if !ok {
+		fmt.Println("[UpSuper]: Invalid token")
+		return
+	}
 	// Update it for every request.
+	fmt.Printf("DnSuper %s running\n", token)
+	for {
+		select {
+		case superChan := <-c:
+			//fmt.Printf("received : %+v\n", sc)
+			replyChan := superChan.C
+			if stash.Token == superChan.Meta.Token {
+				length := len(superChan.Meta.Files)
+				if length == 0 {
+					replyChan <- api.HttpReplyChan{stash, "Current stash status", http.StatusOK}
+				} else if length == 1 {
+					// TODO: Validate stash restrictions, like number of files in a stash (optional).
+					stash.Files = append(stash.Files, superChan.Meta.Files...)
+					fmt.Printf("received filename: %+v\n", stash)
+					replyChan <- api.HttpReplyChan{stash, "", http.StatusOK}
+				} else {
+					// TODO: panic
+				}
+			} else {
+				replyChan <- api.HttpReplyChan{stash, "Internal token error", http.StatusInternalServerError}
+			}
+		}
+	}
 }
-
-// Metadata for the cleaning supervisor.
-type CleanStash struct {
-	option       int
-	token        string
-	fname        string
-	responseChan bool
-}
-
-// Constants used for the option field in the CleanStash struct.
-const (
-	CLEANFILE  = 200
-	CLEANSTASH = 201
-)
-
-// The channel to send cleaning requests to, should probably be in the
-// Configuration struct in server.go.
-var CleanChan = make(chan CleanStash)
 
 // Sends a message to the janitor to remove a file from a stash. Both
 // in the database and on disc.
@@ -212,9 +243,4 @@ func RmFile(fname string) error {
 // database and on disc.
 func RmStash(token string) error {
 	return errors.New("bla")
-}
-
-// The janitor. Download supervisor tells the janitor what to do.
-func Cleaner() {
-
 }

@@ -44,18 +44,13 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	}
 	filename := parseFilename(handler.Filename)
 
-	c, _ := api.FindChan(conf.upMap, token)
-	// TODO: end
-	var st []api.StashFile
-	s := api.Stash{Token: token, Lifetime: 0, Files: append(st, api.StashFile{Fname: filename, Size: 0, Type: "", Download: 0})}
-
-	//TODO: maybe have a response channel for the supervisor to reply
-	//ie. c <- handler.Filename, responseChannel
-	replyChannel := make(chan api.HttpReplyChan)
-	c <- api.SuperChan{s, replyChannel}
+	reply, err := UpSuperUpload(token, filename, conf)
+	if err != nil {
+		http.Error(w, reply.Message, reply.HttpCode)
+	}
 	fmt.Println("Sent filename to channel")
-	supAns := <-replyChannel
-	if supAns.HttpCode == 200 {
+	
+	if reply.HttpCode == 200 {
 		f, err := os.OpenFile(filepath.Join(conf.filefolder, token, filename), os.O_WRONLY|os.O_CREATE, 0666)
 		if err != nil {
 			fmt.Println(err)
@@ -66,7 +61,7 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		fmt.Fprintf(w, "%v", handler.Header)
 
 	} else {
-		http.Error(w, supAns.Message, supAns.HttpCode)
+		http.Error(w, reply.Message, reply.HttpCode)
 	}
 }
 
