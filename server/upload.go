@@ -42,24 +42,32 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		fmt.Println("Could not create token folder")
 		http.Error(w, "Internal server error", 500)
 	}
-
 	filename := parseFilename(handler.Filename)
 
-	f, err := os.OpenFile(filepath.Join(conf.filefolder, token, filename), os.O_WRONLY|os.O_CREATE, 0666)
-	if err != nil {
-		fmt.Println(err) // Could not open file
-		http.Error(w, "Internal server error", 500)
-		return
-	}
-	defer f.Close()
-	io.Copy(f, file)
+	c, _ := api.FindChan(conf.upMap, token)
+	// TODO: end
+	var st []api.StashFile
+	s := api.Stash{Token: token, Lifetime: 0, Files: append(st, api.StashFile{Fname: filename, Size: 0, Type: "", Download: 0})}
 
 	//TODO: maybe have a response channel for the supervisor to reply
 	//ie. c <- handler.Filename, responseChannel
-	c, _ := api.FindChan(conf.upMap, token)
-	c <- filename
+	replyChannel := make(chan api.HttpReplyChan)
+	c <- api.SuperChan{s, replyChannel}
 	fmt.Println("Sent filename to channel")
-	fmt.Fprintf(w, "%v", handler.Header)
+	supAns := <-replyChannel
+	if supAns.HttpCode == 200 {
+		f, err := os.OpenFile(filepath.Join(conf.filefolder, token, filename), os.O_WRONLY|os.O_CREATE, 0666)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		defer f.Close()
+		io.Copy(f, file)
+		fmt.Fprintf(w, "%v", handler.Header)
+
+	} else {
+		http.Error(w, supAns.Message, supAns.HttpCode)
+	}
 }
 
 func parseFilename(path string) string {

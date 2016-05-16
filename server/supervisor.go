@@ -123,29 +123,32 @@ type UploadStash struct {
 	//upChan chan SomeStruct // Should have a response channel field
 }
 
-func superRequest(token string, req string, cm *api.ChanMap) (bool, error) {
-	respChan := make(chan bool)
-	upChan, ok := api.FindChan(cm, token)
+func superRequest(token string, req api.SuperChan, cm *api.ChanMap) (*api.HttpReplyChan, error) {
+	respChan := req.C
+	c, ok := api.FindChan(cm, token)
 	if !ok {
-		return false, errors.New("Invalid token")
+		return nil, errors.New("Invalid token")
 	}
-	upChan <- req
+	c <- req
 	select {
 	case resp := <-respChan:
-		return resp, nil
+		return &resp, nil
 	}
 }
 
 // Contact an upload supervisor to add a file to a stash.
-func UpSuperUpload(token string, fname string, conf *Configuration) (bool, error) {
-	req := token + fname
+func UpSuperUpload(token string, fname string, conf *Configuration) (*api.HttpReplyChan, error) {
+	stash := api.Stash{Token: token, Lifetime: 0, Files: append([]api.StashFile{}, api.StashFile{Fname: fname, Size: 0, Type: "", Download: 0})}
+	replyChannel := make(chan api.HttpReplyChan)
+	req := api.SuperChan{stash, replyChannel}
 	return superRequest(token, req, conf.upMap)
 }
 
 // Contact an upload supervisor to finalize its stash and end the upload session.
-func UpSuperFinalize(token string, conf *Configuration) (bool, error) {
-	req := token + "finalize"
-	return superRequest(token, req, conf.upMap)
+func UpSuperFinalize(finalStash api.Stash, conf *Configuration) (*api.HttpReplyChan, error) {
+	replyChannel := make(chan api.HttpReplyChan)
+	req := api.SuperChan{finalStash, replyChannel}
+	return superRequest(finalStash.Token, req, conf.upMap)
 }
 
 // The upload supervisor. Has a stash which it updates after every call and writes
@@ -165,8 +168,10 @@ type DownloadStash struct {
 }
 
 // Contact an upload supervisor to download a file.
-func DnSuperDownload(token string, fname string, conf *Configuration) (bool, error) {
-	req := token + fname
+func DnSuperDownload(token string, fname string, conf *Configuration) (*api.HttpReplyChan, error) {
+	stash := api.Stash{Token: token, Lifetime: 0, Files: append([]api.StashFile{}, api.StashFile{Fname: fname, Size: 0, Type: "", Download: 0})}
+	replyChannel := make(chan api.HttpReplyChan)
+	req := api.SuperChan{stash, replyChannel}
 	return superRequest(token, req, conf.downMap)
 }
 

@@ -26,7 +26,7 @@ func create(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	}
 
 	stringToken := generateToken()
-	c := make(chan string)
+	c := make(chan api.SuperChan)
 	api.AppendChan(conf.upMap, stringToken, c)
 	jsonToken := struct {
 		Token string

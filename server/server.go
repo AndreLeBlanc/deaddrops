@@ -17,19 +17,6 @@ type Configuration struct {
 	downMap    *api.ChanMap
 }
 
-type stashFile struct {
-	Fname    string
-	Size     int
-	Type     string
-	Download int
-}
-
-type stash struct {
-	Token    string
-	Lifetime int
-	Files    []stashFile
-}
-
 func (c *Configuration) loadSettings() {
 	//TODO: load server settings from somewhere, ex. port number
 	c.filefolder = "deadropfiles"
