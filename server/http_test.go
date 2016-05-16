@@ -10,15 +10,15 @@ import (
 
 func TestStashGET(t *testing.T) {
 	conf := InitServer()
-	cm := conf.ChanMap()
+	cm := conf.upMap
 
 	if n := api.LenChan(cm); n != 0 {
 		t.Errorf("Map containing more/less elements than it should: %d elem", api.LenChan(cm))
 	}
 
 	for i := 0; i < 10; i++ {
-		csHandler := makeHandler(upload, conf)
-		req, _ := http.NewRequest("GET", "http://localhost:8080/upload", nil)
+		csHandler := makeHandler(create, conf)
+		req, _ := http.NewRequest("GET", "http://localhost:9090/create", nil)
 		w := httptest.NewRecorder()
 		csHandler.ServeHTTP(w, req)
 
@@ -36,16 +36,34 @@ func TestStashGET(t *testing.T) {
 func TestStashPOST(t *testing.T) {
 	conf := InitServer()
 
-	csHandler := makeHandler(upload, conf)
+	csHandler := makeHandler(create, conf)
 
-	req, _ := http.NewRequest("GET", "http://localhost:8080/upload", nil)
+	req, _ := http.NewRequest("GET", "http://localhost:9090/create", nil)
 	w := httptest.NewRecorder()
 	csHandler.ServeHTTP(w, req)
 
+	csHandler = makeHandler(upload, conf)
 	var jsonStr = []byte(`{"title":"Buy cheese and bread for breakfast."}`)
-	req, _ = http.NewRequest("POST", "http://localhost:8080/upload", bytes.NewBuffer(jsonStr))
+	req, _ = http.NewRequest("POST", "http://localhost:9090/upload", bytes.NewBuffer(jsonStr))
 
 	w = httptest.NewRecorder()
+	csHandler.ServeHTTP(w, req)
+
+	if w.Code != http.StatusOK {
+		t.Errorf("No Stash POST response: %v", http.StatusOK)
+	}
+}
+
+func TestEndUpload(t *testing.T) {
+	conf := InitServer()
+
+	csHandler := makeHandler(finalize, conf)
+
+	var jsonStr = []byte(`{"Token":"hfsiehfsiehf983989wrhiuhsi","Lifetime":60,"Files":[{"Fname":"blaj.txt","Size":100,"Type":"txt","Download":10},{"Fname":"blaj.txt","Size":100,"Type":"txt","Download":10}]}`)
+
+	req, _ := http.NewRequest("POST", "http://localhost:9090/finalize", bytes.NewBuffer(jsonStr))
+	req.Header.Add("Content-Type", "application/json")
+	w := httptest.NewRecorder()
 	csHandler.ServeHTTP(w, req)
 
 	if w.Code != http.StatusOK {
