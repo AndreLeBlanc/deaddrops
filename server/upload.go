@@ -58,7 +58,7 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		}
 		defer f.Close()
 		io.Copy(f, file)
-		fmt.Fprintf(w, "%v", handler.Header)
+		fmt.Fprintf(w, supAns.Message)
 
 	} else {
 		http.Error(w, reply.Message, reply.HttpCode)
