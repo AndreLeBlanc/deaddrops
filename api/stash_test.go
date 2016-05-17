@@ -10,7 +10,8 @@ func TestStashDecrementFile(t *testing.T) {
 	files = append(files, StashFile{Fname: "test1", Size: 0, Type: "", Download: 1})
 	files = append(files, StashFile{Fname: "test2", Size: 0, Type: "", Download: 2})
 	files = append(files, StashFile{Fname: "test3", Size: 0, Type: "", Download: 3})
-	s := Stash{"abc", 0, files}
+	s := NewEmptyStash()
+	s.Files = files
 	if d := s.DecrementDownloadCounter(findFile); d == 1 && s.Files[s.FindFileInStash(findFile)].Download != d {
 		t.Errorf("Incorrect download counter")
 	}
@@ -22,7 +23,7 @@ func TestRemoveStashFile(t *testing.T) {
 	files = append(files, StashFile{Fname: "test1", Size: 0, Type: "", Download: 1})
 	files = append(files, StashFile{Fname: "test2", Size: 0, Type: "", Download: 2})
 	files = append(files, StashFile{Fname: "test3", Size: 0, Type: "", Download: 3})
-	s := Stash{"abc", 0, []StashFile{}}
+	s := NewEmptyStash()
 	s.Files = files
 	s.RemoveFile(0)
 	if s.FindFileInStash(StashFile{Fname: "test1", Size: 0, Type: "", Download: 1}) != -1 {

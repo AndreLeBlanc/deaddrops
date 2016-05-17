@@ -153,7 +153,8 @@ func UpSuper(token string, conf *Configuration) {
 		fmt.Println("[UpSuper]: Invalid token")
 		return
 	}
-	stash := api.Stash{token, 0, []api.StashFile{}}
+	stash := api.NewEmptyStash()
+	stash.Token = token
 	fmt.Printf("UpSuper %s running\n", token)
 	// Update is for every request.
 	for {
@@ -201,7 +202,8 @@ func DnSuperDownload(token string, fname string, conf *Configuration) (*api.Http
 // Lifetime expires.
 func DnSuper(token string, conf *Configuration) {
 	// TODO: Read stash from database.
-	stash := api.Stash{token, 0, []api.StashFile{}} // this is just temporary
+	stash := api.NewEmptyStash() 
+	stash.Token = token// this is just temporary
 	c, ok := api.FindChan(conf.downMap, token)
 	if !ok {
 		fmt.Println("[UpSuper]: Invalid token")

@@ -6,19 +6,6 @@ import (
 	"time"
 )
 
-/*
-type StashFile struct {
-	Fname    string
-	Size     int
-	Type     string
-	Download int
-}
-
-type Stash struct {
-	Token    string
-	Lifetime int
-	Files    []StashFile
-}*/
 
 func DummySupervisor1(token string, c chan SuperChan, cm *ChanMap) {
 	select {
@@ -31,7 +18,8 @@ func DummySupervisor1(token string, c chan SuperChan, cm *ChanMap) {
 
 func DummySupervisor2(token string, c chan SuperChan, cm *ChanMap) {
 	fmt.Printf("Upload supervisor %s up and running\n", token)
-	s := Stash{token, 0, []StashFile{}}
+	s := NewEmptyStash()
+	s.Token = token
 	fmt.Printf("created local stash: %+v", s)
 	loop := true
 	for loop {

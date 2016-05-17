@@ -2,6 +2,7 @@ package api
 
 
 type StashFile struct {
+	Id       int
 	Fname    string
 	Size     int
 	Type     string
@@ -9,9 +10,10 @@ type StashFile struct {
 }
 
 type Stash struct {
-	Token    string
-	Lifetime int
-	Files    []StashFile
+	Token     string
+	StashName string
+	Lifetime  int
+	Files     []StashFile
 }
 
 //Returns the index of a file in the stash
@@ -34,4 +36,9 @@ func (s *Stash) DecrementDownloadCounter(f StashFile) int {
 
 func (s *Stash) RemoveFile(index int){
 	s.Files = append(s.Files[:index],s.Files[(index+1):]...)
+}
+
+func NewEmptyStash() Stash{
+	s := Stash{"", "", 0, []StashFile{}}
+	return s
 }
