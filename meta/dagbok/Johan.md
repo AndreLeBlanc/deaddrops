@@ -67,7 +67,6 @@ Work2: Fixade lite server-problem
 Work: Fortsatte arbete på front-end. Fokus på design
 
 ##### Onsdag
-Work: Ännu mer arbete på frontend (fokus design + funktionalitet) sedan jobb med automation deploy på servern
 
 ##### Torsdag
 
@@ -94,8 +93,10 @@ Work: Arbetade under längre period tsm med Jonas med sidan för ny sub-page och
 ## Vecka 20
 
 ##### Måndag
+Work&Meet: Träffade gruppen och arbetade under dagen. Försökte koppla ihop progress
 
 ##### Tisdag
+Work: Ännu mer arbete på frontend (fokus design + funktionalitet) sedan jobb med automation deploy på servern
 
 ##### Onsdag
 
