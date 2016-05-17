@@ -67,6 +67,7 @@ Work2: Fixade lite server-problem
 Work: Fortsatte arbete på front-end. Fokus på design
 
 ##### Onsdag
+Work: Ännu mer arbete på frontend (fokus design + funktionalitet) sedan jobb med automation deploy på servern
 
 ##### Torsdag
 
