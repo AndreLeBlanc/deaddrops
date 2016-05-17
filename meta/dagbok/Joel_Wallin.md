@@ -105,7 +105,8 @@ Definierade APIn för alla supervisors och vilka andra funktioner som behövs. S
 ##### Måndag, 13:00-16:00
 Gruppmöte och parprogrammering med Erik. Merge av det vi båda jobbat med och skrev klart upload och download supervisors. Sen integrerade jag den övriga koden. Nu behöver vi bara databasen för att testa allt.
   
-##### Tisdag
+##### Tisdag, ?-?
+Disskussion via slack om vad som behöver göras och hur olika problem ska lösas. Sen testade jag supervisors och skrev lite bättre tester.
 
 ##### Onsdag
 
