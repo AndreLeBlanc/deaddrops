@@ -42,36 +42,21 @@ func TestCreate(t *testing.T) {
 // Test does not work yet, as POST is not 100% defined yet
 func TestUpload(t *testing.T) {
 	conf := InitServer()
-
-	csHandler := makeHandler(create, conf)
-	req, err := http.NewRequest("GET", "http://localhost:9090/create", nil)
-	if err != nil {
+	w, req := createGet("http://localhost:9090/upload", conf)
+	if w == nil {
 		t.Errorf("Error creating GET [Create] request")
 	}
-	w := httptest.NewRecorder()
-	csHandler.ServeHTTP(w, req)
-
 	if w.Code != http.StatusOK {
 		t.Errorf("[Create] GET response error: %v", w.Code)
 	}
 
-	type jsonToken struct {
-		Token string
-	}
-	var jsToken jsonToken
-	var body []byte
-	if body, err = ioutil.ReadAll(w.Body); err != nil {
+	token, err := getToken(w)
+	if err != nil {
 		t.Errorf("[Upload] Invalid token format")
 	}
-	err = json.Unmarshal(body, &jsToken)
-	if err != nil {
-		fmt.Println("error:", err)
-	}
-	token := jsToken.Token
-	fmt.Println(token)
 
-	csHandler = makeHandler(upload, conf)
-	req, err = postFile("test1.txt", "http://localhost:9090/upload", token)
+	csHandler := makeHandler(upload, conf)
+	req, err = uploadPostReq("test1.txt", "http://localhost:9090/upload", token)
 	if err != nil {
 		t.Errorf("Error creating POST [Upload] request")
 	}
@@ -169,7 +154,19 @@ func TestFileDownload(t *testing.T) {
 	// TODO: Check if file exists!
 }
 
-func postFile(filename string, targetUrl string, token string) (*http.Request, error) {
+func createGet(targetUrl string, conf *Configuration) (*httptest.ResponseRecorder, *http.Request) {
+	csHandler := makeHandler(create, conf)
+	req, err := http.NewRequest("GET", "http://localhost:9090/create", nil)
+	if err != nil {
+		return nil, nil
+	}
+	w := httptest.NewRecorder()
+	csHandler.ServeHTTP(w, req)
+
+	return w, req
+}
+
+func uploadPostReq(filename string, targetUrl string, token string) (*http.Request, error) {
 	bodyBuf := &bytes.Buffer{}
 	bodyWriter := multipart.NewWriter(bodyBuf)
 
@@ -207,4 +204,24 @@ func postFile(filename string, targetUrl string, token string) (*http.Request, e
 	req.Header.Set("Content-Type", contentType)
 
 	return req, nil
+}
+
+func getToken(w *httptest.ResponseRecorder) (string, error) {
+	type jsonToken struct {
+		Token string
+	}
+	var jsToken jsonToken
+	//var body []byte
+	body, err := ioutil.ReadAll(w.Body)
+	if err != nil {
+		return "", err
+	}
+	err = json.Unmarshal(body, &jsToken)
+	if err != nil {
+		fmt.Println("error:", err)
+		return "", err
+	}
+	token := jsToken.Token
+	fmt.Println(token)
+	return token, nil
 }
