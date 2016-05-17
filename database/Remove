@@ -1,0 +1,28 @@
+package database
+
+import (
+    "database/sql"
+    _ "github.com/mattn/go-sqlite3"
+    "time"
+    "deadrop/api"
+)
+
+// Ta bort en fil från en stash i databasen. Funktionen behöver även
+
+// uppdatera json fältet, men det har Joel och Erik en funktion för
+
+// säkert.
+
+func RemoveFile(token string, fname string) error {
+
+}
+
+​func RemoveFileHard(token string, fname string) error {
+	
+}
+
+// Ta bort en stash från databasen.
+
+func RemoveStash(token string) error {
+
+}
