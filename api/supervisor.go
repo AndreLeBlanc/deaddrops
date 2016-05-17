@@ -6,7 +6,6 @@ import (
 	"time"
 )
 
-
 func DummySupervisor1(token string, c chan SuperChan, cm *ChanMap) {
 	select {
 	case fname := <-c:

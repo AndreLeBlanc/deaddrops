@@ -44,5 +44,3 @@ func FindChan(cm *ChanMap, token string) (chan SuperChan, bool) {
 func LenChan(cm *ChanMap) int {
 	return len(cm.m)
 }
-
-

@@ -56,7 +56,7 @@ func TestUpload(t *testing.T) {
 	}
 
 	csHandler := makeHandler(upload, conf)
-	req, err = uploadPostReq("test1.txt", "http://localhost:9090/upload", token)
+	req, err = uploadPost("test1.txt", "http://localhost:9090/upload", token)
 	if err != nil {
 		t.Errorf("Error creating POST [Upload] request")
 	}
@@ -79,14 +79,23 @@ func TestUpload(t *testing.T) {
 
 func TestFinalize(t *testing.T) {
 	conf := InitServer()
-	csHandler := makeHandler(finalize, conf)
-
 	var jsonStr = []byte(`{"Token":"52359c633f1eae96ac7e600a9a4a885b","Lifetime":60,"Files":[{"Fname":"foo.txt","Size":100,"Type":"txt","Download":10},{"Fname":"bar.txt","Size":50,"Type":"txt","Download":5}]}`)
+	w, _ := finalizePOST("http://localhost:9090/finalize", jsonStr, conf)
 
-	req, _ := http.NewRequest("POST", "http://localhost:9090/finalize", bytes.NewBuffer(jsonStr))
-	req.Header.Add("Content-Type", "application/json")
-	w := httptest.NewRecorder()
-	csHandler.ServeHTTP(w, req)
+	if w.Code != http.StatusOK {
+		t.Errorf("Response error [Finalize]: %v", w.Code)
+	}
+
+	stash := api.NewEmptyStash()
+	stash.Token = ttoken
+	stash.Lifetime = 999
+	file := api.NewEmptyStashFile()
+	file.Fname = "test1.txt"
+	file.Download = 1
+	stash.Files = append(stash.Files, file)
+	json, _ := json.Marshal(stash)
+	jsonStr = []byte(json)
+	w, _ = finalizePOST("http://localhost:9090/finalize", jsonStr, conf)
 
 	if w.Code != http.StatusOK {
 		t.Errorf("Response error [Finalize]: %v", w.Code)
@@ -166,7 +175,7 @@ func createGet(targetUrl string, conf *Configuration) (*httptest.ResponseRecorde
 	return w, req
 }
 
-func uploadPostReq(filename string, targetUrl string, token string) (*http.Request, error) {
+func uploadPost(filename string, targetUrl string, token string) (*http.Request, error) {
 	bodyBuf := &bytes.Buffer{}
 	bodyWriter := multipart.NewWriter(bodyBuf)
 
@@ -204,6 +213,18 @@ func uploadPostReq(filename string, targetUrl string, token string) (*http.Reque
 	req.Header.Set("Content-Type", contentType)
 
 	return req, nil
+}
+
+func finalizePOST(targetUrl string, jsonStr []byte, conf *Configuration) (*httptest.ResponseRecorder, *http.Request) {
+	csHandler := makeHandler(finalize, conf)
+	req, err := http.NewRequest("POST", targetUrl, bytes.NewBuffer(jsonStr))
+	if err != nil {
+		return nil, nil
+	}
+	req.Header.Add("Content-Type", "application/json")
+	w := httptest.NewRecorder()
+	csHandler.ServeHTTP(w, req)
+	return w, req
 }
 
 func getToken(w *httptest.ResponseRecorder) (string, error) {

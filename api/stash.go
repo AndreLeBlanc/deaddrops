@@ -1,6 +1,5 @@
 package api
 
-
 type StashFile struct {
 	Id       int
 	Fname    string
@@ -34,16 +33,16 @@ func (s *Stash) DecrementDownloadCounter(f StashFile) int {
 	return s.Files[i].Download
 }
 
-func (s *Stash) RemoveFile(index int){
-	s.Files = append(s.Files[:index],s.Files[(index+1):]...)
+func (s *Stash) RemoveFile(index int) {
+	s.Files = append(s.Files[:index], s.Files[(index+1):]...)
 }
 
-func NewEmptyStash() Stash{
+func NewEmptyStash() Stash {
 	s := Stash{Token: "", StashName: "", Lifetime: 0, Files: []StashFile{}}
 	return s
 }
 
 func NewEmptyStashFile() StashFile {
-	f := StashFile{Id:0, Fname:"", Size:0, Type: "", Download: -1 }
+	f := StashFile{Id: 0, Fname: "", Size: 0, Type: "", Download: -1}
 	return f
 }

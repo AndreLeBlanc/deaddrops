@@ -206,8 +206,8 @@ func DnSuperDownload(token string, fname string, conf *Configuration) (*api.Http
 // Lifetime expires.
 func DnSuper(token string, conf *Configuration) {
 	// TODO: Read stash from database.
-	stash := api.NewEmptyStash() 
-	stash.Token = token// this is just temporary
+	stash := api.NewEmptyStash()
+	stash.Token = token // this is just temporary
 	c, ok := api.FindChan(conf.downMap, token)
 	if !ok {
 		fmt.Println("[UpSuper]: Invalid token")
@@ -220,30 +220,29 @@ func DnSuper(token string, conf *Configuration) {
 		case superChan := <-c:
 			//fmt.Printf("received : %+v\n", sc)
 			replyChan := superChan.C
-			if stash.Token == superChan.Meta.Token {
-				length := len(superChan.Meta.Files)
-				if length == 0 {
-					replyChan <- api.HttpReplyChan{stash, "Current stash status", http.StatusOK}
-				} else if length == 1 {
-					reqFile := superChan.Meta.Files[0]
-					fileIndex := stash.FindFileInStash(reqFile)
-					if stash.Files[fileIndex].Download == 0 {
-						replyChan <- api.HttpReplyChan{stash, "File no longer available", http.StatusNotFound}
-					} else {
-						n := stash.DecrementDownloadCounter(reqFile)
-						if n == 0 {
-							//defer cleanupfunction(stash)
-						}
-						replyChan <- api.HttpReplyChan{stash, "Download file OK", http.StatusOK}
-					}
-					stash.Files = append(stash.Files, superChan.Meta.Files...)
-					fmt.Printf("received filename: %+v\n", stash)
-					replyChan <- api.HttpReplyChan{stash, "", http.StatusOK}
-				} else {
-					replyChan <- api.HttpReplyChan{stash, "Bad file handling", http.StatusInternalServerError}
-				}
-			} else {
+			if stash.Token != superChan.Meta.Token {
 				replyChan <- api.HttpReplyChan{stash, "Internal token error", http.StatusInternalServerError}
+			}
+			length := len(superChan.Meta.Files)
+			if length == 0 {
+				replyChan <- api.HttpReplyChan{stash, "Current stash status", http.StatusOK}
+			} else if length == 1 {
+				reqFile := superChan.Meta.Files[0]
+				fileIndex := stash.FindFileInStash(reqFile)
+				if stash.Files[fileIndex].Download == 0 {
+					replyChan <- api.HttpReplyChan{stash, "File no longer available", http.StatusNotFound}
+				} else {
+					n := stash.DecrementDownloadCounter(reqFile)
+					if n == 0 {
+						//defer cleanupfunction(stash)
+					}
+					replyChan <- api.HttpReplyChan{stash, "Download file OK", http.StatusOK}
+				}
+				stash.Files = append(stash.Files, superChan.Meta.Files...) // Why is this line here?
+				fmt.Printf("received filename: %+v\n", stash)
+				replyChan <- api.HttpReplyChan{stash, "", http.StatusOK}
+			} else {
+				replyChan <- api.HttpReplyChan{stash, "Bad file handling", http.StatusInternalServerError}
 			}
 		}
 	}

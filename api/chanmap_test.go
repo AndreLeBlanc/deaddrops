@@ -63,5 +63,3 @@ func TestCMconcurrency(t *testing.T) {
 		t.Errorf("Map containing more/less elements than it should")
 	}
 }
-
-

@@ -17,7 +17,6 @@ func TestStashDecrementFile(t *testing.T) {
 	}
 }
 
-
 func TestRemoveStashFile(t *testing.T) {
 	files := []StashFile{}
 	files = append(files, StashFile{Fname: "test1", Size: 0, Type: "", Download: 1})
