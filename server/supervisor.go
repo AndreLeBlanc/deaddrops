@@ -131,8 +131,12 @@ func superRequest(token string, req api.SuperChan, cm *api.ChanMap) (*api.HttpRe
 
 // Contact an upload supervisor to add a file to a stash.
 func UpSuperUpload(token string, fname string, conf *Configuration) (*api.HttpReplyChan, error) {
-	stash := api.Stash{Token: token, Lifetime: 0, Files: append([]api.StashFile{}, api.StashFile{Fname: fname, Size: 0, Type: "", Download: 0})}
-	replyChannel := make(chan api.HttpReplyChan)
+	newFile := api.NewEmptyStashFile()
+	newFile.Fname = fname
+	stash := api.NewEmptyStash()
+	stash.Token = token
+	stash.Files = append(stash.Files, newFile)
+	replyChannel := make(chan api.HttpReplyChan, 1)
 	req := api.SuperChan{stash, replyChannel}
 	return superRequest(token, req, conf.upMap)
 }

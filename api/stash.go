@@ -39,6 +39,11 @@ func (s *Stash) RemoveFile(index int){
 }
 
 func NewEmptyStash() Stash{
-	s := Stash{"", "", 0, []StashFile{}}
+	s := Stash{Token: "", StashName: "", Lifetime: 0, Files: []StashFile{}}
 	return s
+}
+
+func NewEmptyStashFile() StashFile {
+	f := StashFile{Id:0, Fname:"", Size:0, Type: "", Download: -1 }
+	return f
 }
