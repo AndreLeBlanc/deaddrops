@@ -12,7 +12,7 @@ func addToHashD(db *sql.DB, tok string, StashNom string, lifeTime int) error {
 	return err
 }
 
-func createNewTable(db *sql.DB, token string, fil *[]StashFile) error {
+func createNewTable(db *sql.DB, token string, fil *[]api.StashFile) error {
 	if fil == nil {
 		return DError{time.Now(), "No stashfile!"}
 	}
@@ -33,7 +33,7 @@ func createNewTable(db *sql.DB, token string, fil *[]StashFile) error {
 	return nil
 }
 
-func InsertStash(db *sql.DB, s *Stash) error {
+func InsertStash(db *sql.DB, s *api.Stash) error {
 	error := addToHashD(db, s.Token, s.StashName, s.Lifetime)
 	if error == nil {
 		error = createNewTable(db, s.Token, &s.Files)

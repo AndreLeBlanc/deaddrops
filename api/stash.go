@@ -10,7 +10,7 @@ type StashFile struct {
 
 type Stash struct {
 	Token     string
-	Label     string
+	StashName     string
 	Lifetime  int
 	Files     []StashFile
 }
@@ -38,7 +38,7 @@ func (s *Stash) RemoveFile(index int) {
 }
 
 func NewEmptyStash() Stash {
-	s := Stash{Token: "", Label: "", Lifetime: 0, Files: []StashFile{}}
+	s := Stash{Token: "", StashName: "", Lifetime: 0, Files: []StashFile{}}
 	return s
 }
 

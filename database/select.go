@@ -8,8 +8,8 @@ import (
 
 // Läs en stash från databasen.
 
-func getStash(db *sql.DB, token string) Stash {
-	var s Stash
+func getStash(db *sql.DB, token string) api.Stash {
+	var s api.Stash
 
 	rows, err := db.Query("SELECT Lifetime FROM stashes WHERE token=?", token)
 	if err != nil {
@@ -41,15 +41,15 @@ func getStash(db *sql.DB, token string) Stash {
 	return s
 }
 
-func getRows(db *sql.DB, token string) []StashFile {
+func getRows(db *sql.DB, token string) []api.StashFile {
 	var count int
-	SFile := make([]StashFile, count)
+	SFile := make([]api.StashFile, count)
 	error := db.QueryRow("SELECT COUNT(*) FROM " + token).Scan(&count)
 	if error != nil {
 		return SFile
 	}
 
-	SFile = make([]StashFile, count)
+	SFile = make([]api.StashFile, count)
 	rows, error := db.Query("SELECT ID, Fname, Size, Type, numD FROM " + token)
 	if error != nil {
 		return SFile
@@ -57,7 +57,7 @@ func getRows(db *sql.DB, token string) []StashFile {
 	return getStashFiles(rows, SFile)
 }
 
-func getStashFiles(rows *sql.Rows, SFile []StashFile) []StashFile {
+func getStashFiles(rows *sql.Rows, SFile []api.StashFile) []api.StashFile {
 	i := 0
 	for rows.Next() {
 		var Id, Size, Download int
@@ -66,13 +66,13 @@ func getStashFiles(rows *sql.Rows, SFile []StashFile) []StashFile {
 		if err != nil {
 			return SFile
 		}
-		SFile[i] = StashFile{Id, Fname, Size, Type, Download}
+		SFile[i] = api.StashFile{Id, Fname, Size, Type, Download}
 		i++
 	}
 	return SFile
 }
 
-func SelectStash(db *sql.DB, token string) Stash {
+func SelectStash(db *sql.DB, token string) api.Stash {
 	myStash := getStash(db, token)
 	myStash.Files = getRows(db, token)
 	return myStash

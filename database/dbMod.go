@@ -2,7 +2,14 @@ package database
 
 import (
 	"database/sql"
+	"time"
+	"fmt"
 )
+
+type DError struct{
+	When time.Time
+	What string
+}
 
 func Init() *sql.DB {
 	Db, err := sql.Open("sqlite3", "database/deadrops.db")

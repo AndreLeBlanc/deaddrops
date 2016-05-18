@@ -2,7 +2,7 @@ package database
 
 import (
 	"database/sql"
-	"deadrop/api"
+	//"deadrop/api"
 	_ "github.com/mattn/go-sqlite3"
 	"time"
 )

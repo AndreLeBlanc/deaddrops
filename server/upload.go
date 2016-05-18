@@ -8,8 +8,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"time"
-	"deadrop/database"
 )
 
 func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
