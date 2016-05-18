@@ -17,7 +17,7 @@ type HttpReplyChan struct {
 
 type ChanMap struct {
 	m   map[string]chan SuperChan
-	mux sync.Mutex
+	sync.RWMutex
 }
 
 // Initialize a new empty ChanMap.
@@ -27,16 +27,19 @@ func InitChanMap() *ChanMap {
 
 // Append a channel to the ChanMap with the token string as key.
 func AppendChan(cm *ChanMap, token string, c chan SuperChan) {
-	cm.mux.Lock()
-	defer cm.mux.Unlock()
 	if _, ok := FindChan(cm, token); ok {
 		return
 	}
+	cm.Lock()
 	cm.m[token] = c
+	defer cm.Unlock()
+
 }
 
 // Get the channel with the corresponding token string as key.
 func FindChan(cm *ChanMap, token string) (chan SuperChan, bool) {
+	cm.RLock()
+	defer cm.RUnlock()
 	c, ok := cm.m[token]
 	return c, ok
 }
