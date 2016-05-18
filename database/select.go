@@ -6,8 +6,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-// Läs en stash från databasen.
-
+//Reads a stash from database
 func getStash(db *sql.DB, token string) api.Stash {
 	var s api.Stash
 
@@ -72,12 +71,14 @@ func getStashFiles(rows *sql.Rows, SFile []api.StashFile) []api.StashFile {
 	return SFile
 }
 
+//Returns a stash from the database
 func SelectStash(db *sql.DB, token string) api.Stash {
 	myStash := getStash(db, token)
 	myStash.Files = getRows(db, token)
 	return myStash
 }
 
+//Returns the lifetme from the deadrop token.
 func SelectLifetime(db *sql.DB, token string) int {
 	var tok int
 	db.QueryRow("SELECT Lifetime FROM stashes WHERE token=?", token).Scan(&tok)

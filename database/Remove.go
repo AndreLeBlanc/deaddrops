@@ -7,12 +7,9 @@ import (
 	"time"
 )
 
-// Ta bort en fil från en stash i databasen. Funktionen behöver även
-
-// uppdatera json fältet, men det har Joel och Erik en funktion för
-
-// säkert.
-
+//Removes a file from the deadrop token. If the number of allowed downloads is more than 0 
+//the number of allowed downloads is decremented by 1. Otherwise the file is deleted from 
+//the database. Returns an DError if failed and nil if successful
 func RemoveFile(db *sql.DB, token string, fname string) error {
 	var numD int
 	error := db.QueryRow("SELECT numD FROM "+token+" WHERE Fname=?", fname).Scan(&numD)
@@ -32,6 +29,7 @@ func RemoveFile(db *sql.DB, token string, fname string) error {
 	return nil
 }
 
+//Removes a file named fname from the deadop token regardless of how many downloads are left
 func RemoveFileHard(db *sql.DB, token string, fname string) error {
 	ut, error := db.Prepare("delete from " + token + " where Fname=?")
 	if error != nil {
@@ -41,8 +39,7 @@ func RemoveFileHard(db *sql.DB, token string, fname string) error {
 	return nil
 }
 
-// Ta bort en stash från databasen.
-
+// Removes a stash from database.
 func RemoveStash(db *sql.DB, token string) error {
 	ut, error := db.Prepare("delete from stashes where token=?")
 	if error != nil {
