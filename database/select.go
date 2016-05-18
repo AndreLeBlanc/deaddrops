@@ -7,37 +7,37 @@ import (
 )
 
 //Reads a stash from database
-func getStash(db *sql.DB, token string) api.Stash {
+func getStash(db *sql.DB, token string) *api.Stash {
 	var s api.Stash
 
 	rows, err := db.Query("SELECT Lifetime FROM stashes WHERE token=?", token)
 	if err != nil {
-		return s
+		return nil
 	}
 	var Lifetime int
 	var StashName string
 	for rows.Next() {
 		err = rows.Scan(&Lifetime)
 		if err != nil {
-			return s
+			return nil
 		}
 	}
 
 	rows, err = db.Query("SELECT StashName FROM stashes WHERE token=?", token)
 	if err != nil {
-		return s
+		return nil
 	}
 	for rows.Next() {
 		err = rows.Scan(&StashName)
 		if err != nil {
-			return s
+			return nil
 		}
 	}
 
 	s.Token = token
 	s.StashName = StashName
 	s.Lifetime = Lifetime
-	return s
+	return &s
 }
 
 func getRows(db *sql.DB, token string) []api.StashFile {
@@ -72,8 +72,11 @@ func getStashFiles(rows *sql.Rows, SFile []api.StashFile) []api.StashFile {
 }
 
 //Returns a stash from the database
-func SelectStash(db *sql.DB, token string) api.Stash {
+func SelectStash(db *sql.DB, token string) *api.Stash {
 	myStash := getStash(db, token)
+	if myStash == nil {
+		return nil
+	}
 	myStash.Files = getRows(db, token)
 	return myStash
 }

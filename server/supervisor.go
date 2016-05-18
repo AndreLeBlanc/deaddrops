@@ -122,7 +122,7 @@ func superRequest(token string, req api.SuperChan, cm *api.ChanMap, conf *Config
 	respChan := req.C
 	c, ok := api.FindChan(cm, token)
 	if !ok {
-		return nil, errors.New("Invalid token")
+		return &api.HttpReplyChan{Message: "Invalid token", HttpCode: http.StatusServiceUnavailable}, errors.New("Invalid token")
 	}
 	c <- req
 	select {
@@ -195,6 +195,8 @@ func DnSuperStash(token string, conf *Configuration) (*api.HttpReplyChan, error)
 	stash := api.Stash{Token: token, Lifetime: 0, Files: []api.StashFile{}}
 	replyChannel := make(chan api.HttpReplyChan)
 	req := api.SuperChan{stash, replyChannel}
+	api.AppendChan(conf.downMap, token, make(chan api.SuperChan))
+	go DnSuper(token, conf)
 	return superRequest(token, req, conf.downMap, conf)
 }
 
@@ -212,19 +214,23 @@ func DnSuperDownload(token string, fname string, conf *Configuration) (*api.Http
 // Lifetime expires.
 func DnSuper(token string, conf *Configuration) {
 	// TODO: Read stash from database.
-	stash := api.NewEmptyStash()
+	//stash := api.NewEmptyStash()
+	sp := database.SelectStash(conf.dbConn, token)
+	if sp == nil {
+		fmt.Println("[UpSuper]: Stash does not exist")
+		return
+	}
+	stash := *sp
 	stash.Token = token // this is just temporary
 	c, ok := api.FindChan(conf.downMap, token)
 	if !ok {
 		fmt.Println("[UpSuper]: Invalid token")
 		return
 	}
-	// Update it for every request.
 	fmt.Printf("DnSuper %s running\n", token)
 	for {
 		select {
 		case superChan := <-c:
-			//fmt.Printf("received : %+v\n", sc)
 			replyChan := superChan.C
 			if stash.Token != superChan.Meta.Token {
 				replyChan <- api.HttpReplyChan{stash, "Internal token error", http.StatusInternalServerError}
@@ -240,7 +246,7 @@ func DnSuper(token string, conf *Configuration) {
 				} else {
 					n := stash.DecrementDownloadCounter(reqFile)
 					if n == 0 {
-						//defer cleanupfunction(stash)
+						//RmFile(stash)
 					}
 					replyChan <- api.HttpReplyChan{stash, "Download file OK", http.StatusOK}
 				}

@@ -75,15 +75,16 @@ func TestUpload(t *testing.T) {
 	}
 
 	ttoken = token
+	httpconf = conf
 }
 
-func TestFinalize(t *testing.T) {
-	conf := InitServer()
-	var jsonStr = []byte(`{"Token":"52359c633f1eae96ac7e600a9a4a885b","Lifetime":60,"Files":[{"Fname":"foo.txt","Size":100,"Type":"txt","Download":10},{"Fname":"bar.txt","Size":50,"Type":"txt","Download":5}]}`)
-	w, _ := finalizePOST("http://localhost:9090/finalize", jsonStr, conf)
+var httpconf *Configuration = nil
 
-	if w.Code != http.StatusOK {
-		t.Errorf("Response error [Finalize]: %v", w.Code)
+func TestFinalize(t *testing.T) {
+	conf := httpconf
+	if conf == nil {
+		t.Errorf("Upload failed, token is nil")
+		return
 	}
 
 	stash := api.NewEmptyStash()
@@ -94,8 +95,8 @@ func TestFinalize(t *testing.T) {
 	file.Download = 1
 	stash.Files = append(stash.Files, file)
 	json, _ := json.Marshal(stash)
-	jsonStr = []byte(json)
-	w, _ = finalizePOST("http://localhost:9090/finalize", jsonStr, conf)
+	jsonStr := []byte(json)
+	w, _ := finalizePOST("http://localhost:9090/finalize", jsonStr, conf)
 
 	if w.Code != http.StatusOK {
 		t.Errorf("Response error [Finalize]: %v", w.Code)

@@ -26,7 +26,7 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	if len(urlSubStr) == 3 {
 		if api.ValidateToken(api.GetToken(urlSubStr)) {
 			// TODO: Uncomment when database is in place.
-			//createJsonStash(w, api.GetToken(urlSubStr), conf)
+			createJsonStash(w, api.GetToken(urlSubStr), conf)
 			return
 		} else {
 			http.Error(w, "Invalid URL", 400)
@@ -44,11 +44,11 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 
 	// TODO: Uncomment when database is in place.
 	// TODO: Don-t think you have to check the error here.
-	// reply, _ := DnSuperDownload(token, filename, conf)
-	// if reply.HttpCode != http.StatusOK {
-	// 	http.Error(w, reply.Message, reply.HttpCode)
-	// 	return
-	// }
+	reply, _ := DnSuperDownload(token, filename, conf)
+	if reply.HttpCode != http.StatusOK {
+		http.Error(w, reply.Message, reply.HttpCode)
+		return
+	}
 
 	fmt.Printf("filename is %s", filename)
 
@@ -67,6 +67,7 @@ func createJsonStash(w http.ResponseWriter, token string, conf *Configuration) {
 	reply, err := DnSuperStash(token, conf)
 	if err != nil {
 		http.Error(w, reply.Message, reply.HttpCode)
+		return
 	}
 
 	json, err := json.Marshal(reply.Meta)

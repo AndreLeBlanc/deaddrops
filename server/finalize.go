@@ -15,11 +15,11 @@ func endUpload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	}
 
 	// TODO: Uncomment when database is in place.
-	// reply, err := UpSuperFinalize(*meta, conf)
-	// if err != nil {
-	// 	http.Error(w, reply.Message, reply.HttpCode)
-	// 	return
-	// }
+	reply, err := UpSuperFinalize(*meta, conf)
+	if err != nil {
+		http.Error(w, reply.Message, reply.HttpCode)
+		return
+	}
 
 	fmt.Println(*meta)
 	fmt.Fprintf(w, "%v", meta.Token)

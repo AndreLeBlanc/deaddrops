@@ -33,6 +33,7 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	if err != nil {
 		fmt.Println("Invalid token")
 		http.Error(w, "Invalid token", 400)
+		return
 	}
 
 	api.ValidateFile( /*file*/ ) // ?
@@ -41,12 +42,14 @@ func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	if err != nil {
 		fmt.Println("Could not create token folder")
 		http.Error(w, "Internal server error", 500)
+		return
 	}
 	filename := parseFilename(handler.Filename)
 
 	reply, err := UpSuperUpload(token, filename, conf)
 	if err != nil {
 		http.Error(w, reply.Message, reply.HttpCode)
+		return
 	}
 	fmt.Println("Sent filename to channel")
 
