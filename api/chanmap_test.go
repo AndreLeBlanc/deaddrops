@@ -7,8 +7,8 @@ import (
 
 func TestBasicCM(t *testing.T) {
 	cm := InitChanMap()
-	c1 := make(chan string)
-	c2 := make(chan string)
+	c1 := make(chan SuperChan)
+	c2 := make(chan SuperChan)
 	AppendChan(cm, "hello", c1)
 
 	if _, ok := FindChan(cm, "hello"); !ok {
@@ -47,7 +47,7 @@ func TestCMconcurrency(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		go func(i int) {
 			defer wg.Done()
-			AppendChan(cm, tokens[i], make(chan string))
+			AppendChan(cm, tokens[i], make(chan SuperChan))
 		}(i)
 	}
 
