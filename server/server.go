@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"time"
 )
 
 //TODO temporary config fake struct
@@ -15,7 +16,9 @@ type Configuration struct {
 	port       string
 	upMap      *api.ChanMap
 	downMap    *api.ChanMap
-	timeout    int //seconds before supervisors timeout
+	uptimeout  time.Duration
+	dntimeout  time.Duration
+	reqtimeout time.Duration
 }
 
 func (c *Configuration) loadSettings() {
@@ -24,7 +27,9 @@ func (c *Configuration) loadSettings() {
 	c.port = ":9090"
 	c.upMap = api.InitChanMap()
 	c.downMap = api.InitChanMap()
-	c.timeout = 1
+	c.uptimeout = 30
+	c.dntimeout = 30
+	c.reqtimeout = 1
 }
 
 var validPath = regexp.MustCompile("^/(create|upload|download|finalize)")
