@@ -108,7 +108,8 @@ Gruppmöte och parprogrammering med Erik. Merge av det vi båda jobbat med och s
 ##### Tisdag, ?-?
 Disskussion via slack om vad som behöver göras och hur olika problem ska lösas. Sen testade jag supervisors och skrev lite bättre tester.
 
-##### Onsdag
+##### Onsdag, 10:00-20:00
+Parprogrammering med Erik, integrering av databas och servern samt lite fix av supervisors. Följt av massvis av debugging.
 
 ##### Torsdag
 
