@@ -174,7 +174,7 @@ func UpSuper(token string, conf *Configuration) {
 				if superChan.Meta.Lifetime != 0 {
 					// TODO: Validate filenames (optional).					
 					err := database.InsertStash(conf.dbConn, &superChan.Meta)
-					database.CheckErr(err)
+					database.CheckErr(err) // debug
 					if err != nil {
 						replyChan <- api.HttpReplyChan{superChan.Meta, "Failed to write to database", http.StatusInternalServerError}
 					}
@@ -250,7 +250,9 @@ func DnSuper(token string, conf *Configuration) {
 				fileIndex := stash.FindFileInStash(reqFile)
 				//fmt.Println(fileIndex)
 				fmt.Println(stash)
-				if stash.Files[fileIndex].Download == 0 {
+				if fileIndex < 0 {
+					replyChan <- api.HttpReplyChan{stash, "No such file in stash", http.StatusNotFound}
+				} else if stash.Files[fileIndex].Download == 0 {
 					replyChan <- api.HttpReplyChan{stash, "File no longer available", http.StatusNotFound}
 				} else {
 					n := stash.DecrementDownloadCounter(reqFile)
