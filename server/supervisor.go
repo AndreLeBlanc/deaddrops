@@ -175,6 +175,7 @@ func UpSuper(token string, conf *Configuration) {
 					// TODO: Validate filenames (optional).
 					database.InsertStash(conf.dbConn, &superChan.Meta)
 				        replyChan <- api.HttpReplyChan{superChan.Meta, "Stash completed", http.StatusOK}
+					//TODO chanmap should be cleaned up
 					return
 				}
 
