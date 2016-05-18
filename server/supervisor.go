@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"time"
 )
 
 // Contains meta data relevant to the system supervisor. The Struct should probably
@@ -116,7 +117,7 @@ func sysHandler(sys *system, sysOpt SysOption) error {
 	return nil
 }
 
-func superRequest(token string, req api.SuperChan, cm *api.ChanMap) (*api.HttpReplyChan, error) {
+func superRequest(token string, req api.SuperChan, cm *api.ChanMap, conf *Configuration) (*api.HttpReplyChan, error) {
 	respChan := req.C
 	c, ok := api.FindChan(cm, token)
 	if !ok {
@@ -126,6 +127,8 @@ func superRequest(token string, req api.SuperChan, cm *api.ChanMap) (*api.HttpRe
 	select {
 	case resp := <-respChan:
 		return &resp, nil
+	case <-time.After(time.Second * conf.reqtimeout):
+		return &api.HttpReplyChan{Message: "timeout", HttpCode: http.StatusServiceUnavailable}, nil
 	}
 }
 
@@ -138,14 +141,14 @@ func UpSuperUpload(token string, fname string, conf *Configuration) (*api.HttpRe
 	stash.Files = append(stash.Files, newFile)
 	replyChannel := make(chan api.HttpReplyChan, 1)
 	req := api.SuperChan{stash, replyChannel}
-	return superRequest(token, req, conf.upMap)
+	return superRequest(token, req, conf.upMap, conf)
 }
 
 // Contact an upload supervisor to finalize its stash and end the upload session.
 func UpSuperFinalize(finalStash api.Stash, conf *Configuration) (*api.HttpReplyChan, error) {
 	replyChannel := make(chan api.HttpReplyChan)
 	req := api.SuperChan{finalStash, replyChannel}
-	return superRequest(finalStash.Token, req, conf.upMap)
+	return superRequest(finalStash.Token, req, conf.upMap, conf)
 }
 
 // The upload supervisor. Has a stash which it updates after every call and writes
@@ -189,15 +192,15 @@ func DnSuperStash(token string, conf *Configuration) (*api.HttpReplyChan, error)
 	stash := api.Stash{Token: token, Lifetime: 0, Files: []api.StashFile{}}
 	replyChannel := make(chan api.HttpReplyChan)
 	req := api.SuperChan{stash, replyChannel}
-	return superRequest(token, req, conf.downMap)
+	return superRequest(token, req, conf.downMap, conf)
 }
 
 // Contact a download supervisor to download a file.
 func DnSuperDownload(token string, fname string, conf *Configuration) (*api.HttpReplyChan, error) {
 	stash := api.Stash{Token: token, Lifetime: 0, Files: append([]api.StashFile{}, api.StashFile{Fname: fname, Size: 0, Type: "", Download: 0})}
-	replyChannel := make(chan api.HttpReplyChan)
+	replyChannel := make(chan api.HttpReplyChan, 1)
 	req := api.SuperChan{stash, replyChannel}
-	return superRequest(token, req, conf.downMap)
+	return superRequest(token, req, conf.downMap, conf)
 }
 
 // The download supervisor. Reads the stash from the database and keeps track of
