@@ -44,6 +44,18 @@ func FindChan(cm *ChanMap, token string) (chan SuperChan, bool) {
 	return c, ok
 }
 
+// Deletes a channel from the chanmap.
+// Returns true if succesfull
+func DeleteChan(cm *ChanMap, token string) bool {
+	if _, ok := FindChan(cm, token); !ok {
+		return false
+	}
+	cm.Lock()
+	delete(cm.m, token)
+	cm.Unlock()
+	return true
+}
+
 func LenChan(cm *ChanMap) int {
 	return len(cm.m)
 }
