@@ -45,19 +45,16 @@ func RemoveFileHard(db *sql.DB, token string, fname string) error {
 
 func RemoveStash(db *sql.DB, token string) error {
 	ut, error := db.Prepare("delete from stashes where token=?")
-	CheckErr(error)
 	if error != nil {
 		return DError{time.Now(), "No such stash"}
 	}
 
 	ut.Exec(token)
-	CheckErr(error)
 	if error != nil {
 		return DError{time.Now(), "Couldn't delete Stash"}
 	}
 
 	db.Exec("DROP TABLE " + token)
-	CheckErr(error)
 
 	if error != nil {
 		return DError{time.Now(), "Couldn't prepare tabledrop"}
