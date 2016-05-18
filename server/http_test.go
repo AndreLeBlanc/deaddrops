@@ -2,6 +2,7 @@ package server
 
 import (
 	"bytes"
+	"deadrop/database"
 	"deadrop/api"
 	"encoding/json"
 	"fmt"
@@ -17,6 +18,7 @@ import (
 
 func TestCreate(t *testing.T) {
 	conf := InitServer()
+	defer database.Close(conf.dbConn)
 	cm := conf.upMap
 
 	if n := api.LenChan(cm); n != 0 {
@@ -93,6 +95,8 @@ func TestFinalize(t *testing.T) {
 	file := api.NewEmptyStashFile()
 	file.Fname = "test1.txt"
 	file.Download = 1
+	file.Size = 100
+	file.Type = "txt"
 	stash.Files = append(stash.Files, file)
 	json, _ := json.Marshal(stash)
 	jsonStr := []byte(json)
@@ -108,14 +112,20 @@ var ttoken string = ""
 func TestStashDownload(t *testing.T) {
 	if ttoken == "" {
 		t.Errorf("[Upload] failure, invalid token")
+		return
 	}
 
-	conf := InitServer()
+	conf := httpconf
+	if conf == nil {
+		t.Errorf("Upload failed, token is nil")
+		return
+	}
 	csHandler := makeHandler(download, conf)
 
 	req, err := http.NewRequest("GET", "http://localhost:9090/download/"+ttoken, nil)
 	if err != nil {
 		t.Errorf("Error creating GET [Download] request")
+		return
 	}
 
 	w := httptest.NewRecorder()
@@ -123,6 +133,7 @@ func TestStashDownload(t *testing.T) {
 
 	if w.Code != http.StatusOK {
 		t.Errorf("Response error [Download]: %v", w.Code)
+		return
 	}
 
 	// TODO: Fix json response
@@ -146,7 +157,12 @@ func TestFileDownload(t *testing.T) {
 		t.Errorf("[Upload] failure, invalid token")
 	}
 
-	conf := InitServer()
+	conf := httpconf
+	if conf == nil {
+		t.Errorf("Upload failed, token is nil")
+		return
+	}
+	defer database.Close(conf.dbConn)
 	csHandler := makeHandler(download, conf)
 
 	req, err := http.NewRequest("GET", "http://localhost:9090/download/"+ttoken+"/"+tfilename, nil)

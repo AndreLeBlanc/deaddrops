@@ -172,8 +172,12 @@ func UpSuper(token string, conf *Configuration) {
 			replyChan := superChan.C
 			if stash.Token == superChan.Meta.Token {
 				if superChan.Meta.Lifetime != 0 {
-					// TODO: Validate filenames (optional).
-					database.InsertStash(conf.dbConn, &superChan.Meta)
+					// TODO: Validate filenames (optional).					
+					err := database.InsertStash(conf.dbConn, &superChan.Meta)
+					database.CheckErr(err)
+					if err != nil {
+						replyChan <- api.HttpReplyChan{superChan.Meta, "Failed to write to database", http.StatusInternalServerError}
+					}
 				        replyChan <- api.HttpReplyChan{superChan.Meta, "Stash completed", http.StatusOK}
 					//TODO chanmap should be cleaned up
 					return
@@ -195,8 +199,11 @@ func DnSuperStash(token string, conf *Configuration) (*api.HttpReplyChan, error)
 	stash := api.Stash{Token: token, Lifetime: 0, Files: []api.StashFile{}}
 	replyChannel := make(chan api.HttpReplyChan)
 	req := api.SuperChan{stash, replyChannel}
-	api.AppendChan(conf.downMap, token, make(chan api.SuperChan))
-	go DnSuper(token, conf)
+	_, ok := api.FindChan(conf.downMap, token)
+	if !ok {
+		api.AppendChan(conf.downMap, token, make(chan api.SuperChan, 1))
+		go DnSuper(token, conf)
+	}
 	return superRequest(token, req, conf.downMap, conf)
 }
 
@@ -217,14 +224,14 @@ func DnSuper(token string, conf *Configuration) {
 	//stash := api.NewEmptyStash()
 	sp := database.SelectStash(conf.dbConn, token)
 	if sp == nil {
-		fmt.Println("[UpSuper]: Stash does not exist")
+		fmt.Println("[DnSuper]: Stash does not exist")
 		return
 	}
 	stash := *sp
 	stash.Token = token // this is just temporary
 	c, ok := api.FindChan(conf.downMap, token)
 	if !ok {
-		fmt.Println("[UpSuper]: Invalid token")
+		fmt.Println("[DnSuper]: Invalid token")
 		return
 	}
 	fmt.Printf("DnSuper %s running\n", token)
@@ -241,6 +248,8 @@ func DnSuper(token string, conf *Configuration) {
 			} else if length == 1 {
 				reqFile := superChan.Meta.Files[0]
 				fileIndex := stash.FindFileInStash(reqFile)
+				//fmt.Println(fileIndex)
+				fmt.Println(stash)
 				if stash.Files[fileIndex].Download == 0 {
 					replyChan <- api.HttpReplyChan{stash, "File no longer available", http.StatusNotFound}
 				} else {
