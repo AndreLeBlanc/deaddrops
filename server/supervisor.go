@@ -244,6 +244,7 @@ func DnSuper(token string, conf *Configuration) {
 			} else {
 				replyChan <- api.HttpReplyChan{stash, "Bad file handling", http.StatusInternalServerError}
 			}
+			// case time.After(time.Second * conf.dntimeout)
 		}
 	}
 }
