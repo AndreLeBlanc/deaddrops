@@ -33,6 +33,7 @@ func createNewTable(db *sql.DB, token string, fil *[]api.StashFile) error {
 	return nil
 }
 
+//Inserts a new deadrop into the database. 
 func InsertStash(db *sql.DB, s *api.Stash) error {
 	error := addToHashD(db, s.Token, s.StashName, s.Lifetime)
 	if error == nil {
