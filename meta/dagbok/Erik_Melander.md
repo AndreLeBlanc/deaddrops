@@ -105,8 +105,11 @@ Skrev supervisor channel structar och reply strucktar samt ändrade så att dess
 Merge av det Joel arbetat på i supervisor branch med min channel branch. Parkodade med Joel upload supervisor och download supervisor. Skrev download supervisor hjälpfunktioner för att ändra i filstruktarna. Skrev lite test och dokumentation.
 
 ##### Tisdag
+Gjorde ändringar på datatyper som efterfrågats av frontend. Diverse hjälpfunktioner för att göra det enklare att ändra i framtiden.
 
 ##### Onsdag
+Fixade mutexlås för chanmap. 
+Försökte tillsammans med Joel få supervisors att funka och funka med databasen. Blandad framgång.
 
 ##### Torsdag
 
