@@ -63,3 +63,20 @@ func TestCMconcurrency(t *testing.T) {
 		t.Errorf("Map containing more/less elements than it should")
 	}
 }
+
+func TestCMdelete(t *testing.T) {
+	cm := InitChanMap()
+	c1_name := "chan1"
+	c1 := make(chan SuperChan)
+	c2_name := "chan2"
+	c2 := make(chan SuperChan)
+	AppendChan(cm, c1_name, c1)
+	AppendChan(cm, c2_name, c2)
+	if result := DeleteChan(cm, c1_name); !result {
+		t.Errorf("Did not delete channel.")
+	}
+	if result2 := DeleteChan(cm, "blabla"); result2 {
+		t.Errorf("Wrong answer on delete channel")
+	}
+
+}
