@@ -2,6 +2,7 @@ package server
 
 import (
 	"deadrop/api"
+	"deadrop/database"
 	"errors"
 	"fmt"
 	"net/http"
@@ -172,7 +173,8 @@ func UpSuper(token string, conf *Configuration) {
 			if stash.Token == superChan.Meta.Token {
 				if superChan.Meta.Lifetime != 0 {
 					// TODO: Validate filenames (optional).
-					// TODO: Write stash to database when it gets a finalize flag.
+					database.InsertStash(conf.dbConn, &superChan.Meta)
+				        replyChan <- api.HttpReplyChan{superChan.Meta, "Stash completed", http.StatusOK}
 					return
 				}
 
