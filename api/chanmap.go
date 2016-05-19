@@ -16,7 +16,7 @@ type HttpReplyChan struct {
 }
 
 type ChanMap struct {
-	m   map[string]chan SuperChan
+	m map[string]chan SuperChan
 	sync.RWMutex
 }
 
