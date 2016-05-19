@@ -2,11 +2,14 @@ package server
 
 import (
 	"deadrop/api"
+	// "deadrop/database"
+	// "database/sql"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
 	"regexp"
+	"time"
 )
 
 //TODO temporary config fake struct
@@ -15,19 +18,10 @@ type Configuration struct {
 	port       string
 	upMap      *api.ChanMap
 	downMap    *api.ChanMap
-}
-
-type stashFile struct {
-	Fname    string
-	Size     int
-	Type     string
-	Download int
-}
-
-type stash struct {
-	Token    string
-	Lifetime int
-	Files    []stashFile
+	uptimeout  time.Duration
+	dntimeout  time.Duration
+	reqtimeout time.Duration
+	// dbConn     *sql.DB
 }
 
 func (c *Configuration) loadSettings() {
@@ -36,6 +30,10 @@ func (c *Configuration) loadSettings() {
 	c.port = ":9090"
 	c.upMap = api.InitChanMap()
 	c.downMap = api.InitChanMap()
+	c.uptimeout = 30
+	c.dntimeout = 30
+	c.reqtimeout = 1
+	// c.dbConn = database.Init()
 }
 
 var validPath = regexp.MustCompile("^/(create|upload|download|finalize)")
@@ -63,7 +61,6 @@ func InitServer() *Configuration {
 
 	conf := new(Configuration)
 	conf.loadSettings()
-
 	//Check if folder "deadropfiles" exist
 	if _, err := os.Stat(conf.filefolder); os.IsNotExist(err) {
 		err = os.Mkdir(conf.filefolder, 0700) //Borde det vara 0700?
@@ -79,8 +76,7 @@ func InitServer() *Configuration {
 }
 
 func StartServer(conf *Configuration) {
-	// TODO: fix /create, /finalize and /
-	//http.HandleFunc("/", makeHandler(upload, conf))
+	// defer database.Close(conf.dbConn)
 	http.HandleFunc("/create", makeHandler(create, conf))
 	http.HandleFunc("/upload", makeHandler(upload, conf))
 	http.HandleFunc("/finalize", makeHandler(finalize, conf))

@@ -1,6 +1,7 @@
 package server
 
 import (
+	"deadrop/api"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -13,12 +14,20 @@ func endUpload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		http.Error(w, "Internal server error", 500)
 	}
 
-	fmt.Println(*meta)
-	fmt.Fprintf(w, "%v", meta.Token)
+	// TODO: Uncomment when database is in place.
+	reply, err := UpSuperFinalize(*meta, conf)
+	if err != nil || reply.HttpCode != http.StatusOK {
+		http.Error(w, reply.Message, reply.HttpCode)
+		return
+	}
+	json, _ := json.Marshal(reply.Meta) //Should probably check this error but what the hell
+	
+	//fmt.Println(*meta)
+	w.Write([]byte(json))
 }
 
-func decodeJson(decoder *json.Decoder) *stash {
-	var meta stash
+func decodeJson(decoder *json.Decoder) *api.Stash {
+	var meta api.Stash
 	err := decoder.Decode(&meta)
 	if err != nil {
 		fmt.Printf("the error is ", err)

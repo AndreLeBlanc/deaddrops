@@ -7,8 +7,8 @@ import (
 
 func TestBasicCM(t *testing.T) {
 	cm := InitChanMap()
-	c1 := make(chan string)
-	c2 := make(chan string)
+	c1 := make(chan SuperChan)
+	c2 := make(chan SuperChan)
 	AppendChan(cm, "hello", c1)
 
 	if _, ok := FindChan(cm, "hello"); !ok {
@@ -47,7 +47,7 @@ func TestCMconcurrency(t *testing.T) {
 	for i := 0; i < 10; i++ {
 		go func(i int) {
 			defer wg.Done()
-			AppendChan(cm, tokens[i], make(chan string))
+			AppendChan(cm, tokens[i], make(chan SuperChan))
 		}(i)
 	}
 
@@ -62,4 +62,21 @@ func TestCMconcurrency(t *testing.T) {
 	if n := LenChan(cm); n != 6 {
 		t.Errorf("Map containing more/less elements than it should")
 	}
+}
+
+func TestCMdelete(t *testing.T) {
+	cm := InitChanMap()
+	c1_name := "chan1"
+	c1 := make(chan SuperChan)
+	c2_name := "chan2"
+	c2 := make(chan SuperChan)
+	AppendChan(cm, c1_name, c1)
+	AppendChan(cm, c2_name, c2)
+	if result := DeleteChan(cm, c1_name); !result {
+		t.Errorf("Did not delete channel.")
+	}
+	if result2 := DeleteChan(cm, "blabla"); result2 {
+		t.Errorf("Wrong answer on delete channel")
+	}
+
 }

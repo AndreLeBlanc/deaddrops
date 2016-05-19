@@ -26,7 +26,7 @@ func create(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	}
 
 	stringToken := generateToken()
-	c := make(chan string)
+	c := make(chan api.SuperChan)
 	api.AppendChan(conf.upMap, stringToken, c)
 	jsonToken := struct {
 		Token string
@@ -39,7 +39,8 @@ func create(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		http.Error(w, "Internal server error", 500)
 		return
 	}
-	go api.DummySupervisor2(stringToken, c, conf.upMap)
+	
+	go UpSuper(stringToken, conf)
 
 	//TODO: handle error from JSON
 	w.Header().Set("Content-Type", "application/json")
