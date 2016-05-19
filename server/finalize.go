@@ -16,13 +16,14 @@ func endUpload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 
 	// TODO: Uncomment when database is in place.
 	reply, err := UpSuperFinalize(*meta, conf)
-	if err != nil {
+	if err != nil || reply.HttpCode != http.StatusOK {
 		http.Error(w, reply.Message, reply.HttpCode)
 		return
 	}
-
-	fmt.Println(*meta)
-	fmt.Fprintf(w, "%v", meta.Token)
+	json, _ := json.Marshal(reply.Meta) //Should probably check this error but what the hell
+	
+	//fmt.Println(*meta)
+	w.Write([]byte(json))
 }
 
 func decodeJson(decoder *json.Decoder) *api.Stash {

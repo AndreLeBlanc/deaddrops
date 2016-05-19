@@ -18,14 +18,17 @@ func createNewTable(db *sql.DB, token string, fil []api.StashFile) error {
         return DError{time.Now(), "No stashfile!"}
     }
     fmt.Println(token)
-    ex := "CREATE TABLE IF NOT EXISTS " + token + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, Fname STRING, size INT, type STRING, numD INT, sqltime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)"
-    fmt.Println(ex)
-    _, err := db.Exec(ex)
+    ex, err1 := db.Prepare("CREATE TABLE IF NOT EXISTS " + token + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, Fname STRING, size INT, type STRING, numD INT, sqltime TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)")
+    if err1 != nil {
+        return DError{time.Now(), "Couldn't create table!"}
+    }
+    _, err := ex.Exec()
     if err != nil {
         return DError{time.Now(), "Couldn't create table!"}
     }
     for _, element := range fil {
-        _, error := db.Exec("INSERT INTO "+ token +" (Fname, Size, Type, numD) values(?,?,?,?)", element.Fname, element.Size, element.Type, element.Download)
+        ex, _ := db.Prepare("INSERT INTO "+ token +" (Fname, Size, Type, numD) values(?,?,?,?)")
+	_, error := ex.Exec(element.Fname, element.Size, element.Type, element.Download)
         if error != nil {
             return DError{time.Now(), "Couldn't insert into table!"}
         }
