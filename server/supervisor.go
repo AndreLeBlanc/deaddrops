@@ -6,7 +6,9 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"path/filepath"
 	"time"
+	"os"
 )
 
 // Contains meta data relevant to the system supervisor. The Struct should probably
@@ -172,17 +174,22 @@ func UpSuper(token string, conf *Configuration) {
 			replyChan := superChan.C
 			if stash.Token == superChan.Meta.Token {
 				if superChan.Meta.Lifetime != 0 {
-					// TODO: Validate filenames (optional).					
+					// TODO: Validate filenames (optional).
 					//err := database.InsertStash(conf.dbConn, &superChan.Meta)
 					//database.CheckErr(err) // debug
 					success := writeJsonFile(superChan.Meta, conf)
 					fmt.Println(success)
-/*
-					if err != nil {
-						replyChan <- api.HttpReplyChan{superChan.Meta, "Failed to write to database", http.StatusInternalServerError}
-					}*/
-				        replyChan <- api.HttpReplyChan{superChan.Meta, "Stash completed", http.StatusOK}
+					/*
+						if err != nil {
+							replyChan <- api.HttpReplyChan{superChan.Meta, "Failed to write to database", http.StatusInternalServerError}
+						}*/
+					replyChan <- api.HttpReplyChan{superChan.Meta, "Stash completed", http.StatusOK}
 					//TODO chanmap should be cleaned up
+					if api.DeleteChan(conf.upMap, token) {
+						SuperShutdown(c)
+					} else {
+						panic("Could not delete channel from chanmap!")
+					}
 					return
 				}
 
@@ -193,6 +200,32 @@ func UpSuper(token string, conf *Configuration) {
 			} else {
 				replyChan <- api.HttpReplyChan{stash, "Internal token error", http.StatusInternalServerError}
 			}
+		case  <- time.After(time.Second*conf.uptimeout):
+			path := filepath.Join(conf.filefolder, token)
+			err := os.RemoveAll(path)
+			if err != nil {
+				//logg
+			}
+			if api.DeleteChan(conf.upMap, token) {
+				SuperShutdown(c)
+			} else {
+				panic("Could not delete channel from chanmap!!")
+			}
+			fmt.Println("Supervisor timeout")
+			return
+		}
+	}
+}
+
+func SuperShutdown(c chan api.SuperChan) {
+	for {
+		select {
+		case r := <- c:
+			replyChan := r.C
+			replyChan <- api.HttpReplyChan{api.NewEmptyStash(), "Incorrect stashcall", http.StatusInternalServerError}
+
+		case  <- time.After(time.Second * 2):
+			return
 		}
 	}
 }
@@ -233,8 +266,8 @@ func DnSuper(token string, conf *Configuration) {
 	}
 	fmt.Println("I just found this stash ")
 	fmt.Println(stash)
-//	stash := *sp
-//	stash.Token = token // this is just temporary
+	//	stash := *sp
+	//	stash.Token = token // this is just temporary
 	c, ok := api.FindChan(conf.downMap, token)
 	if !ok {
 		fmt.Println("[DnSuper]: Invalid token")
@@ -270,7 +303,16 @@ func DnSuper(token string, conf *Configuration) {
 			} else {
 				replyChan <- api.HttpReplyChan{stash, "Bad file handling", http.StatusInternalServerError}
 			}
-			// case time.After(time.Second * conf.dntimeout)
+			case <-time.After(time.Second * conf.dntimeout):
+			updateJsonFile(stash, conf)
+			if api.DeleteChan(conf.downMap, token) {
+				SuperShutdown(c)
+			} else {
+				panic("Could not delete channel from chanmap!!")
+			}
+			fmt.Println("Supervisor timeout")
+			return
+			
 		}
 	}
 }
