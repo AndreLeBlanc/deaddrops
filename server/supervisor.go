@@ -6,9 +6,9 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"os"
 	"path/filepath"
 	"time"
-	"os"
 )
 
 // Contains meta data relevant to the system supervisor. The Struct should probably
@@ -200,7 +200,7 @@ func UpSuper(token string, conf *Configuration) {
 			} else {
 				replyChan <- api.HttpReplyChan{stash, "Internal token error", http.StatusInternalServerError}
 			}
-		case  <- time.After(time.Second*conf.uptimeout):
+		case <-time.After(time.Second * conf.uptimeout):
 			path := filepath.Join(conf.filefolder, token)
 			err := os.RemoveAll(path)
 			if err != nil {
@@ -220,11 +220,11 @@ func UpSuper(token string, conf *Configuration) {
 func SuperShutdown(c chan api.SuperChan, reply api.HttpReplyChan) {
 	for {
 		select {
-		case r := <- c:
+		case r := <-c:
 			replyChan := r.C
 			replyChan <- reply
 
-		case  <- time.After(time.Second * 2):
+		case <-time.After(time.Second * 2):
 			return
 		}
 	}
@@ -304,7 +304,7 @@ func DnSuper(token string, conf *Configuration) {
 			} else {
 				replyChan <- api.HttpReplyChan{stash, "Bad file handling", http.StatusInternalServerError}
 			}
-			case <-time.After(time.Second * conf.dntimeout):
+		case <-time.After(time.Second * conf.dntimeout):
 			updateJsonFile(stash, conf)
 			if api.DeleteChan(conf.downMap, token) {
 				SuperShutdown(c, api.HttpReplyChan{api.NewEmptyStash(), "Supervisor timeout", http.StatusRequestTimeout})
@@ -313,7 +313,7 @@ func DnSuper(token string, conf *Configuration) {
 			}
 			fmt.Println("Supervisor timeout")
 			return
-			
+
 		}
 	}
 }
