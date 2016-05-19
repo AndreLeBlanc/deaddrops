@@ -30,8 +30,8 @@ func (c *Configuration) loadSettings() {
 	c.port = ":9090"
 	c.upMap = api.InitChanMap()
 	c.downMap = api.InitChanMap()
-	c.uptimeout = 30
-	c.dntimeout = 30
+	c.uptimeout = 300 //5 min upload timeout
+	c.dntimeout = 600 //10 min download timeout
 	c.reqtimeout = 1
 	// c.dbConn = database.Init()
 	f, err := initLog("logfile")

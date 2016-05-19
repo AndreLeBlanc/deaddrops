@@ -150,7 +150,7 @@ func UpSuperUpload(token string, fname string, conf *Configuration) (*api.HttpRe
 
 // Contact an upload supervisor to finalize its stash and end the upload session.
 func UpSuperFinalize(finalStash api.Stash, conf *Configuration) (*api.HttpReplyChan, error) {
-	replyChannel := make(chan api.HttpReplyChan)
+	replyChannel := make(chan api.HttpReplyChan, 1)
 	req := api.SuperChan{finalStash, replyChannel}
 	return superRequest(finalStash.Token, req, conf.upMap, conf)
 }
@@ -229,7 +229,7 @@ func SuperShutdown(c chan api.SuperChan, reply api.HttpReplyChan) {
 // Contact a download supervisor to get stash.
 func DnSuperStash(token string, conf *Configuration) (*api.HttpReplyChan, error) {
 	stash := api.Stash{Token: token, Lifetime: 0, Files: []api.StashFile{}}
-	replyChannel := make(chan api.HttpReplyChan)
+	replyChannel := make(chan api.HttpReplyChan, 1)
 	req := api.SuperChan{stash, replyChannel}
 	_, ok := api.FindChan(conf.downMap, token)
 	if !ok {
