@@ -2,7 +2,7 @@ package server
 
 import (
 	"deadrop/api"
-	"deadrop/database"
+	//"deadrop/database"
 	"errors"
 	"fmt"
 	"net/http"
@@ -173,11 +173,14 @@ func UpSuper(token string, conf *Configuration) {
 			if stash.Token == superChan.Meta.Token {
 				if superChan.Meta.Lifetime != 0 {
 					// TODO: Validate filenames (optional).					
-					err := database.InsertStash(conf.dbConn, &superChan.Meta)
-					database.CheckErr(err) // debug
+					//err := database.InsertStash(conf.dbConn, &superChan.Meta)
+					//database.CheckErr(err) // debug
+					success := writeJsonFile(superChan.Meta, conf)
+					fmt.Println(success)
+/*
 					if err != nil {
 						replyChan <- api.HttpReplyChan{superChan.Meta, "Failed to write to database", http.StatusInternalServerError}
-					}
+					}*/
 				        replyChan <- api.HttpReplyChan{superChan.Meta, "Stash completed", http.StatusOK}
 					//TODO chanmap should be cleaned up
 					return
@@ -222,13 +225,16 @@ func DnSuperDownload(token string, fname string, conf *Configuration) (*api.Http
 func DnSuper(token string, conf *Configuration) {
 	// TODO: Read stash from database.
 	//stash := api.NewEmptyStash()
-	sp := database.SelectStash(conf.dbConn, token)
-	if sp == nil {
+	//sp := database.SelectStash(conf.dbConn, token)
+	stash, sp := readJsonFile(token, conf)
+	if sp != nil {
 		fmt.Println("[DnSuper]: Stash does not exist")
 		return
 	}
-	stash := *sp
-	stash.Token = token // this is just temporary
+	fmt.Println("I just found this stash ")
+	fmt.Println(stash)
+//	stash := *sp
+//	stash.Token = token // this is just temporary
 	c, ok := api.FindChan(conf.downMap, token)
 	if !ok {
 		fmt.Println("[DnSuper]: Invalid token")
@@ -261,9 +267,6 @@ func DnSuper(token string, conf *Configuration) {
 					}
 					replyChan <- api.HttpReplyChan{stash, "Download file OK", http.StatusOK}
 				}
-				stash.Files = append(stash.Files, superChan.Meta.Files...) // Why is this line here?
-				fmt.Printf("received filename: %+v\n", stash)
-				replyChan <- api.HttpReplyChan{stash, "", http.StatusOK}
 			} else {
 				replyChan <- api.HttpReplyChan{stash, "Bad file handling", http.StatusInternalServerError}
 			}
