@@ -1,136 +1,105 @@
 package server
 
 import (
-	"crypto/md5"
 	"deadrop/api"
-	"encoding/hex"
-	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"path/filepath"
-	"time"
-	"deadrop/database"
 )
 
-
-
-func createStash(w http.ResponseWriter, r *http.Request, conf *Configuration) {
-	//Create token for upload session
-	token := md5.New()
-	t := time.Now()
-	io.WriteString(token, t.String())
-	//TODO probably will not work with a global variable, use supersupervisor??
-	cm := conf.ChanMap()
-	stringToken := hex.EncodeToString(token.Sum(nil))
-	c := make(chan string)
-	api.AppendChan(cm, stringToken, c)
-
-
-	// Ny kod från André
-
-	db := database.NewConnect()
-
-
-	//
-
-	go database.SupervisorUp(db, /*token*/"pppp", c) //TODO: maybe skip c? tog bort cm
-	go database.SupervisorDo(db, stringToken, c) // tog bort cm
-	jsonToken := struct {
-		Token string
-	}{
-		stringToken,
+func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
+	if r.Method != "POST" {
+		fmt.Println("Upload: Invalid request")
+		http.Error(w, "Invalid request", 400)
+		return
 	}
-	reply, _ := json.Marshal(jsonToken)
-	//TODO: handle error from JSON
-	w.Header().Set("Content-Type","application/json")
-	w.Write(reply)
-}
 
-type stashpayload struct {
-	Token string
-	//endTime time.Time
-	//files map[string]int
-}
-
-func endUpload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
-	decoder := json.NewDecoder(r.Body)
-	var meta stashpayload
-	err := decoder.Decode(&meta)
-	if err != nil {
-		fmt.Printf("the error is ", err)
-	}
-	fmt.Printf("the payload is %s", meta.Token)
-	fmt.Fprintf(w, "%v", r.Header)
-}
-
-func uploadFile(w http.ResponseWriter, r *http.Request, conf *Configuration) {
-	//TODO: handle json form at the end, ie. they will send a json object instead of a file
 	r.ParseMultipartForm(32 << 20)
 	file, handler, err := r.FormFile("uploadfile")
 	if err != nil {
 		fmt.Println(err)
+		http.Error(w, "Received bad file", 400)
 		return
 	}
 	defer file.Close()
 
 	token := r.FormValue("token")
+	fmt.Printf("[Upload] token: %s\n", token)
 
-	if !api.ValidateToken(token) {
-		//Abandon ship
+	err = validateToken(token, conf)
+	if err != nil {
+		fmt.Println("Invalid token")
+		http.Error(w, "Invalid token", 400)
 		return
 	}
-	fmt.Println("Checked that token is valid")
-
-	c, ok := api.FindChan(conf.ChanMap(), token)
-	if !ok {
-		return
-	}
-	fmt.Println("Checked that channel exist")
 
 	api.ValidateFile( /*file*/ ) // ?
 
+	err = createFolder(token, conf)
+	if err != nil {
+		fmt.Println("Could not create token folder")
+		http.Error(w, "Internal server error", 500)
+		return
+	}
+	filename := parseFilename(handler.Filename)
+
+	reply, err := UpSuperUpload(token, filename, conf)
+	if err != nil {
+		http.Error(w, reply.Message, reply.HttpCode)
+		return
+	}
+	fmt.Println("Sent filename to channel")
+
+	if reply.HttpCode == 200 {
+		f, err := os.OpenFile(filepath.Join(conf.filefolder, token, filename), os.O_WRONLY|os.O_CREATE, 0666)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		defer f.Close()
+		io.Copy(f, file)
+		fmt.Fprintf(w, reply.Message)
+
+	} else {
+		http.Error(w, reply.Message, reply.HttpCode)
+	}
+}
+
+func parseFilename(path string) string {
+	substr := api.ParseURL(path)
+	if len(substr) == 0 {
+		fmt.Println("Failed parsing filename")
+		return path
+	}
+	return substr[len(substr)-1]
+}
+
+// TODO: Function body should (maybe?) be integrated into api.ValidateToken
+func validateToken(token string, conf *Configuration) error {
+	if !api.ValidateToken(token) {
+		return errors.New("Invalid token, incorrect format")
+	}
+	fmt.Println("Checked that token is valid")
+
+	_, ok := api.FindChan(conf.upMap, token)
+	if !ok {
+		return errors.New("Invalid token, could not find in upMap")
+	}
+	fmt.Println("Checked that channel exist")
+
+	return nil
+}
+
+func createFolder(token string, conf *Configuration) error {
 	if _, err := os.Stat(filepath.Join(conf.filefolder, token)); os.IsNotExist(err) {
 		err = os.MkdirAll(filepath.Join(conf.filefolder, token), 0700)
 		fmt.Println("Creating new token folder")
 		if err != nil {
-			log.Fatal("Could not create token folder")
+			return err
 		}
 	}
-
-	f, err := os.OpenFile(filepath.Join(conf.filefolder, token, handler.Filename), os.O_WRONLY|os.O_CREATE, 0666)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	defer f.Close()
-	io.Copy(f, file)
-
-	//TODO: maybe have a response channel for the supervisor to reply
-	//ie. c <- handler.Filename, responseChannel
-	c <- handler.Filename
-	fmt.Println("Sent filename to channel")
-	fmt.Fprintf(w, "%v", handler.Header)
-}
-
-func upload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
-	w.Header().Add("Access-Control-Allow-Origin", "*") //TODO: List of allowed server via config file
-
-	fmt.Println("method:", r.Method)
-	if r.Method == "GET" {
-		createStash(w, r, conf)
-	} else if r.Method == "POST" {
-		t := r.Header.Get("Content-Type")
-		if t == "application/json" {
-			endUpload(w, r, conf)
-			fmt.Println("I just received a JSON")
-			return
-		}
-		uploadFile(w, r, conf)
-	} else {
-		//TODO return error
-		return
-	}
+	return nil
 }

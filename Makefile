@@ -2,6 +2,9 @@ build:
 	go build
 
 test:
+	go test ./...
+
+testv:
 	go test ./... -v
 
 fmt:
@@ -12,5 +15,6 @@ clean:
 	rm -rf api/*~
 	rm -rf server/*~
 
-clean_server_files:
-	rm deadropfiles/ -rf
+cleansrv:
+	rm -rf deadropfiles/
+	rm -rf server/deadropfiles

@@ -88,17 +88,28 @@ Parprogrammering med Erik. Började definiera download funktionaliteten för ser
 ##### Onsdag, 09:15-16:00
 Gruppmöte inför milstolpe 2. Även parprogrammering med Erik där vi fortsatte med json kodning/avkodning och att parsa URLer. Gruppen gjorde även en primär planering för denna vecka.
 
-##### Torsdag
+##### Torsdag, 17:00-19:00
+Läste på om httptest paketet i Go och försökte använda mig utav det för att testa vår api.
 
-##### Fredag
+##### Fredag, 11:00-15:00
+Parprogrammering med Erik, där vi synkroniserade med varandra och började på allvar fundera kring implementationsdetaljer för våra supervisors. Pratade också med Ali och gav honom något vettigt och göra samt hjälpte André via Slack.
+
+##### Lördag, 16:00-18:00
+Fixade en bugg i upload och började definiera supervisor interfacet och funktionaliteten lite bättre.
+
+#### Söndag, ?-?
+Definierade APIn för alla supervisors och vilka andra funktioner som behövs. Samt började koda dem.
 
 ## Vecka 20
 
-##### Måndag
+##### Måndag, 13:00-16:00
+Gruppmöte och parprogrammering med Erik. Merge av det vi båda jobbat med och skrev klart upload och download supervisors. Sen integrerade jag den övriga koden. Nu behöver vi bara databasen för att testa allt.
+  
+##### Tisdag, ?-?
+Disskussion via slack om vad som behöver göras och hur olika problem ska lösas. Sen testade jag supervisors och skrev lite bättre tester.
 
-##### Tisdag
-
-##### Onsdag
+##### Onsdag, 10:00-20:00
+Parprogrammering med Erik, integrering av databas och servern samt lite fix av supervisors. Följt av massvis av debugging.
 
 ##### Torsdag
 
