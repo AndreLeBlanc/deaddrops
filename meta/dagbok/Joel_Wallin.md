@@ -111,7 +111,8 @@ Disskussion via slack om vad som behöver göras och hur olika problem ska lösa
 ##### Onsdag, 10:00-20:00
 Parprogrammering med Erik, integrering av databas och servern samt lite fix av supervisors. Följt av massvis av debugging.
 
-##### Torsdag
+##### Torsdag, 10:00-15:00, 19:00-20:00
+Parprogrammering med Erik, bytte ut databasen med jsonfiler (för att kunna testa vår kod, eftersom databasen ej fungerade), implementerade loggning, fixade buggar i supervisor och lyckades hitta buggen i databasen.
 
 ##### Fredag
 
