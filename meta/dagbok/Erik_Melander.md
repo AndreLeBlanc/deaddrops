@@ -112,6 +112,7 @@ Fixade mutexlås för chanmap.
 Försökte tillsammans med Joel få supervisors att funka och funka med databasen. Blandad framgång.
 
 ##### Torsdag
+Parprogrammering med Joel. Försökte debugga databasen, men implementerade en lösning med filer istället för att komma vidare med supervisors. Implementerade timeouts och rollback vid upload. Fixade lite blandade buggar. Implementerade en branch som använder filid istället för filnamn vid nedladdning på begäran av frontendteamet.
 
 ##### Fredag
 
