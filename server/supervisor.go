@@ -4,7 +4,7 @@ import (
 	"deadrop/api"
 	//"deadrop/database"
 	"errors"
-	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -15,10 +15,10 @@ import (
 // be in server.go or a future index file. The fields below are suggestions of what
 // to implement. Will probably only implement upload and download supervisor counters.
 type system struct {
-	maxUpSuper int // Maximum number of upload supervisors
-	maxDnSuper int // Maximum number of download supervisors
-	numUpSuper int // Number of active upload supervisors
-	numDnSuper int // Number of active download supervisors
+	maxUpSuper int
+	maxDnSuper int
+	numUpSuper int
+	numDnSuper int
 }
 
 // Codes for the SysOption struct's option field.
@@ -83,7 +83,6 @@ func SysSuper(sys *system, sysChan chan SysOption) {
 	for true {
 		select {
 		case sysOpt := <-sysChan:
-			fmt.Println("[SysSuper] received SysOption")
 			err := sysHandler(sys, sysOpt)
 			switch err {
 			case nil:
@@ -113,7 +112,7 @@ func sysHandler(sys *system, sysOpt SysOption) error {
 	case DECDN:
 		sys.numDnSuper--
 	default:
-		fmt.Println("[SysSuper] invalid SysOption")
+		log.Printf("SysSuper invalid option: %d\n", sysOpt.option)
 		return errors.New("Invalid SysOption")
 	}
 
@@ -124,6 +123,7 @@ func superRequest(token string, req api.SuperChan, cm *api.ChanMap, conf *Config
 	respChan := req.C
 	c, ok := api.FindChan(cm, token)
 	if !ok {
+		log.Printf("Token disappeared from ChanMap: %s\n", token)
 		return &api.HttpReplyChan{Message: "Invalid token", HttpCode: http.StatusServiceUnavailable}, errors.New("Invalid token")
 	}
 	c <- req
@@ -131,6 +131,7 @@ func superRequest(token string, req api.SuperChan, cm *api.ChanMap, conf *Config
 	case resp := <-respChan:
 		return &resp, nil
 	case <-time.After(time.Second * conf.reqtimeout):
+		log.Printf("Request timeout: %s\n", token)
 		return &api.HttpReplyChan{Message: "timeout", HttpCode: http.StatusServiceUnavailable}, nil
 	}
 }
@@ -157,45 +158,40 @@ func UpSuperFinalize(finalStash api.Stash, conf *Configuration) (*api.HttpReplyC
 // The upload supervisor. Has a stash which it updates after every call and writes
 // the stash to the database when finalize is called.
 func UpSuper(token string, conf *Configuration) {
-	// Create a stash.
 	c, ok := api.FindChan(conf.upMap, token)
 	if !ok {
-		fmt.Println("[UpSuper]: Invalid token")
+		log.Printf("Token disappeared from ChanMap: %s\n", token)
 		return
 	}
 	stash := api.NewEmptyStash()
 	stash.Token = token
-	fmt.Printf("UpSuper %s running\n", token)
-	// Update is for every request.
 	for {
 		select {
 		case superChan := <-c:
-			//fmt.Printf("received : %+v\n", sc)
 			replyChan := superChan.C
 			if stash.Token == superChan.Meta.Token {
 				if superChan.Meta.Lifetime != 0 {
 					// TODO: Validate filenames (optional).
-					//err := database.InsertStash(conf.dbConn, &superChan.Meta)
-					//database.CheckErr(err) // debug
+					// err := database.InsertStash(conf.dbConn, &superChan.Meta)
+					// database.CheckErr(err) // debug
 					success := writeJsonFile(superChan.Meta, conf)
-					fmt.Println(success)
-					/*
-						if err != nil {
-							replyChan <- api.HttpReplyChan{superChan.Meta, "Failed to write to database", http.StatusInternalServerError}
-						}*/
+					if !success {
+						log.Printf("Failed writing json file: %s\n", token)
+					}
+					// if err != nil {
+					// 	replyChan <- api.HttpReplyChan{superChan.Meta, "Failed to write to database", http.StatusInternalServerError}
+					// }
 					replyChan <- api.HttpReplyChan{superChan.Meta, "Stash completed", http.StatusOK}
-					//TODO chanmap should be cleaned up
 					if api.DeleteChan(conf.upMap, token) {
 						SuperShutdown(c, api.HttpReplyChan{api.NewEmptyStash(), "Stash was already completed", http.StatusNotFound})
 					} else {
-						panic("Could not delete channel from chanmap!")
+						log.Fatalf("Could not delete channel from chanmap: %s\n", token)
 					}
 					return
 				}
 
 				// TODO: Validate stash restrictions, like number of files in a stash (optional).
 				stash.Files = append(stash.Files, superChan.Meta.Files...)
-				fmt.Printf("received filename: %+v\n", stash)
 				replyChan <- api.HttpReplyChan{stash, "", http.StatusOK}
 			} else {
 				replyChan <- api.HttpReplyChan{stash, "Internal token error", http.StatusInternalServerError}
@@ -204,14 +200,14 @@ func UpSuper(token string, conf *Configuration) {
 			path := filepath.Join(conf.filefolder, token)
 			err := os.RemoveAll(path)
 			if err != nil {
-				//logg
+				log.Println("Error removing stash from disc: %s\n", token)
 			}
 			if api.DeleteChan(conf.upMap, token) {
 				SuperShutdown(c, api.HttpReplyChan{api.NewEmptyStash(), "Supervisor timeout", http.StatusRequestTimeout})
 			} else {
-				panic("Could not delete channel from chanmap!!")
+				log.Fatalf("Could not delete channel from chanmap: %s\n", token)
 			}
-			fmt.Println("Supervisor timeout")
+			log.Printf("UpSuper timeout: %s\n", token)
 			return
 		}
 	}
@@ -260,26 +256,23 @@ func DnSuper(token string, conf *Configuration) {
 	//sp := database.SelectStash(conf.dbConn, token)
 	c, ok := api.FindChan(conf.downMap, token)
 	if !ok {
-		fmt.Println("[DnSuper]: Invalid token")
+		log.Printf("Token disappeared from ChanMap: %s\n", token)
 		return
 	}
 	stash, sp := readJsonFile(token, conf)
 	if sp != nil {
-		fmt.Println("[DnSuper]: Stash does not exist")
+		log.Printf("Stash does not exist: %s\n", token)
 		SuperShutdown(c, api.HttpReplyChan{api.NewEmptyStash(), "No such stash", http.StatusNotFound})
 		return
 	}
-	fmt.Println("I just found this stash ")
-	fmt.Println(stash)
-	//	stash := *sp
-	//	stash.Token = token // this is just temporary
 
-	fmt.Printf("DnSuper %s running\n", token)
+	// stash := *sp
 	for {
 		select {
 		case superChan := <-c:
 			replyChan := superChan.C
 			if stash.Token != superChan.Meta.Token {
+				log.Printf("Token mismatch: %s\n", token)
 				replyChan <- api.HttpReplyChan{stash, "Internal token error", http.StatusInternalServerError}
 			}
 			length := len(superChan.Meta.Files)
@@ -288,8 +281,7 @@ func DnSuper(token string, conf *Configuration) {
 			} else if length == 1 {
 				reqFile := superChan.Meta.Files[0]
 				fileIndex := stash.FindFileInStash(reqFile)
-				//fmt.Println(fileIndex)
-				fmt.Println(stash)
+
 				if fileIndex < 0 {
 					replyChan <- api.HttpReplyChan{stash, "No such file in stash", http.StatusNotFound}
 				} else if stash.Files[fileIndex].Download == 0 {
@@ -297,21 +289,23 @@ func DnSuper(token string, conf *Configuration) {
 				} else {
 					n := stash.DecrementDownloadCounter(reqFile)
 					if n == 0 {
-						//defer RmFile(stash)
+						// TODO: Remove file that has reached Download == 0
+						// defer RmFile(stash)
 					}
 					replyChan <- api.HttpReplyChan{stash, "Download file OK", http.StatusOK}
 				}
 			} else {
-				replyChan <- api.HttpReplyChan{stash, "Bad file handling", http.StatusInternalServerError}
+				log.Printf("Multiple files requested: %s\n", token)
+				replyChan <- api.HttpReplyChan{stash, "Bad file handling", http.StatusMethodNotAllowed}
 			}
 		case <-time.After(time.Second * conf.dntimeout):
 			updateJsonFile(stash, conf)
 			if api.DeleteChan(conf.downMap, token) {
 				SuperShutdown(c, api.HttpReplyChan{api.NewEmptyStash(), "Supervisor timeout", http.StatusRequestTimeout})
 			} else {
-				panic("Could not delete channel from chanmap!!")
+				log.Fatalf("Could not delete channel from chanmap: %s\n", token)
 			}
-			fmt.Println("Supervisor timeout")
+			log.Printf("DnSuper timeout: %s\n", token)
 			return
 
 		}
