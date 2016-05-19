@@ -2,7 +2,7 @@ package server
 
 import (
 	"bytes"
-	"deadrop/database"
+	// "deadrop/database"
 	"deadrop/api"
 	"encoding/json"
 	"fmt"
@@ -18,7 +18,7 @@ import (
 
 func TestCreate(t *testing.T) {
 	conf := InitServer()
-	defer database.Close(conf.dbConn)
+	// defer database.Close(conf.dbConn)
 	cm := conf.upMap
 
 	if n := api.LenChan(cm); n != 0 {
@@ -162,7 +162,7 @@ func TestFileDownload(t *testing.T) {
 		t.Errorf("Upload failed, token is nil")
 		return
 	}
-	defer database.Close(conf.dbConn)
+	// defer database.Close(conf.dbConn)
 	csHandler := makeHandler(download, conf)
 
 	req, err := http.NewRequest("GET", "http://localhost:9090/download/"+ttoken+"/"+tfilename, nil)
