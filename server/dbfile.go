@@ -1,11 +1,11 @@
 package server
 
 import (
+	"deadrop/api"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"os"
-	"deadrop/api"
-	"fmt"
 	"path/filepath"
 )
 
@@ -13,7 +13,7 @@ func writeJsonFile(s api.Stash, conf *Configuration) bool {
 	filename := filepath.Join(conf.filefolder, s.Token, "stash.json")
 	fmt.Println(filename)
 	j, _ := json.Marshal(s)
-	err := ioutil.WriteFile(filename,[]byte(j), 0644)
+	err := ioutil.WriteFile(filename, []byte(j), 0644)
 	if err != nil {
 		fmt.Println(err)
 		return false
@@ -49,7 +49,7 @@ func updateJsonFile(s api.Stash, conf *Configuration) bool {
 	}
 	fmt.Println(filename)
 	j, _ := json.Marshal(s)
-	err = ioutil.WriteFile(filename,[]byte(j), 0644)
+	err = ioutil.WriteFile(filename, []byte(j), 0644)
 	if err != nil {
 		fmt.Println(err)
 		return false

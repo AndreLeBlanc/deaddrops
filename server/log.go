@@ -1,9 +1,9 @@
 package server
 
 import (
+	"io"
 	"log"
 	"os"
-	"io"
 )
 
 // Removes logpath from disc and creates a new logfile. Caller must close file.

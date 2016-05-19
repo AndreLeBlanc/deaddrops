@@ -10,7 +10,7 @@ type StashFile struct {
 
 type Stash struct {
 	Token     string
-	StashName     string
+	StashName string
 	Lifetime  int
 	Files     []StashFile
 }

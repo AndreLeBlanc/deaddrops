@@ -5,8 +5,8 @@ import (
 	"deadrop/api"
 	"encoding/hex"
 	"encoding/json"
-	"log"
 	"io"
+	"log"
 	"net/http"
 	"time"
 )
@@ -38,7 +38,7 @@ func create(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		http.Error(w, "Internal server error", 500)
 		return
 	}
-	
+
 	go UpSuper(stringToken, conf)
 
 	w.Header().Set("Content-Type", "application/json")

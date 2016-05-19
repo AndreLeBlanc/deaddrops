@@ -20,7 +20,7 @@ func endUpload(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		return
 	}
 	json, _ := json.Marshal(reply.Meta) //Should probably check this error but what the hell
-	
+
 	w.Write([]byte(json))
 }
 
