@@ -186,7 +186,7 @@ func UpSuper(token string, conf *Configuration) {
 					replyChan <- api.HttpReplyChan{superChan.Meta, "Stash completed", http.StatusOK}
 					//TODO chanmap should be cleaned up
 					if api.DeleteChan(conf.upMap, token) {
-						SuperShutdown(c)
+						SuperShutdown(c, api.HttpReplyChan{api.NewEmptyStash(), "Stash was already completed", http.StatusNotFound})
 					} else {
 						panic("Could not delete channel from chanmap!")
 					}
@@ -207,7 +207,7 @@ func UpSuper(token string, conf *Configuration) {
 				//logg
 			}
 			if api.DeleteChan(conf.upMap, token) {
-				SuperShutdown(c)
+				SuperShutdown(c, api.HttpReplyChan{api.NewEmptyStash(), "Supervisor timeout", http.StatusRequestTimeout})
 			} else {
 				panic("Could not delete channel from chanmap!!")
 			}
@@ -217,12 +217,12 @@ func UpSuper(token string, conf *Configuration) {
 	}
 }
 
-func SuperShutdown(c chan api.SuperChan) {
+func SuperShutdown(c chan api.SuperChan, reply api.HttpReplyChan) {
 	for {
 		select {
 		case r := <- c:
 			replyChan := r.C
-			replyChan <- api.HttpReplyChan{api.NewEmptyStash(), "Incorrect stashcall", http.StatusInternalServerError}
+			replyChan <- reply
 
 		case  <- time.After(time.Second * 2):
 			return
@@ -256,23 +256,24 @@ func DnSuperDownload(token string, fname string, conf *Configuration) (*api.Http
 // from the database and disc when their #downloads reach 0 and the whole stash when
 // Lifetime expires.
 func DnSuper(token string, conf *Configuration) {
-	// TODO: Read stash from database.
 	//stash := api.NewEmptyStash()
 	//sp := database.SelectStash(conf.dbConn, token)
+	c, ok := api.FindChan(conf.downMap, token)
+	if !ok {
+		fmt.Println("[DnSuper]: Invalid token")
+		return
+	}
 	stash, sp := readJsonFile(token, conf)
 	if sp != nil {
 		fmt.Println("[DnSuper]: Stash does not exist")
+		SuperShutdown(c, api.HttpReplyChan{api.NewEmptyStash(), "No such stash", http.StatusNotFound})
 		return
 	}
 	fmt.Println("I just found this stash ")
 	fmt.Println(stash)
 	//	stash := *sp
 	//	stash.Token = token // this is just temporary
-	c, ok := api.FindChan(conf.downMap, token)
-	if !ok {
-		fmt.Println("[DnSuper]: Invalid token")
-		return
-	}
+
 	fmt.Printf("DnSuper %s running\n", token)
 	for {
 		select {
@@ -296,7 +297,7 @@ func DnSuper(token string, conf *Configuration) {
 				} else {
 					n := stash.DecrementDownloadCounter(reqFile)
 					if n == 0 {
-						//RmFile(stash)
+						//defer RmFile(stash)
 					}
 					replyChan <- api.HttpReplyChan{stash, "Download file OK", http.StatusOK}
 				}
@@ -306,7 +307,7 @@ func DnSuper(token string, conf *Configuration) {
 			case <-time.After(time.Second * conf.dntimeout):
 			updateJsonFile(stash, conf)
 			if api.DeleteChan(conf.downMap, token) {
-				SuperShutdown(c)
+				SuperShutdown(c, api.HttpReplyChan{api.NewEmptyStash(), "Supervisor timeout", http.StatusRequestTimeout})
 			} else {
 				panic("Could not delete channel from chanmap!!")
 			}
