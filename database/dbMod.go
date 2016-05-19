@@ -15,9 +15,16 @@ type DError struct{
 
 // Initialises a database connection.
 func Init() *sql.DB {
-	Db, err := sql.Open("sqlite3", "database/deadrops.db")
+	db, err := sql.Open("sqlite3", "database/deadrops.db")
 	CheckErr(err)
-	return Db
+
+	_, err = db.Exec("CREATE TABLE IF NOT EXISTS files(Token TEXT PRIMARY KEY, Fname TEXT, size INT, type TEXT, numD INT);")
+	if err != nil {
+		fmt.Println("Couldn't create table!")
+	}
+	CheckErr(err)
+	
+	return db
 }
 
 //Crashes the server if an error is sent to it.

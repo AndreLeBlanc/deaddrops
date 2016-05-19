@@ -6,7 +6,7 @@ import (
 	"deadrop/database"
 	"deadrop/server"
 	"fmt"
-	"time"
+	// "time"
 	"sync"
 )
 
@@ -23,7 +23,7 @@ func initstash() api.Stash {
 	return stash
 }
 
-func dbsupervisor(c chan int, wg sync.WaitGroup) {
+func dbsupervisor(c chan int, wg *sync.WaitGroup) {
 	db := database.Init()
 	defer database.Close(db)
 	defer wg.Done()
@@ -33,9 +33,10 @@ func dbsupervisor(c chan int, wg sync.WaitGroup) {
 		case i := <-c:
 			stash := initstash()
 			fmt.Printf("[%d]: ", i)
-			fmt.Println(stash)
+			fmt.Println(stash.Token)
 			err := database.InsertStash(db, &stash)
 			database.CheckErr(err)
+			fmt.Printf("[%d]: DONE\n", i)
 			if i >= 9 {
 				return
 			}
@@ -44,13 +45,14 @@ func dbsupervisor(c chan int, wg sync.WaitGroup) {
 	}
 }
 
-func insertstash(db *sql.DB, i int, wg sync.WaitGroup) {
+func insertstash(db *sql.DB, i int, wg *sync.WaitGroup) {
 	defer wg.Done()
 	stash := initstash()
 	fmt.Printf("[%d]: ", i)
-	fmt.Println(stash)
+	fmt.Println(stash.Token)
 	err := database.InsertStash(db, &stash)
 	database.CheckErr(err)
+	fmt.Printf("[%d]: DONE\n", i)
 }
 
 func multithread() {
@@ -61,8 +63,7 @@ func multithread() {
 	defer database.Close(db)
 
 	for i := 0; i < 10; i++ {
-		go insertstash(db, i, wg)
-		time.Sleep(time.Second * 1)
+		go insertstash(db, i, &wg)
 	}
 
 	wg.Wait()
@@ -73,19 +74,23 @@ func singlethread() {
 	wg.Add(1)
 
 	c := make(chan int)
-	go dbsupervisor(c, wg)
+	go dbsupervisor(c, &wg)
 	for i := 0; i < 10; i++ {
 		c <- i
-		time.Sleep(time.Second * 1)
 	}
 
 	wg.Wait()
-
 }
 
 func main() {
 	//server.StartServer(server.InitServer())
 
+	fmt.Println("**********************************")
+	fmt.Println("*   RUNNING SINGLE THREADED DB   *")
+	fmt.Println("**********************************")
 	singlethread()
-	// multithread()
+	fmt.Println("**********************************")
+	fmt.Println("*    RUNNING MULTITHREADED DB    *")
+	fmt.Println("**********************************")
+	multithread()
 }
