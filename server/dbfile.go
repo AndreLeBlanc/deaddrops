@@ -39,3 +39,20 @@ func readJsonFile(token string, conf *Configuration) (api.Stash, error) {
 	}
 	return s, err
 }
+
+func updateJsonFile(s api.Stash, conf *Configuration) bool {
+	filename := filepath.Join(conf.filefolder, s.Token, "stash.json")
+	err := os.Remove(filename)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	fmt.Println(filename)
+	j, _ := json.Marshal(s)
+	err = ioutil.WriteFile(filename,[]byte(j), 0644)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+	return true
+}
