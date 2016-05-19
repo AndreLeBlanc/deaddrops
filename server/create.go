@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func generateToken() string {
+func GenerateToken() string {
 	token := md5.New()
 	t := time.Now()
 	io.WriteString(token, t.String())
@@ -25,7 +25,7 @@ func create(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		return
 	}
 
-	stringToken := generateToken()
+	stringToken := GenerateToken()
 	c := make(chan api.SuperChan)
 	api.AppendChan(conf.upMap, stringToken, c)
 	jsonToken := struct {
