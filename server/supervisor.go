@@ -9,6 +9,7 @@ import (
 	"os"
 	"path/filepath"
 	"time"
+	"strconv"
 )
 
 // Contains meta data relevant to the system supervisor. The Struct should probably
@@ -240,8 +241,13 @@ func DnSuperStash(token string, conf *Configuration) (*api.HttpReplyChan, error)
 }
 
 // Contact a download supervisor to download a file.
-func DnSuperDownload(token string, fname string, conf *Configuration) (*api.HttpReplyChan, error) {
-	stash := api.Stash{Token: token, Lifetime: 0, Files: append([]api.StashFile{}, api.StashFile{Fname: fname, Size: 0, Type: "", Download: 0})}
+func DnSuperDownload(token string, fId string, conf *Configuration) (*api.HttpReplyChan, error) {
+	stash := api.NewEmptyStash()
+	file := api.NewEmptyStashFile()
+	id, _ := strconv.Atoi(fId)
+	file.Id = id
+	stash.Token = token
+	stash.Files = append(stash.Files, file)
 	replyChannel := make(chan api.HttpReplyChan, 1)
 	req := api.SuperChan{stash, replyChannel}
 	return superRequest(token, req, conf.downMap, conf)
@@ -292,7 +298,9 @@ func DnSuper(token string, conf *Configuration) {
 						// TODO: Remove file that has reached Download == 0
 						// defer RmFile(stash)
 					}
-					replyChan <- api.HttpReplyChan{stash, "Download file OK", http.StatusOK}
+					replyStash := api.NewEmptyStash()
+					replyStash.Files = append(replyStash.Files, stash.Files[fileIndex])
+					replyChan <- api.HttpReplyChan{replyStash, "Download file OK", http.StatusOK}
 				}
 			} else {
 				log.Printf("Multiple files requested: %s\n", token)

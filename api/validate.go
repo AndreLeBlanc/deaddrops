@@ -37,6 +37,19 @@ func ValidateFileName(fileName string) bool {
 	}
 }
 
+func ValidateFileId(fileId string) bool {
+	valid, err := regexp.Compile("^([0-9]+)$")
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+	if valid.MatchString(fileId) {
+		return true
+	} else {
+		return false
+	}
+}
+
 //Splits a string at every "/" and trims leading and trailing "/"
 func ParseURL(path string) []string {
 	var parsedURL []string

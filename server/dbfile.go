@@ -10,6 +10,9 @@ import (
 )
 
 func writeJsonFile(s api.Stash, conf *Configuration) bool {
+	for i, _ := range s.Files{
+		s.Files[i].Id = i+1
+	}
 	filename := filepath.Join(conf.filefolder, s.Token, "stash.json")
 	j, _ := json.Marshal(s)
 	err := ioutil.WriteFile(filename, []byte(j), 0644)

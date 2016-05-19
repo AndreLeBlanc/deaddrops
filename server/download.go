@@ -29,27 +29,26 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 			return
 		}
 	}
-	if !api.ValidateFileName(api.GetFilename(urlSubStr)) || !api.ValidateToken(api.GetToken(urlSubStr)) {
+	if !api.ValidateFileId(api.GetFilename(urlSubStr)) || !api.ValidateToken(api.GetToken(urlSubStr)) {
 		http.Error(w, "Invalid Filename", 404)
 		return
 	}
 
 	token := api.GetToken(urlSubStr)
-	filename := api.GetFilename(urlSubStr)
-	path := filepath.Join(conf.filefolder, token, filename)
+	fileid := api.GetFilename(urlSubStr)
 
-	reply, err := DnSuperDownload(token, filename, conf)
+	reply, err := DnSuperDownload(token, fileid, conf)
 	if err != nil || reply.HttpCode != http.StatusOK {
 		http.Error(w, reply.Message, reply.HttpCode)
 		return
 	}
-
+	filename := reply.Meta.Files[0].Fname
+	path := filepath.Join(conf.filefolder, token, filename)
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		log.Println(err)
 		http.Error(w, "File does not exist", 404)
 		return
 	}
-
 	http.ServeFile(w, r, path)
 }
 

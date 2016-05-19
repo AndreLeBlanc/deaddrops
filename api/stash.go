@@ -19,7 +19,7 @@ type Stash struct {
 //Returns -1 if file not found
 func (s Stash) FindFileInStash(f StashFile) int {
 	for i, a := range s.Files {
-		if a.Fname == f.Fname {
+		if a.Id == f.Id {
 			return i
 		}
 	}
