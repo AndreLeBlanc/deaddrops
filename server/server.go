@@ -4,7 +4,6 @@ import (
 	"deadrop/api"
 	// "deadrop/database"
 	// "database/sql"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -21,6 +20,7 @@ type Configuration struct {
 	uptimeout  time.Duration
 	dntimeout  time.Duration
 	reqtimeout time.Duration
+	logfile    *os.File
 	// dbConn     *sql.DB
 }
 
@@ -34,6 +34,11 @@ func (c *Configuration) loadSettings() {
 	c.dntimeout = 30
 	c.reqtimeout = 1
 	// c.dbConn = database.Init()
+	f, err := initLog("logfile")
+	if err != nil {
+		panic("Failed to open logfile")
+	}
+	c.logfile = f
 }
 
 var validPath = regexp.MustCompile("^/(create|upload|download|finalize)")
@@ -47,29 +52,24 @@ func makeHandler(f func(http.ResponseWriter, *http.Request, *Configuration), con
 		m := validPath.FindStringSubmatch(r.URL.Path)
 		if m == nil {
 			http.NotFound(w, r)
-			fmt.Println("Invalid path")
+			log.Printf("Invalid URL path %s\n", r.URL.Path)
 			http.Error(w, "Invalid URL", 400)
 			return
 		}
-		fmt.Println("method:", r.Method)
+		// fmt.Println("method:", r.Method)
 		f(w, r, conf)
 	}
 }
 
 func InitServer() *Configuration {
-	//TODO: check/start database
-
 	conf := new(Configuration)
 	conf.loadSettings()
-	//Check if folder "deadropfiles" exist
+
 	if _, err := os.Stat(conf.filefolder); os.IsNotExist(err) {
-		err = os.Mkdir(conf.filefolder, 0700) //Borde det vara 0700?
-		fmt.Printf("Creating folder %s\n", conf.filefolder)
+		err = os.Mkdir(conf.filefolder, 0700)
 		if err != nil {
 			log.Fatal("Could not create file directory %s\n", err)
 		}
-	} else {
-		fmt.Printf("Folder exists %s\n", conf.filefolder)
 	}
 
 	return conf
@@ -77,6 +77,7 @@ func InitServer() *Configuration {
 
 func StartServer(conf *Configuration) {
 	// defer database.Close(conf.dbConn)
+	defer conf.logfile.Close()
 	http.HandleFunc("/create", makeHandler(create, conf))
 	http.HandleFunc("/upload", makeHandler(upload, conf))
 	http.HandleFunc("/finalize", makeHandler(finalize, conf))
