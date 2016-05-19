@@ -2,7 +2,7 @@ package server
 
 import (
 	"deadrop/api"
-	//"encoding/json"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
@@ -12,6 +12,7 @@ import (
 func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	if r.Method != "GET" {
 		fmt.Println("Download: Invalid request")
+		http.Error(w, "Invalid request", 400)
 		return
 	}
 
@@ -19,22 +20,21 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	urlSubStr := api.ParseURL(r.URL.Path)
 	fmt.Println(urlSubStr)
 	if len(urlSubStr) < 3 {
-		http.Error(w, "Invalid URL", 404) //TODO fix error code
+		http.Error(w, "Invalid URL", 400)
 		return
 	}
 	if len(urlSubStr) == 3 {
 		if api.ValidateToken(api.GetToken(urlSubStr)) {
-			// Send info about stash to client
-			json := createJsonStash(api.GetToken(urlSubStr), conf)
-			w.Write([]byte(json))
+			// TODO: Uncomment when database is in place.
+			createJsonStash(w, api.GetToken(urlSubStr), conf)
 			return
 		} else {
-			http.Error(w, "Invalid URL", 404) //TODO fix error code
+			http.Error(w, "Invalid URL", 400)
 			return
 		}
 	}
-	if !api.ValidateFileName(api.GetFilename(urlSubStr))||!api.ValidateToken(api.GetToken(urlSubStr)) {
-		http.Error(w, "Invalid Filename", 404) //TODO fix error code
+	if !api.ValidateFileName(api.GetFilename(urlSubStr)) || !api.ValidateToken(api.GetToken(urlSubStr)) {
+		http.Error(w, "Invalid Filename", 404)
 		return
 	}
 
@@ -42,10 +42,18 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	filename := api.GetFilename(urlSubStr)
 	path := filepath.Join(conf.filefolder, token, filename)
 
+	// TODO: Uncomment when database is in place.
+	// TODO: Don-t think you have to check the error here.
+	reply, _ := DnSuperDownload(token, filename, conf)
+	if reply.HttpCode != http.StatusOK {
+		http.Error(w, reply.Message, reply.HttpCode)
+		return
+	}
+
 	fmt.Printf("filename is %s", filename)
 
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		http.Error(w, "File does not exist", 404) // TODO: Check error code
+		http.Error(w, "File does not exist", 404)
 		return
 	}
 	fmt.Println(path)
@@ -55,13 +63,19 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	http.ServeFile(w, r, path)
 }
 
-func createJsonStash(token string, conf *Configuration) string {
-	// TODO: This whole function
-	_, ok := api.FindChan(conf.downMap, token)
-	if !ok {
-		// superChan := make(chan string)
-		// api.AppendChan(conf.downMap, token, c)
-		// api.DownSupervisor(superChan, conf)
+func createJsonStash(w http.ResponseWriter, token string, conf *Configuration) {
+	reply, err := DnSuperStash(token, conf)
+	if err != nil {
+		http.Error(w, reply.Message, reply.HttpCode)
+		return
 	}
-	return token
+
+	json, err := json.Marshal(reply.Meta)
+	if err != nil {
+		fmt.Println("Failed token json encoding")
+		http.Error(w, "Internal server error", 500)
+		return
+	}
+
+	w.Write([]byte(json))
 }

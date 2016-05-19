@@ -115,9 +115,15 @@ Group meeting to code a bit and discuss what's to come (2 hours)
 
 ##### Måndag
 
+Started reading a bit on writing tests cases in GO (1 hour)
+
 ##### Tisdag
 
+Started working on test cases (1 hour)
+
 ##### Onsdag
+
+Continued writing tests for Validate.go (2 hours)
 
 ##### Torsdag
 

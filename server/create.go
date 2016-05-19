@@ -21,11 +21,12 @@ func generateToken() string {
 func create(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	if r.Method != "GET" {
 		fmt.Println("Create: Invalid request")
+		http.Error(w, "Invalid request", 400)
 		return
 	}
 
 	stringToken := generateToken()
-	c := make(chan string)
+	c := make(chan api.SuperChan)
 	api.AppendChan(conf.upMap, stringToken, c)
 	jsonToken := struct {
 		Token string
@@ -35,11 +36,13 @@ func create(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	reply, err := json.Marshal(jsonToken)
 	if err != nil {
 		fmt.Println("Failed token json encoding")
+		http.Error(w, "Internal server error", 500)
 		return
 	}
-	go api.DummySupervisor2(stringToken, c, conf.upMap)
+	
+	go UpSuper(stringToken, conf)
 
 	//TODO: handle error from JSON
-	w.Header().Set("Content-Type","application/json")
+	w.Header().Set("Content-Type", "application/json")
 	w.Write(reply)
 }

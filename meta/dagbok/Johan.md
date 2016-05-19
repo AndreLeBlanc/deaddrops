@@ -85,14 +85,18 @@ Work: Arbetade hemma med att läsa på mer ingående på react + teoerier om det
 Meet&Work: Träffades, arbetade samt planerade presentation och utförde sedan denna.
 
 ##### Torsdag
+Work: Gjorde småändringar på sidan
 
 ##### Fredag
+Work: Arbetade under längre period tsm med Jonas med sidan för ny sub-page och kommunikation med server för finalize
 
 ## Vecka 20
 
 ##### Måndag
+Work&Meet: Träffade gruppen och arbetade under dagen. Försökte koppla ihop progress
 
 ##### Tisdag
+Work: Ännu mer arbete på frontend (fokus design + funktionalitet) sedan jobb med automation deploy på servern
 
 ##### Onsdag
 
