@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"time"
 	"strconv"
+	"time"
 )
 
 // Contains meta data relevant to the system supervisor. The Struct should probably
