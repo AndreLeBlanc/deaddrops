@@ -101,6 +101,7 @@ Work: Ännu mer arbete på frontend (fokus design + funktionalitet) sedan jobb m
 ##### Onsdag
 
 ##### Torsdag
+Work: Arbetade med att finalisera fronend och göra sidan + golang servern live
 
 ##### Fredag
 
