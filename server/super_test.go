@@ -3,8 +3,8 @@ package server
 import (
 	"net/http"
 	//"net/http/httptest"
-	"testing"
 	"deadrop/api"
+	"testing"
 )
 
 func TestSysSuper(t *testing.T) {
@@ -68,7 +68,7 @@ func TestUpSuperFinalize(t *testing.T) {
 		t.Errorf("UpSuperUpload failed")
 		return
 	}
-	reply, err :=UpSuperFinalize(*tstash, tconf)
+	reply, err := UpSuperFinalize(*tstash, tconf)
 	if err != nil || reply.HttpCode != http.StatusOK {
 		t.Errorf("UpSuperFinalize failed")
 		tconf = nil

@@ -14,6 +14,8 @@ clean:
 	rm -rf *~
 	rm -rf api/*~
 	rm -rf server/*~
+	rm -rf logfile
+	rm -rf server/logfile
 
 cleansrv:
 	rm -rf deadropfiles/

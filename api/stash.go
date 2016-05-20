@@ -10,15 +10,16 @@ type StashFile struct {
 
 type Stash struct {
 	Token     string
-	StashName     string
+	StashName string
 	Lifetime  int
 	Files     []StashFile
 }
 
-//Returns the index of a file in the stash
+//Returns the index of a file based on filename in the stash
+//Returns -1 if file not found
 func (s Stash) FindFileInStash(f StashFile) int {
 	for i, a := range s.Files {
-		if a.Fname == f.Fname {
+		if a.Id == f.Id {
 			return i
 		}
 	}
@@ -33,15 +34,21 @@ func (s *Stash) DecrementDownloadCounter(f StashFile) int {
 	return s.Files[i].Download
 }
 
+//Removes a file from a stash
 func (s *Stash) RemoveFile(index int) {
 	s.Files = append(s.Files[:index], s.Files[(index+1):]...)
 }
 
+//Creates a new empty stash struct with all values initialized
+//s := Stash{Token: "", StashName: "", Lifetime: 0, 
+//Files: []StashFile{}}
 func NewEmptyStash() Stash {
 	s := Stash{Token: "", StashName: "", Lifetime: 0, Files: []StashFile{}}
 	return s
 }
 
+//Creates a new empty stash struct with all values initialized
+//StashFile{Id: 0, Fname: "", Size: 0, Type: "", Download: -1}
 func NewEmptyStashFile() StashFile {
 	f := StashFile{Id: 0, Fname: "", Size: 0, Type: "", Download: -1}
 	return f

@@ -1,7 +1,7 @@
 package api
 
 import (
-	"fmt"
+	"log"
 	"regexp"
 	"strings"
 )
@@ -27,10 +27,23 @@ func ValidateFile( /*file*/ ) bool {
 func ValidateFileName(fileName string) bool {
 	valid, err := regexp.Compile("^([\\w]+\\.[a-z]+)$")
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		return false
 	}
 	if valid.MatchString(fileName) {
+		return true
+	} else {
+		return false
+	}
+}
+
+func ValidateFileId(fileId string) bool {
+	valid, err := regexp.Compile("^([0-9]+)$")
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+	if valid.MatchString(fileId) {
 		return true
 	} else {
 		return false
@@ -41,7 +54,6 @@ func ValidateFileName(fileName string) bool {
 func ParseURL(path string) []string {
 	var parsedURL []string
 	parsedURL = append(parsedURL, path)
-	fmt.Println(parsedURL)
 
 	if strings.HasPrefix(path, "/") {
 		path = path[1:]
@@ -50,7 +62,6 @@ func ParseURL(path string) []string {
 		path = path[:(len(path) - 1)]
 	}
 	parsedURL = append(parsedURL, strings.Split(path, "/")...)
-	fmt.Println(parsedURL)
 	return parsedURL
 }
 
