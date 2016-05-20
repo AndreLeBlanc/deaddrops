@@ -124,7 +124,7 @@ func superRequest(token string, req api.SuperChan, cm *api.ChanMap, conf *Config
 	respChan := req.C
 	c, ok := api.FindChan(cm, token)
 	if !ok {
-		return &api.HttpReplyChan{Message: "Invalid token", HttpCode: http.StatusServiceUnavailable}, errors.New("Invalid token")
+		return &api.HttpReplyChan{Message: "Invalid token", HttpCode: http.StatusNotFound}, errors.New("Invalid token")
 	}
 	c <- req
 	select {
