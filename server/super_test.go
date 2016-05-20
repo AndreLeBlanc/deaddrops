@@ -1,8 +1,8 @@
 package server
 
 import (
-	"net/http"
 	"deadrop/api"
+	"net/http"
 	"testing"
 )
 

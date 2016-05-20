@@ -41,26 +41,29 @@ func TestCreate(t *testing.T) {
 	}
 }
 
-// Test does not work yet, as POST is not 100% defined yet
 func TestUpload(t *testing.T) {
 	conf := InitServer()
 	w, req := createGet("http://localhost:9090/upload", conf)
 	if w == nil {
 		t.Errorf("Error creating GET [Create] request")
+		return
 	}
 	if w.Code != http.StatusOK {
 		t.Errorf("[Create] GET response error: %v", w.Code)
+		return
 	}
 
 	token, err := getToken(w)
 	if err != nil {
 		t.Errorf("[Upload] Invalid token format")
+		return
 	}
 
 	csHandler := makeHandler(upload, conf)
 	req, err = uploadPost("test1.txt", "http://localhost:9090/upload", token)
 	if err != nil {
 		t.Errorf("Error creating POST [Upload] request")
+		return
 	}
 
 	w = httptest.NewRecorder()
@@ -70,6 +73,7 @@ func TestUpload(t *testing.T) {
 
 	if w.Code != http.StatusOK {
 		t.Errorf("Response error [Upload]: %v", w.Code)
+		return
 	}
 
 	ttoken = token
@@ -157,8 +161,8 @@ func TestFileDownload(t *testing.T) {
 		t.Errorf("[Upload] failure, invalid fileID")
 		return
 	}
-	stringID := string(48+tfileID)
-	
+	stringID := string(48 + tfileID)
+
 	conf := httpconf
 	if conf == nil {
 		t.Errorf("Upload failed, token is nil")
@@ -178,13 +182,13 @@ func TestFileDownload(t *testing.T) {
 
 	if w.Code != http.StatusOK {
 		t.Errorf("Response error [Download]: %v", w.Code)
+		return
 	}
 
 	w = httptest.NewRecorder()
 	csHandler.ServeHTTP(w, req)
 	if w.Code != http.StatusNotFound {
 		t.Errorf("Response error [Download]: %v", w.Code)
-		return
 	}
 }
 
