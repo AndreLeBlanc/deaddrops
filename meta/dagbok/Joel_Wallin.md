@@ -53,7 +53,7 @@ Möte inför milstolpe 1 och planering.
 Snabbt möte fölt av milstolpe 1.
 
 #### Lördag, 09:00-10:30
-Möte via slack där vi definierade systemarkitekturen bättre samt interface mellan front- och back-end.
+Möte via Slack där vi definierade systemarkitekturen bättre samt interface mellan front- och back-end.
 
 ## Vecka 18
 
@@ -106,7 +106,7 @@ Definierade APIn för alla supervisors och vilka andra funktioner som behövs. S
 Gruppmöte och parprogrammering med Erik. Merge av det vi båda jobbat med och skrev klart upload och download supervisors. Sen integrerade jag den övriga koden. Nu behöver vi bara databasen för att testa allt.
   
 ##### Tisdag, ?-?
-Disskussion via slack om vad som behöver göras och hur olika problem ska lösas. Sen testade jag supervisors och skrev lite bättre tester.
+Disskussion via Slack om vad som behöver göras och hur olika problem ska lösas. Sen testade jag supervisors och skrev lite bättre tester.
 
 ##### Onsdag, 10:00-20:00
 Parprogrammering med Erik, integrering av databas och servern samt lite fix av supervisors. Följt av massvis av debugging.
@@ -114,7 +114,8 @@ Parprogrammering med Erik, integrering av databas och servern samt lite fix av s
 ##### Torsdag, 10:00-15:00, 19:00-20:00
 Parprogrammering med Erik, bytte ut databasen med jsonfiler (för att kunna testa vår kod, eftersom databasen ej fungerade), implementerade loggning, fixade buggar i supervisor och lyckades hitta buggen i databasen.
 
-##### Fredag
+##### Fredag, 15:00-19:00
+Lite synkronisering via Slack och fixade så att filer och stashes tas bort från hårddisken vid körning, samt att servern läser stashes från hårddisken när den startar (så att grejer inte försvinner när man startar om servern). Fipplade också lite med generering av snyggare dokumentation.
 
 ## Vecka 21
 
