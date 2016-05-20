@@ -301,8 +301,10 @@ func DnSuper(token string, conf *Configuration) {
 						}
 						return
 					}
+					go updateJsonFile(stash, conf)
 				} else {
 					stash.DecrementDownloadCounter(reqFile)
+					go updateJsonFile(stash, conf)
 					replyStash := api.NewEmptyStash()
 					replyStash.Files = append(replyStash.Files, stash.Files[fileIndex])
 					replyChan <- api.HttpReplyChan{replyStash, "Download file OK", http.StatusOK}
