@@ -34,6 +34,11 @@ func (s *Stash) DecrementDownloadCounter(f StashFile) int {
 	return s.Files[i].Download
 }
 
+//Checks whether the stash is empty.
+func (s *Stash) IsEmpty() bool {
+	return len(s.Files) == 0
+}
+
 //Removes a file from a stash
 func (s *Stash) RemoveFile(index int) {
 	s.Files = append(s.Files[:index], s.Files[(index+1):]...)

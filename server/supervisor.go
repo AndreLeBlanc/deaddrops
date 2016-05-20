@@ -124,7 +124,6 @@ func superRequest(token string, req api.SuperChan, cm *api.ChanMap, conf *Config
 	respChan := req.C
 	c, ok := api.FindChan(cm, token)
 	if !ok {
-		log.Printf("Token disappeared from ChanMap: %s\n", token)
 		return &api.HttpReplyChan{Message: "Invalid token", HttpCode: http.StatusServiceUnavailable}, errors.New("Invalid token")
 	}
 	c <- req
@@ -290,14 +289,20 @@ func DnSuper(token string, conf *Configuration) {
 
 				if fileIndex < 0 {
 					replyChan <- api.HttpReplyChan{stash, "No such file in stash", http.StatusNotFound}
-				} else if stash.Files[fileIndex].Download == 0 {
-					replyChan <- api.HttpReplyChan{stash, "File no longer available", http.StatusNotFound}
-				} else {
-					n := stash.DecrementDownloadCounter(reqFile)
-					if n == 0 {
-						// TODO: Remove file that has reached Download == 0
-						// defer RmFile(stash)
+				} else if stash.Files[fileIndex].Download == 1 {
+					replyChan <- api.HttpReplyChan{stash, "Download file OK", http.StatusResetContent}
+					stash.RemoveFile(fileIndex)
+					if stash.IsEmpty() {
+						go RmStash(token, conf)
+						if api.DeleteChan(conf.downMap, token) {
+							SuperShutdown(c, api.HttpReplyChan{api.NewEmptyStash(), "Stash no longer available", http.StatusNotFound})
+						} else {
+							log.Fatalf("Could not delete channel from chanmap: %s\n", token)
+						}
+						return
 					}
+				} else {
+					stash.DecrementDownloadCounter(reqFile)
 					replyStash := api.NewEmptyStash()
 					replyStash.Files = append(replyStash.Files, stash.Files[fileIndex])
 					replyChan <- api.HttpReplyChan{replyStash, "Download file OK", http.StatusOK}
@@ -322,12 +327,19 @@ func DnSuper(token string, conf *Configuration) {
 
 // Sends a message to the janitor to remove a file from a stash. Both
 // in the database and on disc.
-func RmFile(fname string) error {
-	return errors.New("bla")
+func RmFile(token string, fname string, conf *Configuration) {
+	err := os.Remove(filepath.Join(conf.filefolder, token, fname))
+	if err != nil {
+		log.Printf("Failed to remove file: %s/%s\n", token, fname)
+	}
 }
 
 // Sends a message to the janitor to remove a stash. Both in the
 // database and on disc.
-func RmStash(token string) error {
-	return errors.New("bla")
+func RmStash(token string, conf *Configuration) {
+	time.Sleep(time.Second * conf.reqtimeout)
+	err := os.RemoveAll(filepath.Join(conf.filefolder, token))
+	if err != nil {
+		log.Printf("Failed to remove stash: %s/%s\n", token)
+	}
 }
