@@ -68,10 +68,6 @@ func TestUpload(t *testing.T) {
 	time.Sleep(50 * time.Millisecond)
 	csHandler.ServeHTTP(w, req)
 
-	resp_body := w.Body.String()
-	fmt.Println(resp_body)
-
-	// TODO: Do some confirmation with resp_body
 	if w.Code != http.StatusOK {
 		t.Errorf("Response error [Upload]: %v", w.Code)
 	}
@@ -136,27 +132,33 @@ func TestStashDownload(t *testing.T) {
 		return
 	}
 
-	// TODO: Fix json response
-	// var jsStash stash
-	// var body []byte
-	// if body, err = ioutil.ReadAll(w.Body); err != nil {
-	// 	t.Errorf("[Upload] Invalid token format")
-	// }
-	// err = json.Unmarshal(body, &jsStash)
-	// if err != nil {
-	// 	fmt.Println("error:", err)
-	// }
-	// tfilename = jsStash.Files[0].Fname
-	// fmt.Println(tfilename)
+	var jsStash api.Stash
+	var body []byte
+	if body, err = ioutil.ReadAll(w.Body); err != nil {
+		t.Errorf("[Upload] Invalid token format")
+		return
+	}
+	err = json.Unmarshal(body, &jsStash)
+	if err != nil {
+		t.Errorf("Error decoding json")
+		return
+	}
+	tfileID = jsStash.Files[0].Id
 }
 
-var tfilename string = ""
+var tfileID int = -1
 
 func TestFileDownload(t *testing.T) {
 	if ttoken == "" {
 		t.Errorf("[Upload] failure, invalid token")
+		return
 	}
-
+	if tfileID == -1 {
+		t.Errorf("[Upload] failure, invalid fileID")
+		return
+	}
+	stringID := string(48+tfileID)
+	
 	conf := httpconf
 	if conf == nil {
 		t.Errorf("Upload failed, token is nil")
@@ -165,9 +167,10 @@ func TestFileDownload(t *testing.T) {
 	// defer database.Close(conf.dbConn)
 	csHandler := makeHandler(download, conf)
 
-	req, err := http.NewRequest("GET", "http://localhost:9090/download/"+ttoken+"/"+tfilename, nil)
+	req, err := http.NewRequest("GET", "http://localhost:9090/download/"+ttoken+"/"+stringID, nil)
 	if err != nil {
 		t.Errorf("Error creating GET [Download] request")
+		return
 	}
 
 	w := httptest.NewRecorder()
@@ -177,7 +180,12 @@ func TestFileDownload(t *testing.T) {
 		t.Errorf("Response error [Download]: %v", w.Code)
 	}
 
-	// TODO: Check if file exists!
+	w = httptest.NewRecorder()
+	csHandler.ServeHTTP(w, req)
+	if w.Code != http.StatusNotFound {
+		t.Errorf("Response error [Download]: %v", w.Code)
+		return
+	}
 }
 
 func createGet(targetUrl string, conf *Configuration) (*httptest.ResponseRecorder, *http.Request) {
@@ -249,7 +257,6 @@ func getToken(w *httptest.ResponseRecorder) (string, error) {
 		Token string
 	}
 	var jsToken jsonToken
-	//var body []byte
 	body, err := ioutil.ReadAll(w.Body)
 	if err != nil {
 		return "", err
@@ -260,6 +267,5 @@ func getToken(w *httptest.ResponseRecorder) (string, error) {
 		return "", err
 	}
 	token := jsToken.Token
-	fmt.Println(token)
 	return token, nil
 }
