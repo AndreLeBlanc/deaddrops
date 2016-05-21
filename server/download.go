@@ -38,7 +38,7 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	fileid := api.GetFilename(urlSubStr)
 
 	reply, err := DnSuperDownload(token, fileid, conf)
-	if err != nil || !(reply.HttpCode != http.StatusOK || reply.HttpCode != http.StatusResetContent) {
+	if err != nil || (reply.HttpCode != http.StatusOK && reply.HttpCode != http.StatusResetContent) {
 		http.Error(w, reply.Message, reply.HttpCode)
 		return
 	}

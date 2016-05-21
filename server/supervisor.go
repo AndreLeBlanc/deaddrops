@@ -257,7 +257,6 @@ func DnSuperDownload(token string, fId string, conf *Configuration) (*api.HttpRe
 // from the database and disc when their #downloads reach 0 and the whole stash when
 // Lifetime expires.
 func DnSuper(token string, conf *Configuration) {
-	//stash := api.NewEmptyStash()
 	//sp := database.SelectStash(conf.dbConn, token)
 	c, ok := api.FindChan(conf.downMap, token)
 	if !ok {
@@ -290,8 +289,11 @@ func DnSuper(token string, conf *Configuration) {
 				if fileIndex < 0 {
 					replyChan <- api.HttpReplyChan{stash, "No such file in stash", http.StatusNotFound}
 				} else if stash.Files[fileIndex].Download == 1 {
-					replyChan <- api.HttpReplyChan{stash, "Download file OK", http.StatusResetContent}
+					newStash := api.NewCopyStash(&stash)
+					reply := api.HttpReplyChan{*newStash, "Download file OK", http.StatusResetContent}
+					replyChan <- reply
 					stash.RemoveFile(fileIndex)
+					
 					if stash.IsEmpty() {
 						go RmStash(token, conf)
 						if api.DeleteChan(conf.downMap, token) {

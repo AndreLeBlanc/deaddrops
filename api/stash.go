@@ -58,3 +58,20 @@ func NewEmptyStashFile() StashFile {
 	f := StashFile{Id: 0, Fname: "", Size: 0, Type: "", Download: -1}
 	return f
 }
+
+//Creates a a new copy of an existing stash.
+func NewCopyStash(s *Stash) *Stash {
+	newFiles := NewCopyFiles(s.Files)
+	newStash := Stash{Token: s.Token, StashName: s.StashName, Lifetime: s.Lifetime, Files: *newFiles}
+	return &newStash
+}
+
+//Creates a new copy of an existing StashFile array.
+func NewCopyFiles(f []StashFile) *[]StashFile {
+	newFiles := []StashFile{}
+	for i := range f {
+		copy := StashFile{Id: f[i].Id, Fname: f[i].Fname, Size: f[i].Size, Type: f[i].Type, Download: f[i].Download}
+		newFiles = append(newFiles, copy)
+	}
+	return &newFiles
+}
