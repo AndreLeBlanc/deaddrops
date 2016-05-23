@@ -266,6 +266,11 @@ func DnSuper(token string, conf *Configuration) {
 	stash, sp := readJsonFile(token, conf)
 	if sp != nil {
 		log.Printf("Stash does not exist: %s\n", token)
+		if api.DeleteChan(conf.downMap, token) {
+			SuperShutdown(c, api.HttpReplyChan{api.NewEmptyStash(), "Invalid Token", http.StatusNotFound})
+		} else {
+			log.Fatalf("Could not delete channel from chanmap: %s\n", token)
+		}
 		SuperShutdown(c, api.HttpReplyChan{api.NewEmptyStash(), "No such stash", http.StatusNotFound})
 		return
 	}

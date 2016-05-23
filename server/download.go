@@ -64,7 +64,7 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 
 func createJsonStash(w http.ResponseWriter, token string, conf *Configuration) {
 	reply, err := DnSuperStash(token, conf)
-	if err != nil {
+	if err != nil || reply.HttpCode != http.StatusOK {
 		http.Error(w, reply.Message, reply.HttpCode)
 		return
 	}
