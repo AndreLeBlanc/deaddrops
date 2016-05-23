@@ -1,5 +1,10 @@
+DOC = http://localhost:6060/pkg/deadrop/
+
 build:
 	go build
+
+fmt:
+	go fmt ./...
 
 test:
 	go test ./...
@@ -7,8 +12,10 @@ test:
 testv:
 	go test ./... -v
 
-fmt:
-	go fmt ./...
+#echo $(DOC)
+doc:
+	godoc -http=:6060 & \
+	google-chrome $(DOC)
 
 clean:
 	rm -rf *~

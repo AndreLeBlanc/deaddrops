@@ -11,13 +11,13 @@ import (
 
 func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	if r.Method != "GET" {
-		http.Error(w, "Invalid request", 400)
+		http.Error(w, "Invalid request", http.StatusBadRequest)
 		return
 	}
 
 	urlSubStr := api.ParseURL(r.URL.Path)
 	if len(urlSubStr) < 3 {
-		http.Error(w, "Invalid URL", 400)
+		http.Error(w, "Invalid URL", http.StatusBadRequest)
 		return
 	}
 	if len(urlSubStr) == 3 {
@@ -25,12 +25,12 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 			createJsonStash(w, api.GetToken(urlSubStr), conf)
 			return
 		} else {
-			http.Error(w, "Invalid URL", 400)
+			http.Error(w, "Invalid URL", http.StatusBadRequest)
 			return
 		}
 	}
 	if !api.ValidateFileId(api.GetFilename(urlSubStr)) || !api.ValidateToken(api.GetToken(urlSubStr)) {
-		http.Error(w, "Invalid Filename", 404)
+		http.Error(w, "Invalid Filename", http.StatusNotFound)
 		return
 	}
 
@@ -38,18 +38,28 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 	fileid := api.GetFilename(urlSubStr)
 
 	reply, err := DnSuperDownload(token, fileid, conf)
-	if err != nil || reply.HttpCode != http.StatusOK {
+	if err != nil || (reply.HttpCode != http.StatusOK && reply.HttpCode != http.StatusResetContent) {
 		http.Error(w, reply.Message, reply.HttpCode)
 		return
 	}
-	filename := reply.Meta.Files[0].Fname
+
+	filearr := reply.Meta.Files
+	if len(filearr) == 0 {
+		http.Error(w, "Bad request", http.StatusBadRequest)
+		return
+	}
+	filename := filearr[0].Fname
 	path := filepath.Join(conf.filefolder, token, filename)
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		log.Println(err)
-		http.Error(w, "File does not exist", 404)
+		http.Error(w, "File does not exist", http.StatusNotFound)
 		return
 	}
+	w.Header().Set("Content-Disposition", "attachment; filename='" + filename + "'")
 	http.ServeFile(w, r, path)
+	if reply.HttpCode == http.StatusResetContent {		
+		go RmFile(token, filename, conf)
+	}
 }
 
 func createJsonStash(w http.ResponseWriter, token string, conf *Configuration) {
@@ -62,7 +72,7 @@ func createJsonStash(w http.ResponseWriter, token string, conf *Configuration) {
 	json, err := json.Marshal(reply.Meta)
 	if err != nil {
 		log.Println(err)
-		http.Error(w, "Internal server error", 500)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
 

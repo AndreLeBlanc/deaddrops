@@ -41,39 +41,52 @@ func TestCreate(t *testing.T) {
 	}
 }
 
-// Test does not work yet, as POST is not 100% defined yet
 func TestUpload(t *testing.T) {
 	conf := InitServer()
 	w, req := createGet("http://localhost:9090/upload", conf)
 	if w == nil {
 		t.Errorf("Error creating GET [Create] request")
+		return
 	}
 	if w.Code != http.StatusOK {
 		t.Errorf("[Create] GET response error: %v", w.Code)
+		return
 	}
 
 	token, err := getToken(w)
 	if err != nil {
 		t.Errorf("[Upload] Invalid token format")
+		return
 	}
 
 	csHandler := makeHandler(upload, conf)
 	req, err = uploadPost("test1.txt", "http://localhost:9090/upload", token)
 	if err != nil {
 		t.Errorf("Error creating POST [Upload] request")
+		return
 	}
 
 	w = httptest.NewRecorder()
 	// Wait for parent /create request to complete
-	time.Sleep(50 * time.Millisecond)
+	time.Sleep(time.Millisecond * 50)
 	csHandler.ServeHTTP(w, req)
 
-	resp_body := w.Body.String()
-	fmt.Println(resp_body)
-
-	// TODO: Do some confirmation with resp_body
 	if w.Code != http.StatusOK {
 		t.Errorf("Response error [Upload]: %v", w.Code)
+		return
+	}
+
+	req, err = uploadPost("test2.txt", "http://localhost:9090/upload", token)
+	if err != nil {
+		t.Errorf("Error creating POST [Upload] request")
+		return
+	}
+
+	w = httptest.NewRecorder()
+	csHandler.ServeHTTP(w, req)
+		if w.Code != http.StatusOK {
+		t.Errorf("Response error [Upload]: %v", w.Code)
+		return
 	}
 
 	ttoken = token
@@ -97,6 +110,8 @@ func TestFinalize(t *testing.T) {
 	file.Download = 1
 	file.Size = 100
 	file.Type = "txt"
+	stash.Files = append(stash.Files, file)
+	file.Fname = "test2.txt"
 	stash.Files = append(stash.Files, file)
 	json, _ := json.Marshal(stash)
 	jsonStr := []byte(json)
@@ -136,27 +151,36 @@ func TestStashDownload(t *testing.T) {
 		return
 	}
 
-	// TODO: Fix json response
-	// var jsStash stash
-	// var body []byte
-	// if body, err = ioutil.ReadAll(w.Body); err != nil {
-	// 	t.Errorf("[Upload] Invalid token format")
-	// }
-	// err = json.Unmarshal(body, &jsStash)
-	// if err != nil {
-	// 	fmt.Println("error:", err)
-	// }
-	// tfilename = jsStash.Files[0].Fname
-	// fmt.Println(tfilename)
+	var jsStash api.Stash
+	var body []byte
+	if body, err = ioutil.ReadAll(w.Body); err != nil {
+		t.Errorf("[Upload] Invalid token format")
+		return
+	}
+	err = json.Unmarshal(body, &jsStash)
+	if err != nil {
+		t.Errorf("Error decoding json")
+		return
+	}
+	tfileID1 = jsStash.Files[0].Id
+	tfileID2 = jsStash.Files[1].Id
 }
 
-var tfilename string = ""
+var tfileID1 int = -1
+var tfileID2 int = -1
 
 func TestFileDownload(t *testing.T) {
 	if ttoken == "" {
 		t.Errorf("[Upload] failure, invalid token")
+		return
 	}
-
+	if tfileID1 == -1 || tfileID2 == -1 {
+		t.Errorf("[Upload] failure, invalid fileID")
+		return
+	}
+	stringID1 := string(48 + tfileID1)
+	stringID2 := string(48 + tfileID2)
+	
 	conf := httpconf
 	if conf == nil {
 		t.Errorf("Upload failed, token is nil")
@@ -165,19 +189,53 @@ func TestFileDownload(t *testing.T) {
 	// defer database.Close(conf.dbConn)
 	csHandler := makeHandler(download, conf)
 
-	req, err := http.NewRequest("GET", "http://localhost:9090/download/"+ttoken+"/"+tfilename, nil)
+	req, err := http.NewRequest("GET", "http://localhost:9090/download/"+ttoken+"/"+stringID1, nil)
 	if err != nil {
 		t.Errorf("Error creating GET [Download] request")
+		return
 	}
-
 	w := httptest.NewRecorder()
 	csHandler.ServeHTTP(w, req)
-
 	if w.Code != http.StatusOK {
 		t.Errorf("Response error [Download]: %v", w.Code)
+		return
 	}
 
-	// TODO: Check if file exists!
+	w = httptest.NewRecorder()
+	csHandler.ServeHTTP(w, req)
+	if w.Code != http.StatusNotFound {
+		t.Errorf("Response error [Download]: %v", w.Code)
+	}
+	// Give server time to remove file from server
+	time.Sleep(time.Millisecond * 50)
+	if _, err := os.Stat(conf.filefolder+"/"+ttoken+"/"+"test1.txt"); !os.IsNotExist(err) {
+		t.Errorf("Failure to remove file from server: %v", w.Code)
+		return
+	}
+
+	req, err = http.NewRequest("GET", "http://localhost:9090/download/"+ttoken+"/"+stringID2, nil)
+	if err != nil {
+		t.Errorf("Error creating GET [Download] request")
+		return
+	}
+	w = httptest.NewRecorder()
+	csHandler.ServeHTTP(w, req)
+	if w.Code != http.StatusOK {
+		t.Errorf("Response error [Download]: %v", w.Code)
+		return
+	}
+
+	w = httptest.NewRecorder()
+	csHandler.ServeHTTP(w, req)
+	if w.Code != http.StatusNotFound {
+		t.Errorf("Response error [Download]: %v", w.Code)
+		return
+	}
+	// Wait for server to remove stash directory
+	time.Sleep(time.Second * conf.reqtimeout * 2)
+	if _, err := os.Stat(conf.filefolder+"/"+ttoken); !os.IsNotExist(err) {
+		t.Errorf("Failure to remove stash from server: %v", w.Code)
+	}
 }
 
 func createGet(targetUrl string, conf *Configuration) (*httptest.ResponseRecorder, *http.Request) {
@@ -216,7 +274,6 @@ func uploadPost(filename string, targetUrl string, token string) (*http.Request,
 
 	_, err = io.Copy(fileWriter, f)
 	if err != nil {
-
 		return nil, err
 	}
 
@@ -249,7 +306,6 @@ func getToken(w *httptest.ResponseRecorder) (string, error) {
 		Token string
 	}
 	var jsToken jsonToken
-	//var body []byte
 	body, err := ioutil.ReadAll(w.Body)
 	if err != nil {
 		return "", err
@@ -260,6 +316,5 @@ func getToken(w *httptest.ResponseRecorder) (string, error) {
 		return "", err
 	}
 	token := jsToken.Token
-	fmt.Println(token)
 	return token, nil
 }

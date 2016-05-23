@@ -1,9 +1,8 @@
 package server
 
 import (
-	"net/http"
-	//"net/http/httptest"
 	"deadrop/api"
+	"net/http"
 	"testing"
 )
 
@@ -75,21 +74,4 @@ func TestUpSuperFinalize(t *testing.T) {
 		tstash = nil
 		return
 	}
-}
-
-func TestDnSuperStash(t *testing.T) {
-	if tconf == nil || tstash == nil {
-		t.Errorf("UpSuperUpload or UpSuperFinalize failed")
-	}
-	reply, err := UpSuperFinalize(*tstash, tconf)
-	if err != nil || reply.HttpCode != http.StatusOK {
-		t.Errorf("UpSuperFinalize failed")
-		tconf = nil
-		tstash = nil
-		return
-	}
-}
-
-func TestDnSuperDownload(t *testing.T) {
-
 }

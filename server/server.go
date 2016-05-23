@@ -4,6 +4,7 @@ import (
 	"deadrop/api"
 	// "deadrop/database"
 	// "database/sql"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -39,6 +40,19 @@ func (c *Configuration) loadSettings() {
 		panic("Failed to open logfile")
 	}
 	c.logfile = f
+	c.readStashes()
+}
+
+func (c *Configuration) readStashes() {
+	files, err := ioutil.ReadDir("./")
+	if err != nil {
+		log.Println(err)
+		log.Fatal("Error when reading files in deadropsfiles/")
+	}
+	for _, f := range files {
+		sc := make(chan api.SuperChan)
+		api.AppendChan(c.downMap, f.Name(), sc)
+	}
 }
 
 var validPath = regexp.MustCompile("^/(create|upload|download|finalize)")

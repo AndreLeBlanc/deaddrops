@@ -34,6 +34,11 @@ func (s *Stash) DecrementDownloadCounter(f StashFile) int {
 	return s.Files[i].Download
 }
 
+//Checks whether the stash is empty.
+func (s *Stash) IsEmpty() bool {
+	return len(s.Files) == 0
+}
+
 //Removes a file from a stash
 func (s *Stash) RemoveFile(index int) {
 	s.Files = append(s.Files[:index], s.Files[(index+1):]...)
@@ -52,4 +57,21 @@ func NewEmptyStash() Stash {
 func NewEmptyStashFile() StashFile {
 	f := StashFile{Id: 0, Fname: "", Size: 0, Type: "", Download: -1}
 	return f
+}
+
+//Creates a a new copy of an existing stash.
+func NewCopyStash(s *Stash) *Stash {
+	newFiles := NewCopyFiles(s.Files)
+	newStash := Stash{Token: s.Token, StashName: s.StashName, Lifetime: s.Lifetime, Files: *newFiles}
+	return &newStash
+}
+
+//Creates a new copy of an existing StashFile array.
+func NewCopyFiles(f []StashFile) *[]StashFile {
+	newFiles := []StashFile{}
+	for i := range f {
+		copy := StashFile{Id: f[i].Id, Fname: f[i].Fname, Size: f[i].Size, Type: f[i].Type, Download: f[i].Download}
+		newFiles = append(newFiles, copy)
+	}
+	return &newFiles
 }
