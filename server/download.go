@@ -55,6 +55,7 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		http.Error(w, "File does not exist", http.StatusNotFound)
 		return
 	}
+	w.Header().Set("Content-Disposition", "attachment; filename='" + filename + "'")
 	http.ServeFile(w, r, path)
 	if reply.HttpCode == http.StatusResetContent {		
 		go RmFile(token, filename, conf)
