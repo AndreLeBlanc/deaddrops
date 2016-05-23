@@ -49,6 +49,7 @@ func download(w http.ResponseWriter, r *http.Request, conf *Configuration) {
 		http.Error(w, "File does not exist", 404)
 		return
 	}
+	w.Header().Set("Content-Disposition", "attachment; filename='" + filename + "'")
 	http.ServeFile(w, r, path)
 }
 
