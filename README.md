@@ -1,30 +1,58 @@
-# Project Deadrop
+# Deadrop
 
-OSPP (1DT096) 2016 - Grupp 03
+**OSPP (1DT096) 2016 - Grupp 03**
 
-Projektarbete på kursen Operativsystem och processorienterad
-programmering (1DT096) våren 2016, Uppsala universitet.
+Det här projektet ämnar att underlätta temporär filöverföring mellan två eller flera parter. En användare kan ladda upp en eller flera filer samt ange livslängd i form av dagar eller antal nedladdningar. Därefter så sparas de under en hashad URL och väntar på besökare. Servern som Deadrop körs på är skriven i Go och front-end i Javascript.
 
-Project Deadrop ämnar att underlätta temporär* filöverföring mellan två eller flera parter. En användare kommer att ladda upp en eller flera filer samt ange livslängd i form av dagar eller antal nedladdningar. Därefter så sparas de under en hashad URL och väntar på besökare.
+## Installera
 
-> Denna fil är skrivet i formatet Markdown, läs mer här:
->
-> - https://help.github.com/articles/markdown-basics/
+### Back-end
 
-> Det går att redigera, förhandsvisa och spara (commit) sidan direkt i
-> en webläsare via [projektsidan på github.com](./README.md).
+##### Steg 1, installera Go
+För att installera Go och se till så att ens GOROOT och GOPATH är rätt konfigurerade, rekommenderas det att följa
+[Golangs officiella installationsguide](https://golang.org/doc/install).
+
+##### Steg 2, klona projektet
+Se till att stå i `$GOPATH/src` och skriv sen:
+
+`git clone https://github.com/uu-it-teaching/ospp-2016-group-03/`
+
+Därefter gå in i den nya katalogen och skriv:
+
+`make dep` TODO: Fix this rule in the Makefile (make dependencies), change name of project folder to Deadrop and install database, etc.
+
+### Front-end
 
 ## Kompilera
 
-> Kortfattade instruktioner för hur projektet kompileras.
+### Back-end
+Bygg hela projektet med:
+
+`make build`
+
+### Front-end
 
 ## Testa
 
-> Kortfattade instruktioner för hur automatiska testfall körs.
+### Back-end
+Kör alla tester
+
+`make test`
+
+Kör alla tester med verbos flagga, om något test misslyckas skrivs det ut vart det blir fel:
+
+`make testv`
+
+### Front-end
 
 ## Starta systemet
 
-> Kortfattade instruktioner för hur systemet startas.
+### Back-end
+För att starta servern kör:
+
+`make run` TODO: Fix this rule
+
+### Front-end
 
 ## Struktur
 
@@ -32,14 +60,7 @@ Projektet består av följande kataloger.
 
 ### doc
 
-Dokumentation, projektrapporter och andra viktiga dokument.
-
-### ebin
-
-Erlang beam-filer.
-
-> Ändra till `bin` eller `build` eller liknande om projektet inte
-> använder Erlang.
+projektrapporter och andra viktiga dokument.
 
 ### meta
 
@@ -48,10 +69,6 @@ Erlang beam-filer.
 - Projektdagböcker.
 - Reflektioner på gruppens arbete.
 
-### src
+### api, database, server
 
 All källkod.
-
-## Fler rubriker
-
-> Lägg till mer information allt eftersom.
