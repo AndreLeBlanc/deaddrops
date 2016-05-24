@@ -115,12 +115,15 @@ Försökte tillsammans med Joel få supervisors att funka och funka med database
 Parprogrammering med Joel. Försökte debugga databasen, men implementerade en lösning med filer istället för att komma vidare med supervisors. Implementerade timeouts och rollback vid upload. Fixade lite blandade buggar. Implementerade en branch som använder filid istället för filnamn vid nedladdning på begäran av frontendteamet.
 
 ##### Fredag
+Pull request till master med Onsdagens och torsdagens commits. Div diskussion och buggfixande när frontend integrerade.
 
 ## Vecka 21
 
 ##### Måndag
+Presentation och rapportskrivande. Lite buggfixande.
 
 ##### Tisdag
+Mer presentationsfix, testgenomgångar och milestone 3 möte. Lite mer buggfixande.
 
 ##### Onsdag
 
