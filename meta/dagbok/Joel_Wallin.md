@@ -117,11 +117,19 @@ Parprogrammering med Erik, bytte ut databasen med jsonfiler (för att kunna test
 ##### Fredag, 15:00-19:00
 Lite synkronisering via Slack och fixade så att filer och stashes tas bort från hårddisken vid körning, samt att servern läser stashes från hårddisken när den startar (så att grejer inte försvinner när man startar om servern). Fipplade också lite med generering av snyggare dokumentation.
 
+##### Lördag, 10:00-13:00
+Buggfixande av det arbete som gjordes igår.
+
+##### Söndag, sporadiskt
+Började allvarligt med rapporten, mycket arbete.
+
 ## Vecka 21
 
-##### Måndag
+##### Måndag, 09:00-12:00
+Lite buggfixande som frontend hittat samt presentation förberedelse.
 
-##### Tisdag
+##### Tisdag, 09:00-17:00
+Fortsatt arbete med presentationen och väldigt avslappnat arbete med lite buggfixar. Samt genrep av presentation.
 
 ##### Onsdag
 
