@@ -294,8 +294,9 @@ func DnSuper(token string, conf *Configuration) {
 				if fileIndex < 0 {
 					replyChan <- api.HttpReplyChan{stash, "No such file in stash", http.StatusNotFound}
 				} else if stash.Files[fileIndex].Download == 1 {
-					newStash := api.NewCopyStash(&stash)
-					reply := api.HttpReplyChan{*newStash, "Download file OK", http.StatusResetContent}
+					newStash := api.NewEmptyStash()
+					newStash.Files = append(newStash.Files, stash.Files[fileIndex])
+					reply := api.HttpReplyChan{newStash, "Download file OK", http.StatusResetContent}
 					replyChan <- reply
 					stash.RemoveFile(fileIndex)
 					
