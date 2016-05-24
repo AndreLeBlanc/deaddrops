@@ -3,6 +3,9 @@ DOC = http://localhost:6060/pkg/deadrop/
 build:
 	go build
 
+dev:
+	./deadrop dev
+
 fmt:
 	go fmt ./...
 

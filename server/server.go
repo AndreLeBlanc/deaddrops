@@ -23,6 +23,7 @@ type Configuration struct {
 	reqtimeout time.Duration
 	logfile    *os.File
 	// dbConn     *sql.DB
+	dev        bool
 }
 
 func (c *Configuration) loadSettings() {
@@ -41,6 +42,14 @@ func (c *Configuration) loadSettings() {
 	}
 	c.logfile = f
 	c.readStashes()
+
+	if len(os.Args) == 2 {
+		if os.Args[1] == "dev" {
+			c.dev = true
+			return
+		}
+		c.dev = false
+	}
 }
 
 func (c *Configuration) readStashes() {
@@ -59,7 +68,10 @@ var validPath = regexp.MustCompile("^/(create|upload|download|finalize)")
 
 func makeHandler(f func(http.ResponseWriter, *http.Request, *Configuration), conf *Configuration) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Add("Access-Control-Allow-Origin", "deadrop.win") //TODO: List of allowed server via config file
+		if conf.dev {
+			w.Header().Add("Access-Control-Allow-Origin", "*")
+		}
+		w.Header().Add("Access-Control-Allow-Origin", "deadrop.win")
 		w.Header().Add("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token")
 		w.Header().Add("Access-Control-Allow-Credentials", "true")
 
