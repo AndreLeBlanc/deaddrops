@@ -12,6 +12,12 @@ test:
 testv:
 	go test ./... -v
 
+cov:
+	go test ./... -cover
+
+race:
+	go test ./... -race
+
 #echo $(DOC)
 doc:
 	godoc -http=:6060 & \
