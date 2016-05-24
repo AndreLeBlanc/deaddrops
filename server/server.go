@@ -71,7 +71,7 @@ func makeHandler(f func(http.ResponseWriter, *http.Request, *Configuration), con
 		if conf.dev {
 			w.Header().Add("Access-Control-Allow-Origin", "*")
 		} else {
-			w.Header().Add("Access-Control-Allow-Origin", "deadrop.win")
+			w.Header().Add("Access-Control-Allow-Origin", "http://deadrop.win")
 		}
 		w.Header().Add("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token")
 		w.Header().Add("Access-Control-Allow-Credentials", "true")
