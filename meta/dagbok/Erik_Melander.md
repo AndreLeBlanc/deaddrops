@@ -126,6 +126,7 @@ Presentation och rapportskrivande. Lite buggfixande.
 Mer presentationsfix, testgenomgångar och milestone 3 möte. Lite mer buggfixande.
 
 ##### Onsdag
+Rapportskrivande. Samt lite fixande i koden för att få begränsningar så att servern inte litar blint på klienten. Otestat dock.
 
 ##### Torsdag
 
