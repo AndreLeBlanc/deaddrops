@@ -131,7 +131,8 @@ Lite buggfixande som frontend hittat samt presentation förberedelse.
 ##### Tisdag, 09:00-17:00
 Fortsatt arbete med presentationen och väldigt avslappnat arbete med lite buggfixar. Samt genrep av presentation.
 
-##### Onsdag
+##### Onsdag, 10:00-21:00
+Arbete med rapporten, synkronisering via Slack.
 
 ##### Torsdag
 
