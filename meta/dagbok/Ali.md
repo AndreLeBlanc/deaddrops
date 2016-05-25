@@ -127,15 +127,25 @@ Continued writing tests for Validate.go (2 hours)
 
 ##### Torsdag
 
+Ran into problems with some of the tests. Couldn't compile it properly. (2 hours)
+
 ##### Fredag
+
+Fixed the issue with the tests. Continued work on other functions.
 
 ## Vecka 21
 
 ##### Måndag
 
+Group meeting where we worked a little on our own and then focused on the practice presentation. (3 hours)
+
 ##### Tisdag
 
+We had a group meeting today before having the presentation. We fixed some last minute bugs and prepared for the presentation. (2 hours)
+
 ##### Onsdag
+
+Worked on the report draft. (1 hour)
 
 ##### Torsdag
 
