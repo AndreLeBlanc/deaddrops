@@ -96,22 +96,26 @@ Work: Arbetade under längre period tsm med Jonas med sidan för ny sub-page och
 Work&Meet: Träffade gruppen och arbetade under dagen. Försökte koppla ihop progress
 
 ##### Tisdag
-Work: Ännu mer arbete på frontend (fokus design + funktionalitet) sedan jobb med automation deploy på servern
+Work: Ännu mer arbete på frontend (fokus design + funktionalitet) sedan jobb med automation deploy på servern för backend
 
 ##### Onsdag
 
 ##### Torsdag
-Work: Arbetade med att finalisera fronend och göra sidan + golang servern live
+Work: Arbetade med att finalisera frontend och göra sidan + golang servern live
 
 ##### Fredag
+Work: Fixade till lite småsaker på frontend, slipade till auto deploy för backend
 
 ## Vecka 21
 
 ##### Måndag
+Work&Meet: Småjobb tillsammans med grupp men mest arbete med presentation + prat om möjliga uppdateringar
 
 ##### Tisdag
+Work&Meet: Ännu mer jobb på presentation och början på rapport för mig del
 
 ##### Onsdag
+Work: Skrev klart ett utkast (i princip slutversion) av allt det jag skulle täcka av rapporten. 
 
 ##### Torsdag
 
