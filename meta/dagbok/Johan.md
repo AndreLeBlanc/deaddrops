@@ -124,6 +124,7 @@ Work: Skrev klart ett utkast (i princip slutversion) av allt det jag skulle täc
 ## Vecka 22
 
 ##### Måndag
+Work&Meet: Övade och arbetade på presentatonen. Jag desginade om de flesta slides något
 
 ##### Tisdag
 
