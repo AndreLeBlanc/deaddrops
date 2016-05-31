@@ -155,6 +155,8 @@ Worked on the report draft. (1 hour)
 
 ##### Måndag
 
+Group meeting to have final practice session before the final presentation.
+
 ##### Tisdag
 
 ##### Onsdag
