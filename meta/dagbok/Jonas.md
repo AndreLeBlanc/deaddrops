@@ -104,23 +104,23 @@ Gruppmöte. Vidareutveckling av download samt finalize funktionaliteten.
 ## Vecka 21
 
 ##### Måndag
-
+Färdigställde koden för frontend.
 ##### Tisdag
-
-##### Onsdag
-
+Skrev på projektrapportens draft. Redovisning genrep.
+##### Onsdag 
+Skrev klart projektrapportens draft.
 ##### Torsdag
 
 ##### Fredag
 
 ## Vecka 22
 
-##### Måndag
+##### Måndag Färdigställde slides till redovisningen och tränade på redovisningen.
 
-##### Tisdag
+##### Tisdag Redovisning av projektet.
 
 ##### Onsdag
 
-##### Torsdag
+##### Torsdag Färdigställde projektrapporten.
 
 ##### Fredag
