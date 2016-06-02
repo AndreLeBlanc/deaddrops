@@ -44,9 +44,7 @@ Nu kör vi endast 'npm install' kommandot. Om allt går bra ska man nu vara redo
 ## Kompilera
 
 ### Backend
-Bygg hela projektet med:
-
-`make build`
+`make build` - Bygg hela projektet med.
 
 ### Frontend
 
@@ -73,13 +71,9 @@ Så lätt var det!
 ## Testa
 
 ### Backend
-Kör alla tester
+`make test` - Kör alla tester.
 
-`make test`
-
-Kör alla tester med verbos flagga, om något test misslyckas skrivs det ut vart det blir fel:
-
-`make testv`
+`make testv` - Kör alla tester med verbos flagga, om något test misslyckas skrivs det ut vart det blir fel.
 
 ### Frontend
 
