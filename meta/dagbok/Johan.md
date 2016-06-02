@@ -127,9 +127,11 @@ Work: Skrev klart ett utkast (i princip slutversion) av allt det jag skulle täc
 Work&Meet: Övade och arbetade på presentatonen. Jag desginade om de flesta slides något
 
 ##### Tisdag
+Redovisning av projekt
 
 ##### Onsdag
 
 ##### Torsdag
+Lade till frontend och installation i repot. Samt fördigställde rapport
 
 ##### Fredag
