@@ -23,6 +23,22 @@ Därefter gå in i den nya katalogen och skriv:
 
 ### Front-end
 
+##### Steg 1, installera npm
+För att installera npm se till och föja deras [officiella installtionsguide](https://docs.npmjs.com/getting-started/installing-node)
+
+##### Steg 2, installera gulp
+Installera gulp som en global variabel. Om du kör linux använd 'sudo npm install gulp -g'. Man kan även följa denna [guide](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
+
+##### Steg 3, installera webpack & webpack-dev-server
+Nu kommer vi behöva installera webpack och webpack-dev-server globalt. Vi gör detta på en linux genom dessa kommandon:
+'npm install webpack -g'
+'npm install webpack-dev-server -g'
+
+Alternativt följ [detta](https://webpack.github.io/docs/tutorials/getting-started/)
+
+##### Steg 4, installera alla dependencies
+Nu kör vi endast 'npm install' kommandot. Om allt går bra ska man nu vara redo och kompilera.
+
 ## Kompilera
 
 ### Back-end
@@ -31,6 +47,21 @@ Bygg hela projektet med:
 `make build`
 
 ### Front-end
+
+##### Alternativ 1, kompilera en gång
+För att kompilera filerna endast en gång kan man köra dessa kommandon:
+'npm run build_gulp'  - Detta bygger alla css filer
+'npm run build_webpack' - Detta bygger alla javascript filer
+
+Nu ska man kunna visa sidan, dock så är alternativ 2 både smidigare och snabbare.
+
+##### Alternativ 2, aktiv kompilering + server
+Vi börjar genom att se till att gulp lyssnar på ändringar i css filerna:
+'gulp -watch &' - & lades till för att köra processen i bakgrunden
+Sedan så kör vi igång vår dev-server som kommer att automatiskt bygga nya javascript filer vid behov:
+'npm run dev' - nu körs servern på http:localhost:8080
+
+Så lätt var det!
 
 ## Testa
 
