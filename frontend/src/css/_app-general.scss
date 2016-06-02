@@ -1,0 +1,99 @@
+
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+	color: $color-dark;
+}
+
+.appContainer {	
+	height: 100%;
+}
+
+.commandButton{
+	width: 60px;
+	height: 30px;
+	padding: 3px;
+	border-radius: 4px;
+	color: #EEEEEE;
+	background: $color-dark;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	margin-right: 5px;
+	position: relative;
+	overflow: hidden;
+}
+
+label.makeButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+button.stylized, label.stylized, a.stylized {
+	position: relative;
+	border: none;
+	outline:none;
+	cursor: pointer;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 2px;
+	min-width: 80px;
+	min-height: 25px;
+	overflow: hidden;
+	text-decoration: none;
+	font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+
+    background-color: #424242;
+	box-shadow: 1px 1px 0px 1px #212121;
+
+	&:hover {
+		background-color: #616161;
+	}
+
+    &.green {
+    	background-color: #43a047;
+		box-shadow: 1px 1px 0px 1px #1B5E20;
+
+		&:hover {
+			background-color: #4CAF50;
+		}
+    }
+
+    &.amber {
+    	background-color: #FFA000;
+		box-shadow: 1px 1px 0px 1px #FF6F00;
+
+		&:hover {
+			background-color: #FFC107;
+		}
+    }
+
+    &.flat {
+    	color: #424242;
+    	background-color: #fff;
+    	box-shadow: none;
+
+    }
+}
+
+input.stylized  {
+	width: 200px;
+	height: 30px;
+	color: $color-dark;
+	border-radius: 4px;
+	padding: 3px;
+	line-height: 1.5;
+
+	font-size: 18px;
+	font-weight: 600;
+
+	outline: none;
+	border: 0;
+	box-shadow: inset 1px 2px 5px -2px rgba(0, 0, 0, 0.5);
+}

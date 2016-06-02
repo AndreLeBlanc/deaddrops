@@ -1,0 +1,38 @@
+.dialog {
+	min-width: 300px;
+	max-width: 500px;
+
+	min-height: 70px;
+	max-height: 200px;
+
+	padding: 10px;
+
+	border-top: 5px solid $color-error;
+	border-radius: 3px;
+
+	margin-right: auto;
+	margin-left: auto;
+
+	background-color: #fff;
+	box-shadow: 0px 1px 2px 0px rgba(66, 66, 66, 0.60);
+
+	> .error {
+		color: $color-error;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		> label {
+			font-family: 'Open Sans', sans-serif;
+			font-size: 18px;
+			font-weight: 700;
+		}
+	}
+
+	> .message {
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    padding: 10px;
+	}
+}

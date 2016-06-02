@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Deadrop - The drop of dead</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+    	body, html {
+    		margin: 0;
+    		padding: 0;
+    		background: #F5F5F5;
+        height: 100%;
+    	}
+      .container {
+          height: 100%;
+      }
+
+		.banner {
+			width: 100%;
+      height: 75px;
+			text-align: center;
+			box-shadow: 1px 1px 1px #424242;
+      background: #424242;
+      padding: 5px;
+      z-index: 999;
+		}
+		.logo img {
+      height: 60px;
+			max-width: 100%;
+		}
+    #app {
+      width: 100%;
+      height: 100%;
+    }
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link rel="stylesheet" href="app.min.css">
+</head>
+<body>
+  <div class="container">
+    <header class="banner">
+    	<a href="/" title="Home" class="logo">
+    		<img src="/images/deadrop_logo_light.png" alt="Deadrop logo"/>
+    	</a>
+    </header>
+    <div id="app"></div>
+  </div>
+  <script src="app.min.js"></script>
+</body>
+
+</html>

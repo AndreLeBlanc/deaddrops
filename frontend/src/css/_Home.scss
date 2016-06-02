@@ -1,0 +1,79 @@
+.home {
+	height: 100%;
+	background: #ef5350;
+}
+
+.case {
+	width: 100%;
+	min-height: 75px;
+	padding: 0px 10px 10px 10px;
+	background: $color-logo-accent;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+}
+
+.header {
+	background: #ef5350;
+	width: 100%;
+	min-height: 300px;
+	padding: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.infoCard {
+	margin: 5px;
+	max-width: 300px;
+	height: 100px;
+
+	display: flex;
+	align-items: center;
+
+	> .icon {
+		height: 100%;
+
+		> i, p, span, label {
+			color: #fff;
+			font-size: 4.5em;
+		}
+
+		display: flex;
+		align-items: center;
+	}
+
+	> .textWrapper {
+		max-width: 160px;
+		margin-left: 10px;
+	}
+
+	> .textWrapper > .infoCardHeader {
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 700;
+		font-size: 28px;
+		color: #fff;
+
+		margin-bottom: 10px;
+	}
+
+	> .textWrapper > .infoCardText {
+		font-family: 'Open Sans', sans-serif;
+		font-weight: 600;
+		font-size: 12px;
+		color: #fff;	
+	}
+}
+
+.create {
+	width: 68px;
+	height: 68px;
+}
+
+@media screen and (min-width: 550px) {
+	.home {
+		background: $color-dark;
+	}
+}
