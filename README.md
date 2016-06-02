@@ -85,6 +85,12 @@ För att starta servern kör:
 
 ### Front-end
 
+##### Precis som i "Alternativ 2, aktiv kompilering + server"
+Vi börjar genom att se till att gulp lyssnar på ändringar i css filerna:
+'gulp -watch &' - & lades till för att köra processen i bakgrunden
+Sedan så kör vi igång vår dev-server som kommer att automatiskt bygga nya javascript filer vid behov:
+'npm run dev' - nu körs servern på http:localhost:8080
+
 ## Struktur
 
 Projektet består av följande kataloger.
