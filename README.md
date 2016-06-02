@@ -37,7 +37,7 @@ Nu kommer vi behöva installera webpack och webpack-dev-server globalt. Vi gör 
 Alternativt följ [detta](https://webpack.github.io/docs/tutorials/getting-started/)
 
 ##### Steg 4, installera alla dependencies
-Nu kör vi endast 'npm install' kommandot. Om allt går bra ska man nu vara redo och kompilera.
+Nu kör vi endast 'npm install' kommandot. Om allt går bra ska man nu vara redo och kompilera. Npm kräver mycker RAM och om man inte har det eller en swapfile kan man få problem att köra detta kommando.
 
 ## Kompilera
 
