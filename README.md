@@ -41,14 +41,12 @@ Alternativt följ [detta](https://webpack.github.io/docs/tutorials/getting-start
 ##### Steg 4, installera alla dependencies
 Nu kör vi endast 'npm install' kommandot. Om allt går bra ska man nu vara redo och kompilera. Npm kräver mycker RAM och om man inte har det eller en swapfile kan man få problem att köra detta kommando.
 
-## Kompilera och köra
+## Kompilera
 
 ### Backend
 Bygg hela projektet med:
 
 `make build`
-
-Starta sen backend binären som vanligt (`./deadrop` i terminalen). För att kunna köra lokalt behöver man dock skriva `make dev`. 
 
 ### Frontend
 
@@ -74,7 +72,7 @@ Så lätt var det!
 
 ## Testa
 
-### Back-end
+### Backend
 Kör alla tester
 
 `make test`
@@ -83,16 +81,14 @@ Kör alla tester med verbos flagga, om något test misslyckas skrivs det ut vart
 
 `make testv`
 
-### Front-end
+### Frontend
 
 ## Starta systemet
 
-### Back-end
-För att starta servern kör:
+### Backend
+Starta backend binären som vanligt (`./deadrop` i terminalen). För att kunna köra lokalt behöver man dock skriva `make dev`.
 
-`make run` TODO: Fix this rule
-
-### Front-end
+### Frontend
 
 ##### Precis som i "Alternativ 2, aktiv kompilering + server"
 Vi börjar genom att se till att gulp lyssnar på ändringar i css filerna:
