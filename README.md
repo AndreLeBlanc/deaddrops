@@ -6,7 +6,7 @@ Det här projektet ämnar att underlätta temporär filöverföring mellan två 
 
 ## Installera
 
-### Back-end
+### Backend
 
 ##### Steg 1, installera Go
 För att installera Go och se till så att ens GOROOT och GOPATH är rätt konfigurerade, rekommenderas det att följa
@@ -17,49 +17,58 @@ Se till att stå i `$GOPATH/src` och skriv sen:
 
 `git clone https://github.com/uu-it-teaching/ospp-2016-group-03/`
 
-Därefter gå in i den nya katalogen och skriv:
+Byt sen namnet på projektmappen till `deadrop/`:
 
-`make dep` TODO: Fix this rule in the Makefile (make dependencies), change name of project folder to Deadrop and install database, etc.
+`mv ospp-2016-group-03 deadrop`
 
-### Front-end
+### Frontend
 
 ##### Steg 1, installera npm
 För att installera npm se till och föja deras [officiella installtionsguide](https://docs.npmjs.com/getting-started/installing-node)
 
 ##### Steg 2, installera gulp
-Installera gulp som en global variabel. Om du kör linux använd 'sudo npm install gulp -g'. Man kan även följa denna [guide](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
+Installera gulp som en global variabel. Om du kör linux använd `sudo npm install gulp -g`. Man kan även följa denna [guide](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md)
 
 ##### Steg 3, installera webpack & webpack-dev-server
 Nu kommer vi behöva installera webpack och webpack-dev-server globalt. Vi gör detta på en linux genom dessa kommandon:
-'npm install webpack -g'
-'npm install webpack-dev-server -g'
+
+`npm install webpack -g`
+
+`npm install webpack-dev-server -g`
 
 Alternativt följ [detta](https://webpack.github.io/docs/tutorials/getting-started/)
 
 ##### Steg 4, installera alla dependencies
 Nu kör vi endast 'npm install' kommandot. Om allt går bra ska man nu vara redo och kompilera. Npm kräver mycker RAM och om man inte har det eller en swapfile kan man få problem att köra detta kommando.
 
-## Kompilera
+## Kompilera och köra
 
-### Back-end
+### Backend
 Bygg hela projektet med:
 
 `make build`
 
-### Front-end
+Starta sen backend binären som vanligt (`./deadrop` i terminalen). För att kunna köra lokalt behöver man dock skriva `make dev`. 
+
+### Frontend
 
 ##### Alternativ 1, kompilera en gång
 För att kompilera filerna endast en gång kan man köra dessa kommandon:
-'npm run build_gulp'  - Detta bygger alla css filer
-'npm run build_webpack' - Detta bygger alla javascript filer
+
+`npm run build_gulp`  - Detta bygger alla css filer
+
+`npm run build_webpack` - Detta bygger alla javascript filer
 
 Nu ska man kunna visa sidan, dock så är alternativ 2 både smidigare och snabbare.
 
 ##### Alternativ 2, aktiv kompilering + server
 Vi börjar genom att se till att gulp lyssnar på ändringar i css filerna:
-'gulp -watch &' - & lades till för att köra processen i bakgrunden
+
+`gulp -watch &` - & lades till för att köra processen i bakgrunden
+
 Sedan så kör vi igång vår dev-server som kommer att automatiskt bygga nya javascript filer vid behov:
-'npm run dev' - nu körs servern på http:localhost:8080
+
+`npm run dev` - nu körs servern på http:localhost:8080
 
 Så lätt var det!
 
@@ -97,7 +106,7 @@ Projektet består av följande kataloger.
 
 ### doc
 
-projektrapporter och andra viktiga dokument.
+Projektrapporter och andra viktiga dokument.
 
 ### meta
 
@@ -106,6 +115,6 @@ projektrapporter och andra viktiga dokument.
 - Projektdagböcker.
 - Reflektioner på gruppens arbete.
 
-### api, database, server
+### api, server, frontend
 
 All källkod.
